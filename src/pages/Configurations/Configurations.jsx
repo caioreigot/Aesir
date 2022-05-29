@@ -1,10 +1,10 @@
 import FaArrowLeft from '@components/FaArrowLeft';
 import { Link } from 'react-router-dom';
-import './PlayRoom.css';
+import './Configurations.css';
 
-function PlayRoom() {
+function Configurations() {
   return (
-    <div className='play-room'>
+    <div className='configurations'>
       <Link to="/">
         <FaArrowLeft size="2x" />
       </Link>
@@ -12,4 +12,4 @@ function PlayRoom() {
   );
 }
 
-export default PlayRoom;
+export default Configurations;

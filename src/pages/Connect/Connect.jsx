@@ -4,11 +4,11 @@ import './Connect.css';
 
 function Connect() {
   return (
-    <>
+    <div className='connect'>
       <Link to="/">
         <FaArrowLeft size="2x" />
       </Link>
-    </>
+    </div>
   );
 }
 

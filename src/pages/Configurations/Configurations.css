@@ -1,6 +1,6 @@
 @import url(@/colors.css);
 
-.play-room #fa-arrow-left {
+.configurations #fa-arrow-left {
   cursor: pointer;
 
   position: fixed;
@@ -10,6 +10,6 @@
   color: var(--imperial-red);
 }
 
-.play-room #fa-arrow-left:hover {
+.configurations #fa-arrow-left:hover {
   filter: brightness(105%);
 }

@@ -4,7 +4,7 @@ import { faGear } from '@fortawesome/free-solid-svg-icons';
 function FaGear(props) {
   return (
     <FontAwesomeIcon 
-      id="fa-gear"
+      className="fa-gear"
       icon={faGear}
       size={props.size} />
   );

@@ -24,7 +24,7 @@
   border-bottom: 4px solid var(--cultured);
 }
 
-.home header h1 {
+.home .app-name {
   color: var(--imperial-red);
 
   user-select: none;
@@ -35,8 +35,8 @@
   letter-spacing: 2px;
 }
 
-.home header h1:hover {
-  filter: brightness(105%);
+.home .app-name:hover {
+  filter: brightness(120%);
 }
 
 .home main {
@@ -61,7 +61,7 @@
   margin: 10px;
 }
 
-.home #fa-gear {
+.home #config-btn {
   color: var(--cultured);
 
   margin-left: auto;
@@ -69,7 +69,7 @@
   cursor: pointer;
 }
 
-.home #fa-gear:hover {
+.home #config-btn:hover {
   animation: slight-rotation 500ms ease-out;
 }
 
