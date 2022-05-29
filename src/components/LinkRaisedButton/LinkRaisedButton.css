@@ -1,0 +1,24 @@
+.link-raised-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  background-color: var(--imperial-red);
+  box-shadow: rgba(var(--imperial-red-values), 0.6) 4px 4px 0px;
+
+  border: none;
+  border-radius: 6px;
+
+  text-decoration: none;
+  
+  transition: transform 60ms, box-shadow 60ms;
+}
+
+.link-raised-button:hover {
+  filter: brightness(105%);
+}
+
+.link-raised-button:active {
+  transform: translateY(4px) translateX(4px);
+  box-shadow: rgba(var(--imperial-red-values), 0.6) 0px 0px 0px;
+}

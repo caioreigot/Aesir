@@ -1,0 +1,8 @@
+@import url(@/colors.css);
+
+#fa-arrow-left {
+  cursor: pointer;
+
+  margin: 15px 0 0 20px;
+  color: var(--imperial-red);
+}
