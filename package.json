@@ -4,7 +4,7 @@
   "license": "GPL-3.0",
   "version": "1.0.0",
   "private": true,
-  "description": "A cross-platform for playing Magic",
+  "description": "A cross-platform for playing Magic: The Gathering",
   "main": "public/electron.js",
   "repository": {
     "type": "git",
