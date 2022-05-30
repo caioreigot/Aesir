@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import FaArrowLeft from '@components/FaArrowLeft';
-import TooltipIcon from '@components/TooltipIcon';
+import InterativeTooltipIcon from '@components/InterativeTooltipIcon';
 import MinimalistButton from '@components/MinimalistButton';
 
 import '@styles/pages/Connect.css';
@@ -22,11 +22,11 @@ function Connect() {
         </div>
       </main>
 
-      <TooltipIcon size="2x">
+      <InterativeTooltipIcon size="2x">
         Você precisa fornecer o endereço e a porta em que
         o servidor da sala está aberto. Peça estas 
         informações ao criador da sala!
-      </TooltipIcon>
+      </InterativeTooltipIcon>
     </div>
   );
 }

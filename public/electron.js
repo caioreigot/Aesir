@@ -1,15 +1,17 @@
 const path = require('path');
 
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, shell } = require('electron');
 const isDev = require('electron-is-dev');
+
+let mainWindow;
 
 function createWindow() {
   // Cria a Browser Window
-  const win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1000,
     height: 650,
     minHeight: 600,
-    minWidth: 450,
+    minWidth: 650,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
@@ -17,7 +19,7 @@ function createWindow() {
   });
 
   // E carrega o index.html da aplicação
-  win.loadURL(
+  mainWindow.loadURL(
     isDev
       ? 'http://localhost:3000'
       : `file://${path.join(__dirname, '../build/index.html')}`
@@ -25,7 +27,7 @@ function createWindow() {
 
   // Abre o DevTools
   if (isDev) {
-    win.webContents.openDevTools({ mode: 'detach' });
+    mainWindow.webContents.openDevTools({ mode: 'detach' });
   }
 }
 
@@ -47,4 +49,9 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+
+mainWindow.webContents.on('new-window', function(e, url) {
+  e.preventDefault();
+  shell.openExternal(url);
 });

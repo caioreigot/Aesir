@@ -11,6 +11,7 @@
   flex-direction: column;
 }
 
+/***** Header *****/
 .home header {
   display: flex;
   flex-direction: row;
@@ -39,6 +40,19 @@
   filter: brightness(120%);
 }
 
+.home #config-btn {
+  margin-left: auto;
+  cursor: pointer;
+  color: var(--cultured);
+}
+
+.home #config-btn:hover {
+  animation: slight-rotation 500ms ease-out;
+  filter: brightness(var(--hover-brightness-base));
+}
+/***** Fim Header *****/
+
+/***** Main *****/
 .home main {
   display: flex;
   flex-direction: column;
@@ -62,16 +76,11 @@
 
   animation: fade-in 400ms ease forwards;
 }
+/***** Fim Main *****/
 
-.home #config-btn {
-  margin-left: auto;
-  cursor: pointer;
-  color: var(--cultured);
-}
-
-.home #config-btn:hover {
-  animation: slight-rotation 500ms ease-out;
-  filter: brightness(var(--hover-brightness-base));
+.home .fa-github {
+  bottom: 20px;
+  right: 20px;
 }
 
 @keyframes slight-rotation {
