@@ -3,7 +3,7 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Home from '@pages/Home';
 import Configurations from '@pages/Configurations';
-import ChooseDeckRoom from '@pages/ChooseDeckRoom';
+import PreGameRoom from '@pages/PreGameRoom';
 import PlayRoom from '@pages/PlayRoom';
 import Connect from '@pages/Connect';
 
@@ -17,8 +17,8 @@ function App() {
         <Route exact path="/configurations">
           <Configurations />
         </Route>
-        <Route path="/choose-deck">
-          <ChooseDeckRoom />
+        <Route path="/pre-game-room">
+          <PreGameRoom />
         </Route>
         <Route path="/play-room">
           <PlayRoom />

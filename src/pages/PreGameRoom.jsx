@@ -4,11 +4,11 @@ import { Component } from 'react';
 import MinimalistButton from '@components/MinimalistButton';
 import MinimalistInput from '@components/MinimalistInput';
 
-import '@styles/pages/ChooseDeckRoom.css';
+import '@styles/pages/PreGameRoom.css';
 
 const { ipcRenderer } = window.require('electron');
 
-class ChooseDeckRoom extends Component {
+class PreGameRoom extends Component {
   componentDidMount() {
     ipcRenderer.send('room-created');
   }
@@ -31,4 +31,4 @@ class ChooseDeckRoom extends Component {
   }
 }
 
-export default ChooseDeckRoom;
+export default PreGameRoom;
