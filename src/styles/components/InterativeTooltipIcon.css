@@ -45,7 +45,7 @@
   color: var(--cultured);
   background-color: var(--eerie-black);
 
-  width: clamp(400px, 50%, 900px);
+  width: clamp(500px, 50%, 900px);
   
   /* Posicionando o centro da div no meio da tela */
   position: fixed;

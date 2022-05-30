@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 
-import '@styles/components/TooltipIcon.css';
+import '@styles/components/InterativeTooltipIcon.css';
 
 const onIconMouseOver = () => {
   const tooltip = document.querySelector('.tooltip');
@@ -13,7 +13,7 @@ const onIconMouseLeave = () => {
   tooltip.classList.remove('show');
 }
 
-function TooltipIcon(props) {
+function InterativeTooltipIcon(props) {
   return (
     <>
       <div className='tooltip'>
@@ -30,4 +30,4 @@ function TooltipIcon(props) {
   );
 }
 
-export default TooltipIcon;
+export default InterativeTooltipIcon;
