@@ -1,8 +1,8 @@
-import net from 'net';
-import { DataType } from './enums/DataType';
-import { ErrorContext } from './enums/ErrorContext';
+const net = require('net');
+const DataType = require('./enums/DataType');
+const ErrorContext = require('./enums/ErrorContext');
 
-export default class Peer {
+class Peer {
 
   constructor(name, port, state) {
     this.state = state; // Estado da sala
@@ -42,6 +42,8 @@ export default class Peer {
       .on('error', err =>
         this.onError(err, ErrorContext.SERVER)
       );
+
+    return this;
   }
 
   handleDisconnection = socket => {
@@ -410,3 +412,5 @@ export default class Peer {
     console.warn('Peer.onError -> erro não tratado:', err);
   }
 }
+
+module.exports = Peer;

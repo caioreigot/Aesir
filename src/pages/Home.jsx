@@ -16,7 +16,7 @@ function Home() {
       </header>
 
       <main>
-        <LinkRaisedButton to='/play-room'>CRIAR SALA</LinkRaisedButton>
+        <LinkRaisedButton to='/choose-deck'>CRIAR SALA</LinkRaisedButton>
         <LinkRaisedButton to='/connect'>SE CONECTAR</LinkRaisedButton>
       </main>
 

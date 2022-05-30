@@ -1,7 +1,8 @@
 const path = require('path');
 
-const { app, BrowserWindow, shell } = require('electron');
+const { BrowserWindow, app } = require('electron');
 const isDev = require('electron-is-dev');
+const addMainListeners = require('./scripts/addMainListeners');
 
 let mainWindow;
 
@@ -29,12 +30,24 @@ function createWindow() {
   if (isDev) {
     mainWindow.webContents.openDevTools({ mode: 'detach' });
   }
+
+  mainWindow.webContents.setWindowOpenHandler(details => {
+    return {
+      action: 'allow'
+    }
+  });
+
+  /* Adiciona os listeners para o ipcMain
+  Também configura os listeners para as conexões p2p 
+  para possibilitar o jogo online */
+  addMainListeners(mainWindow.webContents);
 }
 
 /* Esse método será chamado quando o Electron tiver terminado de 
 inicializar e estiver pronto para criar a janela browser.
 Algumas APIs podem ser usadas somente depois que este evento ocorre */
-app.whenReady().then(createWindow);
+app.whenReady()
+  .then(createWindow);
 
 /* Fecha quando todas as janelas forem fechadas, exceto no macOS.
 É comum para as aplicações e suas barras de menu ficarem ativas
@@ -49,9 +62,4 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
-});
-
-mainWindow.webContents.on('new-window', function(e, url) {
-  e.preventDefault();
-  shell.openExternal(url);
 });

@@ -8,4 +8,4 @@ const DataType = {
   STATE: 'STATE'
 }
 
-export { DataType }
+module.exports = DataType;

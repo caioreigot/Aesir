@@ -1,5 +1,6 @@
 import FaArrowLeft from '@components/FaArrowLeft';
 import { Link } from 'react-router-dom';
+
 import '@styles/pages/PlayRoom.css';
 
 function PlayRoom() {

@@ -4,4 +4,4 @@ const ErrorContext = {
   SOCKET: 'SOCKET'
 }
 
-export { ErrorContext };
+module.exports = ErrorContext;

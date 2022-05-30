@@ -1,0 +1,39 @@
+@import url(@styles/commons.css);
+
+.choose-deck-room {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+}
+
+.choose-deck-room .fa-arrow-left {
+  cursor: pointer;
+
+  position: fixed;
+  top: 15px;
+  left: 20px;
+
+  color: var(--imperial-red);
+}
+
+.choose-deck-room .fa-arrow-left:hover {
+  filter: brightness(var(--hover-brightness-base));
+}
+
+/* TODO */
+
+.choose-deck-room .enter-name-container {
+  width: 500px;
+}
+
+.choose-deck-room .enter-name-container button,
+.choose-deck-room .enter-name-container input {
+  width: 100%;
+}
+
+.choose-deck-room .enter-name-container button {
+  margin-top: 10px;
+}

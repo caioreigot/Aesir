@@ -10,6 +10,7 @@ function FaGitHub(props) {
       href={props.href}
       target="_blank"
       rel="noreferrer"
+      title='Apoie o projeto no GitHub'
     >
       <FontAwesomeIcon 
         icon={faGithub}

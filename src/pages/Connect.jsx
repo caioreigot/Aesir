@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import FaArrowLeft from '@components/FaArrowLeft';
 import InterativeTooltipIcon from '@components/InterativeTooltipIcon';
 import MinimalistButton from '@components/MinimalistButton';
+import MinimalistInput from '@components/MinimalistInput';
 
 import '@styles/pages/Connect.css';
 
@@ -14,8 +15,8 @@ function Connect() {
 
       <main>
         <div className='inputs'>
-          <input type="text" placeholder="IP" />
-          <input type="text" placeholder="Porta" />
+          <MinimalistInput placeholder="IP" spellCheck="false" />
+          <MinimalistInput placeholder="Porta" spellCheck="false" />
           <MinimalistButton onClick={() => console.log('TODO')}>
             CONECTAR
           </MinimalistButton>
