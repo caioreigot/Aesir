@@ -1,3 +1,5 @@
+@import url(@styles/commons.css);
+
 .link-raised-button {
   display: flex;
   align-items: center;
@@ -11,14 +13,14 @@
 
   text-decoration: none;
   
-  transition: transform 60ms, box-shadow 60ms;
+  transition: transform 80ms, box-shadow 80ms;
 }
 
 .link-raised-button:hover {
-  filter: brightness(105%);
+  filter: brightness(var(--hover-brightness-base));
 }
 
 .link-raised-button:active {
-  transform: translateY(4px) translateX(4px);
+  transform: translate(4px, 4px);
   box-shadow: rgba(var(--imperial-red-values), 0.6) 0px 0px 0px;
 }

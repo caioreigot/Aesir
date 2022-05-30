@@ -1,4 +1,5 @@
 :root {
+  /***** Cores *****/
   --rich-black-fogra: #0b090aff;
   --eerie-black: #161a1dff;
   --blood-red: #660708ff;
@@ -20,7 +21,49 @@
   --light-gray-values: 211, 211, 211;
   --cultured-values: 245, 243, 244;
   --white-values: 255, 255, 255;
+  /***** Fim Cores *****/
+
+  /***** Fontes *****/
+  --font-family-sans-serif: 'Ubuntu', 'Roboto', sans-serif;
+  /***** Fim Fontes *****/
+
+  /***** Bases *****/
+  --hover-brightness-base: 110%;
+  /***** Fim Bases *****/
 }
+
+/***** Animações *****/
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes enter-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes emerge {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 15%));
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+/***** Fim Animações *****/
 
 /* --dark-liver: #474448ff;
 --raisin-black: #2d232eff;

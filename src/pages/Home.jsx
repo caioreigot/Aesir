@@ -1,8 +1,8 @@
 import FaGear from '@components/FaGear';
-import LinkRaisedButton from '@components/LinkRaisedButton/LinkRaisedButton';
+import LinkRaisedButton from '@components/LinkRaisedButton';
 import { Link } from 'react-router-dom';
 
-import './Home.css';
+import '@styles/pages/Home.css';
 
 function Home() {
   return (

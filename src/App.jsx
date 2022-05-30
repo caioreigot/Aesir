@@ -1,10 +1,10 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom' 
 
-import Home from '@pages/Home/Home';
-import Configurations from '@pages/Configurations/Configurations';
-import PlayRoom from '@pages/PlayRoom/PlayRoom';
-import Connect from '@pages/Connect/Connect';
+import Home from '@pages/Home';
+import Configurations from '@pages/Configurations';
+import PlayRoom from '@pages/PlayRoom';
+import Connect from '@pages/Connect';
 
 function App() {
   return (
