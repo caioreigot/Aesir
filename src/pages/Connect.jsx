@@ -15,6 +15,7 @@ function Connect() {
 
       <main>
         <div className='inputs'>
+          <MinimalistInput placeholder="Nickname" spellCheck="false" />
           <MinimalistInput placeholder="IP" spellCheck="false" />
           <MinimalistInput placeholder="Porta" spellCheck="false" />
           <MinimalistButton onClick={() => console.log('TODO')}>
@@ -24,8 +25,9 @@ function Connect() {
       </main>
 
       <InterativeTooltipIcon size="2x">
-        Você precisa fornecer o endereço e a porta em que
-        o servidor da sala está aberto. Peça estas 
+        Você precisa fornecer um nickname para se identificar
+        dentro da sala do jogo. Também é preciso do endereço e
+        porta em que o servidor da sala está aberto. Peça estas 
         informações ao criador da sala!
       </InterativeTooltipIcon>
     </div>

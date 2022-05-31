@@ -2,7 +2,7 @@ import '@styles/components/MinimalistButton.css';
 
 function MinimalistButton(props) {
   return(
-    <button 
+    <button
       className='minimalist-button'
       onClick={props.onClick}
     >

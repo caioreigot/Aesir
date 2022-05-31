@@ -1,7 +1,7 @@
+import { Link } from 'react-router-dom';
 import FaGear from '@components/FaGear';
 import InterativeGitHubIcon from '@components/InterativeGitHubIcon';
 import LinkRaisedButton from '@components/LinkRaisedButton';
-import { Link } from 'react-router-dom';
 
 import '@styles/pages/Home.css';
 
@@ -22,7 +22,8 @@ function Home() {
 
       <InterativeGitHubIcon 
         size='2x'
-        href='https://www.github.com/caioreigot/Aesir' />
+        href='https://www.github.com/caioreigot/Aesir'
+        title='Veja o projeto no GitHub' />
     </div>
   );
 }

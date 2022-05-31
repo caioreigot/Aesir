@@ -1,5 +1,6 @@
 :root {
-  /***** Cores *****/
+  /***** Paleta de Cores *****/
+  
   --rich-black-fogra: #0b090aff;
   --eerie-black: #161a1dff;
   --blood-red: #660708ff;
@@ -21,7 +22,11 @@
   --light-gray-values: 211, 211, 211;
   --cultured-values: 245, 243, 244;
   --white-values: 255, 255, 255;
-  /***** Fim Cores *****/
+
+  /***** Outras cores *****/
+  --snackbar-green: #3e8e41;
+
+  /***** Fim Paleta de Cores *****/
 
   /***** Fontes *****/
   --font-family-sans-serif: 'Ubuntu', 'Roboto', sans-serif;
@@ -29,17 +34,14 @@
 
   /***** Bases *****/
   --hover-brightness-base: 110%;
+  --snackbar-bottom-offset: 20px;
   /***** Fim Bases *****/
 }
 
 /***** Animações *****/
 @keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes enter-from-left {

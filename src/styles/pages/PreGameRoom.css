@@ -1,6 +1,6 @@
 @import url(@styles/commons.css);
 
-.choose-deck-room {
+.pre-game-room {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,7 +9,7 @@
   height: 100%;
 }
 
-.choose-deck-room .fa-arrow-left {
+.pre-game-room .fa-arrow-left {
   cursor: pointer;
 
   position: fixed;
@@ -19,21 +19,29 @@
   color: var(--imperial-red);
 }
 
-.choose-deck-room .fa-arrow-left:hover {
+.pre-game-room .scale-loader {
+  display: none;
+}
+
+.pre-game-room .fa-arrow-left:hover {
   filter: brightness(var(--hover-brightness-base));
 }
 
-/* TODO */
-
-.choose-deck-room .enter-name-container {
-  width: 500px;
+.pre-game-room .enter-nickname-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  width: clamp(420px, 40%, 500px);
+  animation: enter-from-left 400ms ease forwards;
 }
 
-.choose-deck-room .enter-name-container button,
-.choose-deck-room .enter-name-container input {
+.pre-game-room .enter-nickname-container button,
+.pre-game-room .enter-nickname-container input {
   width: 100%;
 }
 
-.choose-deck-room .enter-name-container button {
+.pre-game-room .enter-nickname-container button {
   margin-top: 10px;
 }

@@ -1,5 +1,5 @@
-import FaArrowLeft from '@components/FaArrowLeft';
 import { Link } from 'react-router-dom';
+import FaArrowLeft from '@components/FaArrowLeft';
 import '@styles/pages/Configurations.css';
 
 function Configurations() {
