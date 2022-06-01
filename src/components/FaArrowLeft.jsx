@@ -6,7 +6,7 @@ function FaArrowLeft(props) {
     <FontAwesomeIcon
       className='fa-arrow-left' 
       icon={faArrowLeft} 
-      size={props.size} />
+      size={props.size || '2x'} />
   );
 }
 

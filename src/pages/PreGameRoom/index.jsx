@@ -1,16 +1,20 @@
 import { Link } from 'react-router-dom';
 import { Component } from 'react';
-import FaArrowLeft from '@components/FaArrowLeft';
-import MinimalistButton from '@components/MinimalistButton/index';
-import MinimalistInput from '@components/MinimalistInput/index';
-import ScaleLoader from '@components/ScaleLoader/index';
-import { Snackbar, showSnackbar } from '@components/Snackbar/index';
+
+import { 
+  FaArrowLeft, 
+  MinimalistButton,
+  MinimalistInput,
+  ScaleLoader,
+  Snackbar,
+  showSnackbar
+} from '@components'
 
 import { StyledPreGameRoom } from './styles';
 
 const { ipcRenderer } = window.require('electron');
 
-function onConfirmNickname() {
+const onConfirmNickname = () => {
   const nameInput = document.querySelector('#nickname-input');
   const nameEntered = nameInput.value;
   
@@ -37,7 +41,6 @@ function onConfirmNickname() {
 }
 
 class PreGameRoom extends Component {
-  // Roda depois do primeiro render()
   componentDidMount() {
     const nicknameInput = document.querySelector('#nickname-input');
 
@@ -53,7 +56,7 @@ class PreGameRoom extends Component {
     return(
       <StyledPreGameRoom>
         <Link to='/'>
-          <FaArrowLeft size='2x' />
+          <FaArrowLeft />
         </Link>
 
         <div className='enter-nickname-container'>

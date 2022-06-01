@@ -1,13 +1,26 @@
 import { Link } from 'react-router-dom';
-import FaArrowLeft from '@components/FaArrowLeft';
+
+import { 
+  FaArrowLeft,
+  DropdownMenu
+} from '@components';
+
 import { StyledConfigurations } from './styles';
+// import i18n from 'i18next';
+
+// const changeToBr = () => {
+//   i18n.changeLanguage("pt-br");
+// }
 
 function Configurations() {
-  return (
+  return(
     <StyledConfigurations>
       <Link to="/">
-        <FaArrowLeft size="2x" />
+        <FaArrowLeft />
       </Link>
+      <div className="container">
+       <DropdownMenu />
+      </div>
     </StyledConfigurations>
   );
 }

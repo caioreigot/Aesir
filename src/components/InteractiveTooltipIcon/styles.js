@@ -6,7 +6,7 @@ export const StyledInteractiveTooltipIcon = styled.div`
     color: var(--imperial-red);
     z-index: 2;
 
-    ${props => props.fixedPosition && css`
+    ${props => props.$fixedPosition && css`
       position: fixed;
 
       top: ${props.top};

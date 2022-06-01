@@ -7,7 +7,7 @@ function PlayRoom() {
   return (
     <StyledPlayRoom>
       <Link to="/">
-        <FaArrowLeft size="2x" />
+        <FaArrowLeft />
       </Link>
     </StyledPlayRoom>
   );

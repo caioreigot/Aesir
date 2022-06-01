@@ -5,7 +5,10 @@ function MinimalistInput(props) {
   const typeAttribute = props.text || 'text';
 
   return(
-    <StyledInput type={typeAttribute} {...props} />
+    <StyledInput
+      type={typeAttribute}
+      spellCheck="false"
+      {...props} />
   );
 }
 

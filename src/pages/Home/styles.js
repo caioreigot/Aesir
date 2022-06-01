@@ -19,9 +19,10 @@ export const StyledAppName = styled.h1`
 
 export const StyledHome = styled.div`
   & {
-    height: 100%;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: 100%;
   }
 
   /***** Header *****/
@@ -38,13 +39,13 @@ export const StyledHome = styled.div`
     border-bottom: 4px solid var(--cultured);
   }
 
-  #config-btn {
+  .config-btn {
     margin-left: auto;
     cursor: pointer;
     color: var(--cultured);
   }
 
-  #config-btn:hover {
+  .config-btn:hover {
     animation: slight-rotation 500ms ease-out;
     filter: brightness(var(--hover-brightness-base));
   }
@@ -57,6 +58,13 @@ export const StyledHome = styled.div`
     justify-content: center;
 
     height: 100%;
+  }
+
+  main a {
+    width: 350px;
+    height: 100px;
+    
+    margin: 10px;
   }
 
   @keyframes slight-rotation {

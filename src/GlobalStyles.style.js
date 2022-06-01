@@ -21,7 +21,6 @@ export const GlobalStyles = createGlobalStyle`
 
   :root {
     /***** Paleta de Cores *****/
-  
     --rich-black-fogra: #0b090aff;
     --eerie-black: #161a1dff;
     --blood-red: #660708ff;
@@ -43,11 +42,9 @@ export const GlobalStyles = createGlobalStyle`
     --light-gray-values: 211, 211, 211;
     --cultured-values: 245, 243, 244;
     --white-values: 255, 255, 255;
-
-    /***** Outras cores *****/
-    --snackbar-green: #3e8e41;
-
     /***** Fim Paleta de Cores *****/
+
+    --snackbar-green: #3e8e41;
 
     /***** Fontes *****/
     --font-family-sans-serif: 'Ubuntu', 'Roboto', sans-serif;

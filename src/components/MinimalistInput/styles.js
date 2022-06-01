@@ -14,7 +14,7 @@ export const StyledInput = styled.input`
     background: rgba(0, 0, 0, 0);
     color: var(--cultured);
 
-    font-size: 1.6rem;
+    font-size: 1.6em;
     transition: all .2s ease;
   }
 

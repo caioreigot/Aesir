@@ -6,6 +6,7 @@ export const StyledConnect = styled.div`
     align-items: center;
     justify-content: center;
 
+    width: 100%;
     height: 100%;
   }
 
@@ -29,23 +30,24 @@ export const StyledConnect = styled.div`
     animation: enter-from-left 400ms ease forwards;
   }
 
-  /***** Inputs *****/
-
-  .inputs {
+  .container {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     
     height: 100%;
-  }
 
-  input {
-    width: 100%;
-  }
+    button {
+      width: 100%;
+      margin-top: 8px;
+    }
+    
+    input {
+      width: 100%;
+    }
 
-  input:not(:first-child) {
-    margin-top: 8px;
+    input:not(:first-child) {
+      margin-top: 8px;
+    }
   }
-
-  /***** Fim Inputs *****/
 `;

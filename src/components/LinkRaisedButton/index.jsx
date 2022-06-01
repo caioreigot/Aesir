@@ -2,7 +2,7 @@ import { StyledLink } from './styles';
 
 function LinkRaisedButton(props) {
   return (
-    <StyledLink to={props.to}>
+    <StyledLink {...props}>
       {props.children}
     </StyledLink>
   );

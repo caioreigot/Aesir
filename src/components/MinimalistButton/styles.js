@@ -5,11 +5,9 @@ export const StyledButton = styled.button`
     outline: none;
     cursor: pointer;
 
-    width: ${props => props.width};
-    margin: ${props => props.margin};
     padding: 22px 10px;
 
-    font-size: 1.4rem;
+    font-size: 1.4em;
     font-weight: bold;
 
     border: 0;

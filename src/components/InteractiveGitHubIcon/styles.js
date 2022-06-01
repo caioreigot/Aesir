@@ -5,7 +5,7 @@ export const StyledInteractiveGitHubIcon = styled.a`
     width: fit-content;
     cursor: pointer;
 
-    ${props => props.absolutePosition && css`
+    ${props => props.$absolutePosition && css`
       position: absolute;
 
       top: ${props.top};

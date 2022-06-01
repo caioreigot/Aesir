@@ -7,6 +7,7 @@ export const StyledPreGameRoom = styled.div`
     align-items: center;
     justify-content: center;
 
+    width: 100%;
     height: 100%;
   }
 
@@ -24,6 +25,7 @@ export const StyledPreGameRoom = styled.div`
     filter: brightness(var(--hover-brightness-base));
   }
 
+  /***** Enter Nickname Container *****/
   .enter-nickname-container {
     display: flex;
     flex-direction: column;
@@ -42,4 +44,5 @@ export const StyledPreGameRoom = styled.div`
   .enter-nickname-container button {
     margin-top: 10px;
   }
+  /***** Fim Enter Nickname Container *****/
 `;

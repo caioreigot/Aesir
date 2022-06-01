@@ -1,6 +1,6 @@
 import { StyledSnackbar } from './styles';
 
-function Snackbar(props) { 
+export function Snackbar(props) { 
   return(
     <StyledSnackbar className='snackbar'>
       {props.children}
@@ -8,7 +8,7 @@ function Snackbar(props) {
   );
 }
 
-function showSnackbar(message, type = 'error') {
+export function showSnackbar(message, type = 'error') {
   const snackbar = document.querySelector('.snackbar');
 
   snackbar.innerText = message;
@@ -24,5 +24,3 @@ function showSnackbar(message, type = 'error') {
     snackbar.classList.remove('show', 'error', 'success');
   }, 3000);
 }
-
-export { Snackbar, showSnackbar };

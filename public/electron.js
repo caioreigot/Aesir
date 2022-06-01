@@ -2,7 +2,7 @@ const path = require('path');
 
 const { BrowserWindow, app } = require('electron');
 const isDev = require('electron-is-dev');
-const addMainListeners = require('./scripts/addMainListeners');
+const addMainListeners = require('../src/node/addMainListeners');
 
 let mainWindow;
 
