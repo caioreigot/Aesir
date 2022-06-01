@@ -1,14 +1,14 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom' 
 
-import Home from '@pages/Home';
-import Configurations from '@pages/Configurations';
-import PreGameRoom from '@pages/PreGameRoom';
-import PlayRoom from '@pages/PlayRoom';
-import Connect from '@pages/Connect';
+import Home from '@pages/Home/index';
+import Configurations from '@pages/Configurations/index';
+import PreGameRoom from '@pages/PreGameRoom/index';
+import PlayRoom from '@pages/PlayRoom/index';
+import Connect from '@pages/Connect/index';
 
 function App() {
-  return (
+  return(
     <Router>
       <Switch>
         <Route exact path="/">
