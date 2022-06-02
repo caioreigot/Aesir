@@ -13,7 +13,7 @@ function FaGitHub(props) {
     >
       <FontAwesomeIcon 
         icon={faGithub}
-        size='2x' />
+        size="2x" />
     </StyledInteractiveGitHubIcon>
   );
 }

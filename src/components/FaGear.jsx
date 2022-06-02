@@ -6,7 +6,7 @@ function FaGear(props) {
     <FontAwesomeIcon 
       className="fa-gear"
       icon={faGear}
-      size={props.size || '2x'} />
+      size={props.size || "2x"} />
   );
 }
 

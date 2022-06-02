@@ -1,29 +1,46 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import i18n from 'i18next';
 
 import { 
   FaArrowLeft,
-  DropdownMenu
+  OptionDropdownMenu
 } from '@components';
 
 import { StyledConfigurations } from './styles';
-// import i18n from 'i18next';
 
-// const changeToBr = () => {
-//   i18n.changeLanguage("pt-br");
-// }
+const getCurrentLanguage = () => {
+  switch (i18n.language) {
+    case 'en-US':
+      return 'English';
+    case 'pt-br':
+      return 'Portuguese';
+    default:
+      break;
+  }
+}
+
+const changeToBr = () => {
+  i18n.changeLanguage("pt-br");
+}
 
 function Configurations() {
+  const { t } = useTranslation();
+  const currentLanguage = getCurrentLanguage();
+
   return(
     <StyledConfigurations>
       <Link to="/">
         <FaArrowLeft />
       </Link>
       <div className="container">
-       <h2>Linguagem:</h2> 
-       <DropdownMenu optionSelected='Português'>
-         <li>Português</li>
-         <li>Inglês</li>
-       </DropdownMenu>
+       <h2>{t('Language')}:</h2> 
+       <OptionDropdownMenu 
+        optionSelected={t(currentLanguage)}
+        optionsQuantity={2}>
+         {t('Portuguese')}
+         {t('English')}
+       </OptionDropdownMenu>
       </div>
     </StyledConfigurations>
   );

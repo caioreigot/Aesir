@@ -4,9 +4,9 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 function FaArrowLeft(props) {
   return (
     <FontAwesomeIcon
-      className='fa-arrow-left' 
+      className="fa-arrow-left" 
       icon={faArrowLeft} 
-      size={props.size || '2x'} />
+      size={props.size || "2x"} />
   );
 }
 

@@ -55,15 +55,15 @@ class PreGameRoom extends Component {
   render() {
     return(
       <StyledPreGameRoom>
-        <Link to='/'>
+        <Link to="/">
           <FaArrowLeft />
         </Link>
 
-        <div className='enter-nickname-container'>
+        <div className="enter-nickname-container">
           <MinimalistInput 
-            id='nickname-input'
-            placeholder='Nickname'
-            spellCheck='false' />
+            id="nickname-input"
+            placeholder="Nickname"
+            spellCheck="false" />
           
           <MinimalistButton onClick={onConfirmNickname}>
             CONFIRMAR

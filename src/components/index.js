@@ -7,7 +7,7 @@ import ScaleLoader from './ScaleLoader';
 import { Snackbar, showSnackbar } from './Snackbar';
 import FaArrowLeft from './FaArrowLeft';
 import FaGear from './FaGear';
-import DropdownMenu from './DropdownMenu';
+import OptionDropdownMenu from './OptionDropdownMenu';
 
 export {
   InteractiveGitHubIcon,
@@ -20,5 +20,5 @@ export {
   showSnackbar,
   FaArrowLeft,
   FaGear,
-  DropdownMenu
+  OptionDropdownMenu
 }

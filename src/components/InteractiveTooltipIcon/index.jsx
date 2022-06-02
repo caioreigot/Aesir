@@ -16,12 +16,12 @@ const onIconMouseLeave = () => {
 function InteractiveTooltipIcon(props) {
   return (
     <StyledInteractiveTooltipIcon {...props}>
-      <div className='tooltip-modal'>
+      <div className="tooltip-modal">
         <p>{props.children}</p>
       </div>
 
       <FontAwesomeIcon
-        className='fa-circle-question'
+        className="fa-circle-question"
         onMouseOver={onIconMouseOver}
         onMouseLeave={onIconMouseLeave}
         icon={faCircleQuestion}

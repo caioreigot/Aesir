@@ -16,25 +16,25 @@ function Home() {
     <StyledHome>
       <header>
         <StyledAppName>Aesir</StyledAppName>
-        <Link to='/configurations' className='config-btn'>
+        <Link to="/configurations" className="config-btn">
           <FaGear />
         </Link>
       </header>
 
       <main>
-        <LinkRaisedButton to='/pre-game-room' $uppercase>
+        <LinkRaisedButton to="/pre-game-room" $uppercase>
           {t('Create Room')}
         </LinkRaisedButton>
-        <LinkRaisedButton to='/connect' $uppercase>
+        <LinkRaisedButton to="/connect" $uppercase>
           {t('Connect')}
         </LinkRaisedButton>
       </main>
 
       <InteractiveGitHubIcon 
-        href='https://www.github.com/caioreigot/Aesir'
-        title='Veja o projeto no GitHub'
-        $absolutePosition bottom='20px' right='20px'
-        margin='15px' />
+        href="https://www.github.com/caioreigot/Aesir"
+        title="Veja o projeto no GitHub"
+        $absolutePosition bottom="20px" right="20px"
+        margin="15px" />
     </StyledHome>
   );
 }

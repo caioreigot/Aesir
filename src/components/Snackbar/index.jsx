@@ -2,7 +2,7 @@ import { StyledSnackbar } from './styles';
 
 export function Snackbar(props) { 
   return(
-    <StyledSnackbar className='snackbar'>
+    <StyledSnackbar className="snackbar">
       {props.children}
     </StyledSnackbar>
   );

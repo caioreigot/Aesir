@@ -40,10 +40,10 @@ class Connect extends Component {
         </Link>
 
         <main>
-          <div className='container'>
-            <MinimalistInput className='nickname-input' placeholder="Nickname" />
-            <MinimalistInput className='ip-input' placeholder="IP" />
-            <MinimalistInput className='port-input' placeholder="Porta" />
+          <div className="container">
+            <MinimalistInput className="nickname-input" placeholder="Nickname" />
+            <MinimalistInput className="ip-input" placeholder="IP" />
+            <MinimalistInput className="port-input" placeholder="Porta" />
             <MinimalistButton onClick={onConnectClick}>
               CONECTAR
             </MinimalistButton>
@@ -52,7 +52,7 @@ class Connect extends Component {
 
         <InteractiveTooltipIcon 
           size="2x"
-          $fixedPosition bottom='20px' right='20px'
+          $fixedPosition bottom="20px" right="20px"
         >
           Você precisa fornecer um nickname para se identificar
           dentro da sala do jogo. Também é preciso do endereço e

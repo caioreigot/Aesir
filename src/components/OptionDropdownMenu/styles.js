@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledDropdownMenu = styled.nav`
+export const StyledOptionDropdownMenu = styled.nav`
   & {
     width: 240px; 
     background: #d9d9d9;
@@ -10,7 +10,7 @@ export const StyledDropdownMenu = styled.nav`
     display: block;
     
     cursor: pointer;
-    padding: 30px;
+    padding: 20px;
 
     background: var(--imperial-red); 
     color: white;
@@ -42,11 +42,11 @@ export const StyledDropdownMenu = styled.nav`
     overflow: hidden;
     
     text-align: center;
-    transition: height .4s ease;
+    transition: height 250ms ease;
 
     li {
       cursor: pointer;
-      padding: 30px;
+      padding: 20px;
       
       color: var(--cultured);
 
@@ -72,6 +72,6 @@ export const StyledDropdownMenu = styled.nav`
   }
 
   #touch:checked + .slide {
-    height: calc(83px * ${props => props.listSize});
+    height: calc(63px * ${props => props.optionsQuantity});
   } 
 `;

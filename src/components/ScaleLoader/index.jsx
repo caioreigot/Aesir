@@ -14,7 +14,7 @@ function ScaleLoader(props) {
   return(
     <StyledScaleLoader 
       barHeights={barHeights} 
-      className='scale-loader'
+      className="scale-loader"
     >
       <span className="bar"></span>
       <span className="bar"></span>

@@ -1,6 +1,9 @@
 {
   "translation": {
     "Create Room": "Criar Sala",
-    "Connect": "Se Conectar"
+    "Connect": "Se Conectar",
+    "English": "Inglês",
+    "Portuguese": "Português",
+    "Language": "Linguagem"
   }
 }
