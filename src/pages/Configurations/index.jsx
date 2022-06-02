@@ -19,7 +19,11 @@ function Configurations() {
         <FaArrowLeft />
       </Link>
       <div className="container">
-       <DropdownMenu />
+       <h2>Linguagem:</h2> 
+       <DropdownMenu optionSelected='Português'>
+         <li>Português</li>
+         <li>Inglês</li>
+       </DropdownMenu>
       </div>
     </StyledConfigurations>
   );

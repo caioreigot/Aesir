@@ -1,48 +1,77 @@
 import styled from 'styled-components';
 
-export const StyledDropdownMenu = styled.div`
+export const StyledDropdownMenu = styled.nav`
   & {
-    position: relative;
+    width: 240px; 
+    background: #d9d9d9;
   }
 
-  button {
+  span {
+    display: block;
+    
     cursor: pointer;
+    padding: 30px;
 
-    padding: 16px;
-    
-    border: none;
-    background-color: #3498DB;
+    background: var(--imperial-red); 
     color: white;
+
+    border-bottom: 1px solid #FF8386;
     
-    font-size: 1em;
+    font-size: 1.2em;
+
+    &::after {
+      float: right;
+      right: 10%;
+
+      content: "+";
+    }
+
+    &:hover {
+      filter: brightness(var(--hover-brightness-base));
+    }
   }
 
-  button:hover, button:focus {
-    background-color: #2980B9;
+  .slide {
+    width: 100%;
+    height: 0;
+
+    background-color: #FF575A;
+    
+    clear: both;
+    
+    overflow: hidden;
+    
+    text-align: center;
+    transition: height .4s ease;
+
+    li {
+      cursor: pointer;
+      padding: 30px;
+      
+      color: var(--cultured);
+
+      text-decoration: none; 
+      font-size: 1.2em;
+
+      border-bottom: 1px solid #FF8386;
+
+      &:hover {
+        background-color: #FF6064;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
   }
 
-  .content {
-    display: none;
-
-    min-width: 160px;
+  #touch {
     position: absolute;
-    
-    background-color: #f1f1f1;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-
-    p {
-      color: var(--rich-black-fogra);
-      padding: 12px 16px;
-      text-decoration: none;
-    }
-
-    p:hover {
-      background-color: #ddd;
-    }
+    opacity: 0;
+    height: 0px;
   }
 
-  .content.show {
-    display: block; 
-  }
+  #touch:checked + .slide {
+    height: calc(83px * ${props => props.listSize});
+  } 
 `;

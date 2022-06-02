@@ -23,7 +23,6 @@ export const GlobalStyles = createGlobalStyle`
     /***** Paleta de Cores *****/
     --rich-black-fogra: #0b090aff;
     --eerie-black: #161a1dff;
-    --blood-red: #660708ff;
     --ruby-red: #a4161aff;
     --carnelian: #ba181bff;
     --imperial-red: #e5383bff;
@@ -34,7 +33,6 @@ export const GlobalStyles = createGlobalStyle`
 
     --rich-black-fogra-values: 11, 9, 10;
     --eerie-black-values: 22, 26, 29;
-    --blood-red-values: 102, 7, 8;
     --ruby-red-values: 164, 22, 26;
     --carnelian-values: 186, 24, 27;
     --imperial-red-values: 229, 56, 59;

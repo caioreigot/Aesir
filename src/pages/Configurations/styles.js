@@ -24,8 +24,21 @@ export const StyledConfigurations = styled.div`
   }
 
   .container {
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    height: calc(100% - 80px);
     width: 650px;
-    padding: 40px 20px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    
+    margin-top: 80px;
+    padding: 0 20px;
+  }
+
+  .container h2 {
+    margin-bottom: 15px;
   }
 `;

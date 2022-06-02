@@ -1,13 +1,16 @@
 import { StyledDropdownMenu } from './styles';
 
-function DropdownMenu() {
+function DropdownMenu(props) {
   return(
-    <StyledDropdownMenu>
-      <button>Dropdown</button>
-      <div className="content show">
-        <p>Português</p>
-        <p>Inglês</p>
-      </div>
+    <StyledDropdownMenu listSize={props.children.length}>
+      <label htmlFor='touch'>
+        <span>{props.optionSelected}</span>
+      </label>
+      <input type='checkbox' id='touch' /> 
+
+      <ul className='slide'>
+        {props.children}
+      </ul>
     </StyledDropdownMenu>
   );
 }
