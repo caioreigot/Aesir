@@ -1,11 +1,15 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const StyledButton = styled.button`
   & {
-    outline: none;
     cursor: pointer;
+    outline: none;
 
     padding: 22px 10px;
+
+    ${props => props.$allCaps && css`
+      text-transform: uppercase;
+    `}
 
     font-size: 1.4em;
     font-weight: bold;

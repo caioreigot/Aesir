@@ -1,9 +1,15 @@
 {
   "translation": {
-    "Create Room": "Create Room",
-    "Connect": "Connect",
-    "English": "English",
-    "Portuguese": "Portuguese",
-    "Language": "Language"
+    "create_room": "Create Room",
+    "connect": "Connect",
+    "confirm": "Confirm",
+    "home_connect": "Connect",
+    "english": "English",
+    "portuguese": "Portuguese",
+    "language": "Language",
+    "see_project_github": "See the project on GitHub",
+    "port": "Port",
+    "connect_tooltip_message": "You need to provide a nickname to identify yourself inside the game room. You also need the IP address and port on which the room server is open. Order these information to the room creator!",
+    "snackbar_fill_all_fields": "Fill in all fields!"
   }
 }

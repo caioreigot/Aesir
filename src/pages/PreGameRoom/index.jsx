@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Component } from 'react';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { 
   FaArrowLeft, 
@@ -40,8 +41,10 @@ const onConfirmNickname = () => {
   });
 }
 
-class PreGameRoom extends Component {
-  componentDidMount() {
+function PreGameRoom() {
+  const { t } = useTranslation();
+
+  useEffect(() => {
     const nicknameInput = document.querySelector('#nickname-input');
 
     // Caso o usuário tenha pressionado enter, chama o método de confirmação
@@ -50,31 +53,29 @@ class PreGameRoom extends Component {
         onConfirmNickname();
       }
     });
-  }
+  }, []);
 
-  render() {
-    return(
-      <StyledPreGameRoom>
-        <Link to="/">
-          <FaArrowLeft />
-        </Link>
+  return(
+    <StyledPreGameRoom>
+      <Link to="/">
+        <FaArrowLeft />
+      </Link>
 
-        <div className="enter-nickname-container">
-          <MinimalistInput 
-            id="nickname-input"
-            placeholder="Nickname"
-            spellCheck="false" />
-          
-          <MinimalistButton onClick={onConfirmNickname}>
-            CONFIRMAR
-          </MinimalistButton>
-        </div>
+      <div className="enter-nickname-container">
+        <MinimalistInput 
+          id="nickname-input"
+          placeholder="Nickname"
+          spellCheck="false" />
+        
+        <MinimalistButton $allCaps onClick={onConfirmNickname}>
+          {t('confirm')}
+        </MinimalistButton>
+      </div>
 
-        <ScaleLoader size="45"/>
-        <Snackbar />
-      </StyledPreGameRoom>
-    );
-  }
+      <ScaleLoader size="45"/>
+      <Snackbar />
+    </StyledPreGameRoom>
+  );
 }
 
 export default PreGameRoom;

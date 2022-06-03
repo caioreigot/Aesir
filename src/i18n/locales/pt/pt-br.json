@@ -1,9 +1,15 @@
 {
   "translation": {
-    "Create Room": "Criar Sala",
-    "Connect": "Se Conectar",
-    "English": "Inglês",
-    "Portuguese": "Português",
-    "Language": "Linguagem"
+    "create_room": "Criar Sala",
+    "connect": "Conectar",
+    "confirm": "Confirmar",
+    "home_connect": "Se Conectar",
+    "english": "Inglês",
+    "portuguese": "Português",
+    "language": "Linguagem",
+    "see_project_github": "Veja o projeto no GitHub",
+    "port": "Porta",
+    "connect_tooltip_message": "Você precisa fornecer um nickname para se identificar dentro da sala do jogo. Também é preciso do endereço IP e porta em que o servidor da sala está aberto. Peça estas informações ao criador da sala!",
+    "snackbar_fill_all_fields": "Preencha todos os campos!"
   }
 }

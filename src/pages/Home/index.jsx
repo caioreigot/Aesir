@@ -23,16 +23,16 @@ function Home() {
 
       <main>
         <LinkRaisedButton to="/pre-game-room" $uppercase>
-          {t('Create Room')}
+          {t('create_room')}
         </LinkRaisedButton>
         <LinkRaisedButton to="/connect" $uppercase>
-          {t('Connect')}
+          {t('home_connect')}
         </LinkRaisedButton>
       </main>
 
       <InteractiveGitHubIcon 
         href="https://www.github.com/caioreigot/Aesir"
-        title="Veja o projeto no GitHub"
+        title={t('see_project_github')}
         $absolutePosition bottom="20px" right="20px"
         margin="15px" />
     </StyledHome>
