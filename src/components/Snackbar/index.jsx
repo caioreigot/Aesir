@@ -1,8 +1,8 @@
 import { StyledSnackbar } from './styles';
 import i18n from 'i18next';
 
-import us from '@locales/en/en-us.json';
-import br from '@locales/pt/pt-br.json';
+import us from '@locales/en-us/snackbar.json';
+import br from '@locales/pt-br/snackbar.json';
 
 export function Snackbar(props) { 
   return(
@@ -19,14 +19,10 @@ export function showSnackbar(message, type = 'error') {
 
   switch (i18n.language) {
     case 'en-US':
-      textToDisplay = us
-        .translation
-        .snackbar_fill_all_fields;
+      textToDisplay = us.fill_all_fields;
       break;
     case 'pt-BR':
-      textToDisplay = br
-        .translation
-        .snackbar_fill_all_fields;
+      textToDisplay = br.fill_all_fields;
       break;
     default:
       break;
