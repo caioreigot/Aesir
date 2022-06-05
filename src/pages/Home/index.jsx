@@ -17,7 +17,7 @@ function Home() {
       <header>
         <StyledAppName>Aesir</StyledAppName>
         <Link to="/configurations" className="config-btn">
-          <FaGear />
+          <FaGear title={t('home:configurations')}/>
         </Link>
       </header>
 

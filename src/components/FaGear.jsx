@@ -2,11 +2,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 function FaGear(props) {
-  return (
+  return(
     <FontAwesomeIcon 
       className="fa-gear"
       icon={faGear}
-      size={props.size || "2x"} />
+      size={props.size || "2x"}
+      {...props} />
   );
 }
 

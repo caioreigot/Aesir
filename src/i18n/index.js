@@ -7,7 +7,8 @@ function getTranslations(language) {
     tooltip: require(`./locales/${language}/tooltip.json`),
     home: require(`./locales/${language}/home.json`),
     config: require(`./locales/${language}/config.json`),
-    playRoom: require(`./locales/${language}/playRoom.json`)
+    playRoom: require(`./locales/${language}/playRoom.json`),
+    preGameRoom: require(`./locales/${language}/preGameRoom.json`)
   }
 }
 

@@ -5,7 +5,7 @@ export const StyledButton = styled.button`
     cursor: pointer;
     outline: none;
 
-    padding: 22px 10px;
+    padding: 22px 15px;
 
     ${props => props.$allCaps && css`
       text-transform: uppercase;
