@@ -38,7 +38,6 @@ function createWindow() {
   });
 
   // Install React Dev Tools
-  /*
   const { 
     default: installExtension, 
     REACT_DEVELOPER_TOOLS 
@@ -50,7 +49,6 @@ function createWindow() {
   .catch((err) => {
       console.log('Ocorreu um erro: ', err);
   });
-  */
 
   /* Adiciona os listeners para o ipcMain
   Também configura os listeners para as conexões p2p 

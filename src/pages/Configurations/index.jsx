@@ -32,17 +32,17 @@ function Configurations() {
     <StyledConfigurations>
       <Link to="/"><FaArrowLeft /></Link>
       <div className="container">
-        <h2>{t('language')}:</h2> 
+        <h2>{t('config:language')}:</h2> 
 
         <OptionDropdownMenu 
-          optionSelected={t(currentLanguage)}
+          optionSelected={t(`config:${currentLanguage}`)}
           optionsQuantity={2}
         >
           <OptionDropdownMenuItem onClick={changeLanguageToPtBr}>
-            {t('portuguese')}
+            {t('config:portuguese')}
           </OptionDropdownMenuItem>
           <OptionDropdownMenuItem onClick={changeLanguageToEnUs}>
-            {t('english')}
+            {t('config:english')}
           </OptionDropdownMenuItem>
        </OptionDropdownMenu>
        

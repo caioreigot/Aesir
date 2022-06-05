@@ -60,7 +60,7 @@ function Connect() {
         size="2x"
         $fixedPosition bottom="20px" right="20px"
       >
-        {t('connect_tooltip_message')}
+        {t('tooltip:connect')}
       </InteractiveTooltipIcon>
 
       <Snackbar />
