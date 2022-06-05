@@ -9,12 +9,11 @@ export const GlobalStyles = createGlobalStyle`
     font-family: 'Ubuntu', 'Roboto', sans-serif;
   }
 
-  html, body {
+  html, body, #root {
     height: 100%;
   }
 
   #root {
-    height: 100%;
     background-color: var(--rich-black-fogra);
     color: #fff;
   }
@@ -42,7 +41,9 @@ export const GlobalStyles = createGlobalStyle`
     --white-values: 255, 255, 255;
     /***** Fim Paleta de Cores *****/
 
+    /***** Outras Cores *****/
     --snackbar-green: #3e8e41;
+    /***** Fim Outras Cores *****/
 
     /***** Fontes *****/
     --font-family-sans-serif: 'Ubuntu', 'Roboto', sans-serif;
