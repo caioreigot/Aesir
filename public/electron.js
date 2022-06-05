@@ -37,6 +37,21 @@ function createWindow() {
     }
   });
 
+  // Install React Dev Tools
+  /*
+  const { 
+    default: installExtension, 
+    REACT_DEVELOPER_TOOLS 
+  } = require('electron-devtools-installer');
+
+  installExtension(REACT_DEVELOPER_TOOLS).then((name) => {
+      console.log(`Extensão adicionada:  ${name}`);
+  })
+  .catch((err) => {
+      console.log('Ocorreu um erro: ', err);
+  });
+  */
+
   /* Adiciona os listeners para o ipcMain
   Também configura os listeners para as conexões p2p 
   para possibilitar o jogo online */
