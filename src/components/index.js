@@ -7,7 +7,11 @@ import ScaleLoader from './ScaleLoader';
 import { Snackbar, showSnackbar } from './Snackbar';
 import FaArrowLeft from './FaArrowLeft';
 import FaGear from './FaGear';
-import { OptionDropdownMenu, OptionDropdownMenuItem } from './OptionDropdownMenu';
+import ProgressBar from './ProgressBar';
+import { 
+  OptionDropdownMenu, 
+  OptionDropdownMenuItem 
+} from './OptionDropdownMenu';
 
 export {
   InteractiveGitHubIcon,
@@ -21,5 +25,6 @@ export {
   FaArrowLeft,
   FaGear,
   OptionDropdownMenu,
-  OptionDropdownMenuItem
+  OptionDropdownMenuItem,
+  ProgressBar
 }

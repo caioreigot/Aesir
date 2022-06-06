@@ -4,7 +4,7 @@ import i18n from 'i18next';
 import enUsSnackbarTranslation from '@locales/en-US/snackbar.json';
 import ptBrSnackbarTranslation from '@locales/pt-BR/snackbar.json';
 
-export function Snackbar(props) { 
+function Snackbar(props) { 
   return(
     <StyledSnackbar className="snackbar">
       {props.children}
@@ -12,7 +12,7 @@ export function Snackbar(props) {
   );
 }
 
-export function showSnackbar(message, type = 'error') {
+function showSnackbar(message, type = 'error') {
   const snackbar = document.querySelector('.snackbar');
 
   let textToDisplay = message;
@@ -43,3 +43,5 @@ export function showSnackbar(message, type = 'error') {
     snackbar.classList.remove('show', 'error', 'success');
   }, 3000);
 }
+
+export { Snackbar, showSnackbar }

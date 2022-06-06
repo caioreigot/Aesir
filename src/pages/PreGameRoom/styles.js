@@ -56,22 +56,64 @@ export const PreGameRoomContainer = styled.div`
   }
 `;
 
+/***** Left Side Container *****/
 export const LeftSideContainer = styled.div`
   & {
     height: 100%;
     width: 75%;
-    padding: 70px 20px 20px 20px;
+    
+    padding: 65px 20px 20px 20px;
+  }
+
+  & .progress-bar {
+    display: none;
   }
 `;
 
 export const DeckPreview = styled.div`
   & {
     display: grid;
-    grid-template-rows: 5% repeat(6, 15.83%);
-    grid-template-columns: 1fr;
+    grid-template-rows: 5% repeat(6, 15.833%);
+    grid-template-columns: 120px 1fr;
 
-    height: 85%;
+    height: 89%;
+    max-height: 700px;
+
+    border: 1px solid rgba(var(--imperial-red-values), .7);
+    border-radius: 5px;
+
     background-color: var(--eerie-black);
+
+    > h3:nth-of-type(1) {
+      height: fit-content;
+      align-self: center;
+      
+      font-size: 15px;
+
+      text-align: center;
+
+      grid-column-end: span 2;
+    }
+  }
+`;
+
+export const DeckPreviewLeftBox = styled.div`
+  & {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    
+    border: 0;
+    border-right: 1px solid rgba(var(--imperial-red-values), .7);
+  }
+
+  h3 {
+    width: 100%;
+    text-align: center;
+    font-size: 80%;
   }
 `;
 
@@ -81,6 +123,28 @@ export const DeckPreviewRow = styled.div`
     flex-direction: row;
 
     overflow-x: auto;
+
+    border: 0;
+    border-top: 1px solid rgba(var(--imperial-red-values), .7);
+    border-bottom: 1px solid rgba(var(--imperial-red-values), .7);
+    border-radius: 4px;
+
+    ::-webkit-scrollbar {
+      height: 9px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(var(--imperial-red-values), .92);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--imperial-red);
+    }
   }
 `;
 
@@ -88,12 +152,16 @@ export const LeftSideButtonsContainer = styled.div`
   & {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: center;
-    height: 10%;
-    margin-top: 15px;
+    height: 9%;
+    max-height: 80px;
+    
+    margin-top: 12px;
 
     button {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
+      height: 100%;
       width: 50%;
     }
 
@@ -108,6 +176,7 @@ export const LeftSideButtonsContainer = styled.div`
     }
   }
 `;
+/***** Fim Left Side Container *****/
 
 export const RightSideContainer = styled.div`
   & {

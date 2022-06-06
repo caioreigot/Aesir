@@ -1,23 +1,27 @@
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useState, useEffect } from 'react';
+import i18n from 'i18next';
+import showDeckPreview from './showDeckPreview';
 
 import { 
   FaArrowLeft, 
   MinimalistButton,
+  ProgressBar,
   MinimalistInput,
   ScaleLoader,
   Snackbar,
   showSnackbar
 } from '@components'
 
-import { 
+import {
   StyledPreGameRoom,
   EnterNicknameContainer,
   PreGameRoomContainer,
   LeftSideContainer,
   DeckPreview,
   DeckPreviewRow,
+  DeckPreviewLeftBox,
   LeftSideButtonsContainer,
   RightSideContainer
 } from './styles';
@@ -55,6 +59,16 @@ const onConfirmNickname = () => {
 }
 
 function PreGameRoom() {
+  const [totalCards, setTotalCards] = useState(0);
+  const [artifactAmount, setArtifactAmount] = useState(0);
+  const [creatureAmount, setCreatureAmount] = useState(0);
+  const [enchantmentAmount, setEnchantmentAmount] = useState(0);
+  const [instantAmount, setInstantAmount] = useState(0);
+  const [landAmount, setLandAmount] = useState(0);
+  const [sorceryAmount, setSorceryAmount] = useState(0);
+
+  const [progressValue, setProgressValue] = useState(0);
+
   const { t } = useTranslation();
 
   // useEffect(() => {
@@ -67,6 +81,49 @@ function PreGameRoom() {
   //     }
   //   });
   // }, []);
+
+  useEffect(() => {
+    const loadDeckButton = document.querySelector('#load-deck-button');
+    const readyButton = document.querySelector('#ready-button');
+    const progressBar = document.querySelector('.progress-bar');
+
+    loadDeckButton.onclick = () => {
+      ipcRenderer.send('load-deck', i18n.language);
+    }
+
+    ipcRenderer.on('deck-selected', event => {
+      loadDeckButton.style.display = 'none';
+      readyButton.style.display = 'none';
+      progressBar.style.display = 'flex';
+    });
+
+    // Progresso do download do deck pela API
+    ipcRenderer.on('load-cards-progress', (event, progress) => {
+      setProgressValue(progress);
+    });
+
+    ipcRenderer.on('cards-loaded', (event, deck, cardObjects) => {
+      // ! TODO: Sendo chamado multiplas vezes ao carregar denovo o deck
+
+      setTimeout(() => {
+        loadDeckButton.style.display = 'block';
+        readyButton.style.display = 'block';
+        
+        progressBar.style.display = 'none';
+        setProgressValue(0);
+  
+        showDeckPreview(deck, cardObjects, (totalCards, rowsAmount) => {
+          setTotalCards(totalCards);
+          setArtifactAmount(rowsAmount[0]);
+          setCreatureAmount(rowsAmount[1]);
+          setEnchantmentAmount(rowsAmount[2]);
+          setInstantAmount(rowsAmount[3]);
+          setLandAmount(rowsAmount[4]);
+          setSorceryAmount(rowsAmount[5]);
+        });
+      }, 800);
+    });
+  }, []);
 
   return(
     <StyledPreGameRoom>
@@ -85,37 +142,51 @@ function PreGameRoom() {
       
       <PreGameRoomContainer>
         <LeftSideContainer>
-          <DeckPreview>
-            <p>100 cartas</p>
-            <DeckPreviewRow>
-              Artefatos
-            </DeckPreviewRow>
-            <DeckPreviewRow>
-              Creature
-            </DeckPreviewRow>
-            <DeckPreviewRow>
-              Enchantment
-            </DeckPreviewRow>
-            <DeckPreviewRow>
-              Instant
-            </DeckPreviewRow>
-            <DeckPreviewRow>
-              Land
-            </DeckPreviewRow>
-            <DeckPreviewRow>
-              Sorcery
-            </DeckPreviewRow>
+          <DeckPreview className="deck-preview">
+            <h3>Total: {totalCards} cartas</h3>
+            <DeckPreviewLeftBox>
+                <h3>Artifact</h3>
+                <h3>({artifactAmount})</h3>
+            </DeckPreviewLeftBox>
+            <DeckPreviewRow className="deck-preview-row" />
+            <DeckPreviewLeftBox>
+              <h3>Creature</h3>
+              <h3>({creatureAmount})</h3>
+            </DeckPreviewLeftBox>
+            <DeckPreviewRow className="deck-preview-row" />
+            <DeckPreviewLeftBox>
+              <h3>Enchantment</h3>
+              <h3>({enchantmentAmount})</h3>
+            </DeckPreviewLeftBox>
+            <DeckPreviewRow className="deck-preview-row" />
+            <DeckPreviewLeftBox>
+              <h3>Instant</h3>
+              <h3>({instantAmount})</h3>
+            </DeckPreviewLeftBox>
+            <DeckPreviewRow className="deck-preview-row" />
+            <DeckPreviewLeftBox>
+              <h3>Land</h3>
+              <h3>({landAmount})</h3>
+            </DeckPreviewLeftBox>
+            <DeckPreviewRow className="deck-preview-row" />
+            <DeckPreviewLeftBox>
+              <h3>Sorcery</h3>
+              <h3>({sorceryAmount})</h3>
+            </DeckPreviewLeftBox>
+            <DeckPreviewRow className="deck-preview-row" />
           </DeckPreview>
 
           <LeftSideButtonsContainer>
-
-            <MinimalistButton $allCaps>
+            <MinimalistButton $allCaps id="load-deck-button">
               {t('preGameRoom:load_deck')}
             </MinimalistButton>
-            <MinimalistButton $allCaps>
+            <MinimalistButton $allCaps id="ready-button">
               {t('preGameRoom:ready')}
             </MinimalistButton>
-
+            <ProgressBar 
+              $widthPercentage={75}
+              $height={35}
+              $progress={progressValue} />
           </LeftSideButtonsContainer>
         </LeftSideContainer>
 
