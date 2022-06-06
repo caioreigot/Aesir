@@ -57,7 +57,7 @@ export const PreGameRoomContainer = styled.div`
 `;
 
 /***** Left Side Container *****/
-export const LeftSideContainer = styled.div`
+export const StyledLeftSideContainer = styled.div`
   & {
     height: 100%;
     width: 75%;
@@ -146,6 +146,15 @@ export const DeckPreviewRow = styled.div`
       background: var(--imperial-red);
     }
   }
+
+  & img {
+    border: 1px solid transparent;
+  }
+
+  & img:hover {
+    cursor: pointer;
+    border: 1px solid var(--cultured);
+  }
 `;
 
 export const LeftSideButtonsContainer = styled.div`
@@ -160,7 +169,7 @@ export const LeftSideButtonsContainer = styled.div`
     margin-top: 12px;
 
     button {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       height: 100%;
       width: 50%;
     }
@@ -178,7 +187,7 @@ export const LeftSideButtonsContainer = styled.div`
 `;
 /***** Fim Left Side Container *****/
 
-export const RightSideContainer = styled.div`
+export const StyledRightSideContainer = styled.div`
   & {
     height: 100%;
     width: 25%;

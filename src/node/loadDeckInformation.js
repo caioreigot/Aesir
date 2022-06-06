@@ -1,8 +1,8 @@
 const electron = require('electron');
 const dialog = electron.dialog;
 
-const loadDeckEnUsTranslation = require('../i18n/locales/en-US/loadDeck');
-const loadDeckPtBrTranslation = require('../i18n/locales/pt-BR/loadDeck');
+const loadDeckEnUsTranslation = require('../i18n/locales/en-US/loadDeckInformation');
+const loadDeckPtBrTranslation = require('../i18n/locales/pt-BR/loadDeckInformation');
 
 const getTranslation = (language) => {
   let translationFile;
@@ -27,7 +27,7 @@ const getTranslation = (language) => {
   }
 }
 
-function loadDeck(language) {
+function loadDeckInformation(language) {
   return new Promise((resolve, reject) => {
     const translation = getTranslation(language);
 
@@ -49,4 +49,4 @@ function loadDeck(language) {
   });
 }
 
-module.exports = loadDeck;
+module.exports = loadDeckInformation;

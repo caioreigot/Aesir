@@ -1,7 +1,7 @@
 import InteractiveGitHubIcon from './InteractiveGitHubIcon';
 import InteractiveTooltipIcon from './InteractiveTooltipIcon';
 import LinkRaisedButton from './LinkRaisedButton';
-import MinimalistButton from './MinimalistButton';
+import BrightButton from './BrightButton';
 import MinimalistInput from './MinimalistInput';
 import ScaleLoader from './ScaleLoader';
 import { Snackbar, showSnackbar } from './Snackbar';
@@ -17,7 +17,7 @@ export {
   InteractiveGitHubIcon,
   InteractiveTooltipIcon,
   LinkRaisedButton,
-  MinimalistButton,
+  BrightButton,
   MinimalistInput,
   ScaleLoader,
   Snackbar,

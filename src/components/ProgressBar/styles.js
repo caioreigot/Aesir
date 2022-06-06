@@ -41,6 +41,6 @@ export const StyledProgressValue = styled.div`
     box-shadow: 0 10px 40px -10px var(--imperial-red);
     background: var(--imperial-red);
 
-    transition: width 800ms ease;
+    transition: width 400ms ease;
   }
 `;

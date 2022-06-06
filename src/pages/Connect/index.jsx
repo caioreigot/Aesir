@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import {
   FaArrowLeft,
   InteractiveTooltipIcon,
-  MinimalistButton,
+  BrightButton,
   MinimalistInput,
   Snackbar,
   showSnackbar
@@ -50,9 +50,9 @@ function Connect() {
           <MinimalistInput className="nickname-input" placeholder="Nickname" />
           <MinimalistInput className="ip-input" placeholder="IP" />
           <MinimalistInput className="port-input" placeholder={t('port')} />
-          <MinimalistButton $allCaps onClick={onConnectClick}>
+          <BrightButton $allCaps onClick={onConnectClick}>
             {t('connect')}
-          </MinimalistButton>
+          </BrightButton>
         </div>
       </main>
 

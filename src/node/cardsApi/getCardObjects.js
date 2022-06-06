@@ -10,18 +10,18 @@ const axios = require('axios');
   retorna um array contendo todos os objetos)
 */
 
-function getCardObjects(deck, callback) {
+function getCardObjects(deckInformation, callback) {
   return new Promise((resolve, reject) => {
     const cardObjects = [];
     const apiBase = 'https://api.scryfall.com/cards/named?fuzzy=';
   
     // Se o array "cardsName" estiver vazio
-    if (!deck.length) {
+    if (!deckInformation.length) {
       console.warn('Array passado para "getCardsObject" está vazio.');
       resolve([]);
     }
 
-    const cardsName = deck.map(card => card.name);
+    const cardsName = deckInformation.map(card => card.name);
   
     for (let i = 0; i < cardsName.length; i++) {
       const formattedName = cardsName[i]

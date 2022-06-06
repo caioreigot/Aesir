@@ -1,6 +1,6 @@
 const Peer = require('./p2p/Peer');
 const addPeerListeners = require('./addPeerListeners');
-const loadDeck = require('./loadDeck');
+const loadDeckInformation = require('./loadDeckInformation');
 const extractDeckFromFile = require('./cardsApi/extractDeckFromFile');
 const getCardObjects = require('./cardsApi/getCardObjects');
 const { ipcMain } = require('electron');
@@ -8,13 +8,13 @@ const { ipcMain } = require('electron');
 let renderer;
 let currentPeer;
 
-let deckLoaded;
+let currentDeckStructure;
 
 function addMainListeners(webContents) {
   renderer = webContents;
 
-  ipcMain.on('room-created', (event, name) => {
-    // Se um servidor já estiver rodando, fecha-lo
+  ipcMain.on('room-created', (_, name) => {
+    // Se um servidor já estiver rodando, fecha ele
     if (currentPeer && currentPeer.server) {
       currentPeer.server.close();
     }
@@ -25,8 +25,8 @@ function addMainListeners(webContents) {
     addPeerListeners(currentPeer, webContents);
   });
 
-  ipcMain.on('load-deck', (event, language) => {
-    loadDeck(language)
+  ipcMain.on('load-deck', (_, language) => {
+    loadDeckInformation(language)
       .then(extractDeckFromFile)
       .then(saveDeckAndGetCardObjects)
       .then(sendCardObjectsToRenderer)
@@ -40,15 +40,12 @@ const sendErrorToRenderer = (err) =>
 const onServerCreated = () => 
   renderer.send('server-created', currentPeer.port);
 
-const onDeckFileSelected = () =>
+const saveDeckAndGetCardObjects = (deckStructure) => {
+  currentDeckStructure = deckStructure;
   renderer.send('deck-selected');
 
-const saveDeckAndGetCardObjects = (deck) => {
-  deckLoaded = deck;
-  onDeckFileSelected();
-
   return getCardObjects(
-    deck,
+    deckStructure,
     sendProgressToRenderer
   );
 }
@@ -56,7 +53,11 @@ const saveDeckAndGetCardObjects = (deck) => {
 const sendProgressToRenderer = (progress) =>
   renderer.send('load-cards-progress', progress);
 
-const sendCardObjectsToRenderer = (cardObjects) =>
-  renderer.send('cards-loaded', deckLoaded, cardObjects);
+const sendCardObjectsToRenderer = (cardObjects) => {
+  renderer.send('cards-loaded', { 
+    structure: currentDeckStructure,
+    cards: cardObjects 
+  });
+}
 
 module.exports = addMainListeners;

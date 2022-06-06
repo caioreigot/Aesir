@@ -20,7 +20,7 @@ function extractDeckFromText(pathToFile) {
       reject('O arquivo não existe ou foi movido.');
     }
   
-    const deck = [];
+    const deckStructure = [];
     const content = fs.readFileSync(pathToFile, 'utf-8');
     
     const lines = content.split('\n');
@@ -39,11 +39,11 @@ function extractDeckFromText(pathToFile) {
           return Error('Erro! As quantidades de cartas ultrapassam os 300.');
         }
     
-        deck.push({quantity, name: cardName});
+        deckStructure.push({ quantity, name: cardName });
       }
     }
   
-    resolve(deck);
+    resolve(deckStructure);
   });
 }
 

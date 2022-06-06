@@ -1,7 +1,6 @@
-function showDeckPreview(deck, cardObjects, callback) {
+function showDeckPreview(deck, callback) {
   const deckPreviewRows = document.querySelectorAll('.deck-preview-row');
 
-  let totalCards = 0;
   const rowsAmount = new Array(6).fill(0);
   const rowsType = [
     'Artifact',
@@ -21,7 +20,7 @@ function showDeckPreview(deck, cardObjects, callback) {
   
     if (cardTypeFitsLineType) {
       // Pega a quantidade de cartas iguais presente no deck
-      const cardQuantity = deck
+      const cardQuantity = deck.structure
         .filter(c => c.name === card.name)[0].quantity;
   
       // Renderiza mais de 1x a carta caso tenha várias dela no deck
@@ -31,7 +30,6 @@ function showDeckPreview(deck, cardObjects, callback) {
         row.appendChild(img);
         
         rowsAmount[rowIndex]++;
-        totalCards++;
       }
     }
   }
@@ -39,10 +37,10 @@ function showDeckPreview(deck, cardObjects, callback) {
   for (let i = 0; i < deckPreviewRows.length; i++) {
     /* Pra cada objeto de carta da API, incrementa a quantidade
     do mesmo tipo de carta e então renderiza ela na tela */
-    cardObjects.forEach(card => increaseAmountAndRender(i, card));
+    deck.cards.forEach(card => increaseAmountAndRender(i, card));
   }
 
-  callback(totalCards, rowsAmount);
+  callback(rowsAmount);
 }
 
 module.exports = showDeckPreview;
