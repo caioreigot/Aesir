@@ -20,7 +20,7 @@ const onConnectClick = () => {
 
   // Se algum campo estiver vazio
   if (!nicknameEntered.trim() || !ipEntered.trim() || !portEntered.trim()) {
-    showSnackbar('Fill in all fields!', 'error');
+    showSnackbar('fill_all_fields', 'error');
   }
 }
 

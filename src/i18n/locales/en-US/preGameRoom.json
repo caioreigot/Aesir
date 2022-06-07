@@ -1,4 +1,11 @@
 {
+  "deck_size": "Deck size: {{totalCards}} cards",
+  "artifact": "Artifact",
+  "creature": "Creature",
+  "enchantment": "Enchantment",
+  "instant": "Instant",
+  "land": "Land",
+  "sorcery": "Sorcery",
   "load_deck": "Load Deck",
   "ready": "Ready"
 }

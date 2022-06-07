@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 import showDeckPreview from './showDeckPreview';
 import DeckStorage from '@DeckStorage';
+import Utils from './Utils';
 import i18n from 'i18next';
 
 import { 
@@ -31,48 +32,6 @@ import {
 
 const { ipcRenderer } = window.require('electron');
 
-const validateNicknameAndCreateServer = () => {
-  const nameInput = document.querySelector('#nickname-input');
-  const nameEntered = nameInput.value;
-
-  const scaleLoader = document.querySelector('.scale-loader');
-  
-  if (nameEntered.trim() === '') {
-    showSnackbar('Nickname fornecido não é valido!', 'error');
-    return;
-  }
-
-  // Esconde o container do input
-  document.querySelector('.enter-nickname-container')
-    .style.display = 'none';
-
-  // Se o servidor demorar mais de 500ms para abrir, exibe o loader
-  const showLoaderTimeout = setTimeout(() => {
-    scaleLoader.style.display = 'flex';
-  }, 500);
-
-  // Avisa ao Main Process que o usuário criou uma sala
-  ipcRenderer.send('room-created', nameEntered);
-
-  // Resposta do Main Process pra quando o servidor foi criado
-  ipcRenderer.on('server-created', (event, port) => {
-    clearTimeout(showLoaderTimeout);
-    scaleLoader.style.display = 'none';
-  });
-}
-
-const hideButtonsAndShowLoader = () => {
-  document.querySelector('#load-deck-button').style.display = 'none';
-  document.querySelector('#ready-button').style.display = 'none';
-  document.querySelector('.progress-bar').style.display = 'flex';
-}
-
-const showButtonsAndHideLoader = () => {
-  document.querySelector('#load-deck-button').style.display = 'block';
-  document.querySelector('#ready-button').style.display = 'block';
-  document.querySelector('.progress-bar').style.display = 'none';
-}
-
 function LeftSideContainer() {
   const { t } = useTranslation();
 
@@ -94,28 +53,11 @@ function LeftSideContainer() {
       ipcRenderer.send('load-deck', i18n.language);
     }
 
-    const clearDeckPreview = () => {
-      const rows = [...document.querySelectorAll('.deck-preview-row')];
-      rows.forEach(row => {
-        while (row.firstChild) {
-          row.firstChild.remove();
-        }
-      })
-
-      setCardsQuantity({
-        Artifact: 0,
-        Creature: 0,
-        Enchantment: 0,
-        Instant: 0,
-        Land: 0,
-        Sorcery: 0
-      });
-    }
-
     // Quando o usuário selecionar o arquivo do deck
     ipcRenderer.on('deck-selected', _ => {
-      clearDeckPreview();
-      hideButtonsAndShowLoader();
+      Utils.clearDeckPreviewRows();
+      Utils.resetCardsQuantity(setCardsQuantity);
+      Utils.hideButtonsAndShowLoader();
     });
 
     // Progresso do "download" do deck pela API
@@ -125,22 +67,12 @@ function LeftSideContainer() {
 
     // Quando os objetos das cartas forem pegos da API
     ipcRenderer.on('cards-loaded', (_, deck) => {
-      showButtonsAndHideLoader();
+      DeckStorage.set(deck);
+
+      Utils.showButtonsAndHideLoader();
       setProgressValue(0);
 
-      DeckStorage.set(deck);
-      setTotalCards(DeckStorage.getTotalCards());
-
-      showDeckPreview(deck, rowsAmount => {
-        setCardsQuantity({
-          Artifact: rowsAmount[0],
-          Creature: rowsAmount[1],
-          Enchantment: rowsAmount[2],
-          Instant: rowsAmount[3],
-          Land: rowsAmount[4],
-          Sorcery: rowsAmount[5]
-        });
-      });
+      showDeckPreview(deck, setTotalCards, setCardsQuantity);
     });
 
     // Antes deste componente ser destruido, esta função limpa os listeners
@@ -154,34 +86,34 @@ function LeftSideContainer() {
   return(
     <StyledLeftSideContainer>
       <StyledDeckPreview className="deck-preview">
-        <h3>Deck size: {totalCards} cards</h3>
+        <h3>{t('preGameRoom:deck_size', { totalCards })}</h3>
         <StyledPreviewLeftBox>
-            <h3>Artifact</h3>
+            <h3>{t('preGameRoom:artifact')}</h3>
             <h3>({cardsQuantity.Artifact})</h3>
         </StyledPreviewLeftBox>
         <StyledPreviewRow className="deck-preview-row" />
         <StyledPreviewLeftBox>
-          <h3>Creature</h3>
+          <h3>{t('preGameRoom:creature')}</h3>
           <h3>({cardsQuantity.Creature})</h3>
         </StyledPreviewLeftBox>
         <StyledPreviewRow className="deck-preview-row" />
         <StyledPreviewLeftBox>
-          <h3>Enchantment</h3>
+          <h3>{t('preGameRoom:enchantment')}</h3>
           <h3>({cardsQuantity.Enchantment})</h3>
         </StyledPreviewLeftBox>
         <StyledPreviewRow className="deck-preview-row" />
         <StyledPreviewLeftBox>
-          <h3>Instant</h3>
+          <h3>{t('preGameRoom:instant')}</h3>
           <h3>({cardsQuantity.Instant})</h3>
         </StyledPreviewLeftBox>
         <StyledPreviewRow className="deck-preview-row" />
         <StyledPreviewLeftBox>
-          <h3>Land</h3>
+          <h3>{t('preGameRoom:land')}</h3>
           <h3>({cardsQuantity.Land})</h3>
         </StyledPreviewLeftBox>
         <StyledPreviewRow className="deck-preview-row" />
         <StyledPreviewLeftBox>
-          <h3>Sorcery</h3>
+          <h3>{t('preGameRoom:sorcery')}</h3>
           <h3>({cardsQuantity.Sorcery})</h3>
         </StyledPreviewLeftBox>
         <StyledPreviewRow className="deck-preview-row" />
@@ -219,13 +151,19 @@ function RightSideContainer() {
 function PreGameRoom() {
   const { t } = useTranslation();
 
+  const handleConfirmNickname = () => {
+    Utils.validateNicknameAndCreateServer(ipcRenderer, errorMessage => {
+      showSnackbar(errorMessage, 'error');
+    });
+  }
+
   useEffect(() => {
     const nicknameInput = document.querySelector('#nickname-input');
 
     // Caso o usuário tenha pressionado enter, chama o método de confirmação
     nicknameInput.addEventListener("keyup", event => {
       if (event.keyCode === 13) {
-        validateNicknameAndCreateServer();
+        handleConfirmNickname();
       }
     });
 
@@ -244,7 +182,9 @@ function PreGameRoom() {
 
       <StyledEnterNicknameContainer style={{display: 'none'}}>
         <MinimalistInput id="nickname-input" placeholder="Nickname" />
-        <BrightButton $allCaps onClick={validateNicknameAndCreateServer}>
+        <BrightButton 
+          $allCaps onClick={handleConfirmNickname}
+        >
           {t('confirm')}
         </BrightButton>
       </StyledEnterNicknameContainer>

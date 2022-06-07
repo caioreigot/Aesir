@@ -1,23 +1,11 @@
 const electron = require('electron');
 const dialog = electron.dialog;
 
-const loadDeckEnUsTranslation = require('../i18n/locales/en-US/loadDeckInformation');
-const loadDeckPtBrTranslation = require('../i18n/locales/pt-BR/loadDeckInformation');
-
 const getTranslation = (language) => {
-  let translationFile;
-
-  switch(language) {
-    case 'en-US':
-      translationFile = loadDeckEnUsTranslation;
-      break;
-    case 'pt-BR':
-      translationFile = loadDeckPtBrTranslation;
-      break;
-    default:
-      console.error('Language not supported.');
-      return;
-  }
+  // Se a linguagem não for conhecida, retorna o idioma padrão
+  const translationFile = ['en-US', 'pt-BR'].indexOf(language) < 0
+    ? require('../i18n/locales/en-US/loadDeckInformation')
+    : require(`../i18n/locales/${language}/loadDeckInformation`);
 
   return {
     title: translationFile.title,
@@ -31,15 +19,17 @@ function loadDeckInformation(language) {
   return new Promise((resolve, reject) => {
     const translation = getTranslation(language);
 
-    dialog.showOpenDialog({
-        title: translation.title,
-        buttonLabel: translation.buttonLabel,
-        filters: [
-          { name: translation.textFiles, extensions: ['txt'] },
-          { name: translation.allFiles, extensions: ['*'] }
-        ],
-        properties: ['openFile']
-    })
+    const openDialogOptions = {
+      title: translation.title,
+      buttonLabel: translation.buttonLabel,
+      filters: [
+        { name: translation.textFiles, extensions: ['txt'] },
+        { name: translation.allFiles, extensions: ['*'] }
+      ],
+      properties: ['openFile']
+    }
+
+    dialog.showOpenDialog(openDialogOptions)
       .then(file => {
         if (!file.canceled) {
           const filepath = file.filePaths[0].toString();

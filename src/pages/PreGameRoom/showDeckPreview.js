@@ -1,4 +1,10 @@
-function showDeckPreview(deck, callback) {
+import DeckStorage from '@DeckStorage';
+
+function showDeckPreview(
+  deck,
+  totalCardsSetter,
+  cardsQuantitySetter
+) {
   const deckPreviewRows = document.querySelectorAll('.deck-preview-row');
   const singleImagePreview = document.querySelector('.single-image-preview');
 
@@ -15,12 +21,13 @@ function showDeckPreview(deck, callback) {
   const increaseAmountAndRender = (rowIndex, card) => {
     const row = deckPreviewRows[rowIndex];
 
-    const cardTypeFitsLineType = card.type_line
+    // Se o tipo da carta corresponder ao tipo da linha
+    const cardBelongsToThisRow = card.type_line
       .toLowerCase()
       .indexOf(rowsType[rowIndex].toLowerCase()) >= 0;
   
-    if (cardTypeFitsLineType) {
-      // Pega a quantidade de cartas iguais presente no deck
+    if (cardBelongsToThisRow) {
+      // Pega a quantidade presente desta carta no deck
       const cardQuantity = deck.structure
         .filter(c => c.name === card.name)[0].quantity;
   
@@ -32,12 +39,11 @@ function showDeckPreview(deck, callback) {
         /* Adiciona um event listener para
         quando o mouse passar sobre a img */
         img.addEventListener('mouseover', () => {
-          // Exibe a imagem da carta no preview
+          // Exibe a imagem da carta no single image preview
           singleImagePreview.src = card.image_uris.border_crop;
         });
 
         row.appendChild(img);
-        
         rowsAmount[rowIndex]++;
       }
     }
@@ -49,7 +55,16 @@ function showDeckPreview(deck, callback) {
     deck.cards.forEach(card => increaseAmountAndRender(i, card));
   }
 
-  callback(rowsAmount);
+  totalCardsSetter(DeckStorage.getTotalCards());
+
+  cardsQuantitySetter({
+    Artifact: rowsAmount[0],
+    Creature: rowsAmount[1],
+    Enchantment: rowsAmount[2],
+    Instant: rowsAmount[3],
+    Land: rowsAmount[4],
+    Sorcery: rowsAmount[5]
+  });
 }
 
-module.exports = showDeckPreview;
+export default showDeckPreview;

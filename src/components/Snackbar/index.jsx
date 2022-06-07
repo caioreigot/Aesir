@@ -12,32 +12,25 @@ function Snackbar(props) {
   );
 }
 
-function showSnackbar(message, type = 'error') {
+function showSnackbar(messageType, type = 'error') {
   const snackbar = document.querySelector('.snackbar');
 
-  let textToDisplay = message;
+  let textToDisplay;
 
   switch (i18n.language) {
     case 'en-US':
-      textToDisplay = enUsSnackbarTranslation
-        .fill_all_fields;
+      textToDisplay = enUsSnackbarTranslation[messageType];
       break;
     case 'pt-BR':
-      textToDisplay = ptBrSnackbarTranslation
-        .fill_all_fields;
+      textToDisplay = ptBrSnackbarTranslation[messageType];
       break;
     default:
+      textToDisplay = 'Message not found.';
       break;
   }
 
   snackbar.innerText = textToDisplay;
-  snackbar.classList.add('show');
-
-  if (type === 'error') {
-    snackbar.classList.add('error');
-  } else if (type === 'success') {
-    snackbar.classList.add('success');
-  }
+  snackbar.classList.add('show', type);
 
   setTimeout(() => { 
     snackbar.classList.remove('show', 'error', 'success');

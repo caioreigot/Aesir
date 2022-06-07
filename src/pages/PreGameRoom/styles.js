@@ -205,8 +205,10 @@ export const StyledRightSideContainer = styled.div`
     flex-direction: column;
     flex-wrap: wrap;
 
+    margin: 0 5px;
+
     height: 60%;
-    max-height: 60%;
+    max-height: 70%;
     min-height: 30%;
 
     resize: vertical;

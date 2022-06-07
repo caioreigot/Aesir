@@ -1,4 +1,11 @@
 {
+  "deck_size": "Tamanho do deck: {{totalCards}} cartas",
+  "artifact": "Artefato",
+  "creature": "Criatura",
+  "enchantment": "Encantamento",
+  "instant": "Instantânea",
+  "land": "Terreno",
+  "sorcery": "Feitiço",
   "load_deck": "Carregar Deck",
   "ready": "Preparado"
 }
