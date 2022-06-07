@@ -10,6 +10,9 @@ export const StyledAppName = styled.h1`
     font-weight: 400;
     font-size: 2.5rem;
     letter-spacing: 2px;
+
+    padding: 0 20px;
+    text-shadow: 0 0 0.1em var(--imperial-red);
   }
 
   &:hover {

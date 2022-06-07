@@ -50,8 +50,11 @@ const saveDeckAndGetCardObjects = (deckStructure) => {
   );
 }
 
-const sendProgressToRenderer = (progress) =>
-  renderer.send('load-cards-progress', progress);
+const sendProgressToRenderer = (progress) => {
+  if (progress % 10 === 0) {
+    renderer.send('load-cards-progress', progress);
+  }
+}
 
 const sendCardObjectsToRenderer = (cardObjects) => {
   renderer.send('cards-loaded', { 

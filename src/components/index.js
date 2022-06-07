@@ -1,13 +1,13 @@
 import InteractiveGitHubIcon from './InteractiveGitHubIcon';
 import InteractiveTooltipIcon from './InteractiveTooltipIcon';
+import { Snackbar, showSnackbar } from './Snackbar';
 import LinkRaisedButton from './LinkRaisedButton';
 import BrightButton from './BrightButton';
 import MinimalistInput from './MinimalistInput';
 import ScaleLoader from './ScaleLoader';
-import { Snackbar, showSnackbar } from './Snackbar';
 import FaArrowLeft from './FaArrowLeft';
-import FaGear from './FaGear';
 import ProgressBar from './ProgressBar';
+import FaGear from './FaGear';
 import { 
   OptionDropdownMenu, 
   OptionDropdownMenuItem 

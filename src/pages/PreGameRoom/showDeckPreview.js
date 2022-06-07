@@ -1,5 +1,6 @@
 function showDeckPreview(deck, callback) {
   const deckPreviewRows = document.querySelectorAll('.deck-preview-row');
+  const singleImagePreview = document.querySelector('.single-image-preview');
 
   const rowsAmount = new Array(6).fill(0);
   const rowsType = [
@@ -27,6 +28,14 @@ function showDeckPreview(deck, callback) {
       for (let i = 0; i < cardQuantity; i++) {
         const img = document.createElement('img');
         img.src = card.image_uris.small;
+        
+        /* Adiciona um event listener para
+        quando o mouse passar sobre a img */
+        img.addEventListener('mouseover', () => {
+          // Exibe a imagem da carta no preview
+          singleImagePreview.src = card.image_uris.border_crop;
+        });
+
         row.appendChild(img);
         
         rowsAmount[rowIndex]++;

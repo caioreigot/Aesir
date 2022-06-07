@@ -26,7 +26,7 @@ export const StyledPreGameRoom = styled.div`
   }
 `;
 
-export const EnterNicknameContainer = styled.div`
+export const StyledEnterNicknameContainer = styled.div`
   & {
     display: flex;
     flex-direction: column;
@@ -47,7 +47,7 @@ export const EnterNicknameContainer = styled.div`
   }
 `;
 
-export const PreGameRoomContainer = styled.div`
+export const StyledPreGameRoomContainer = styled.div`
   & {
     display: flex;
     flex-direction: row;
@@ -70,7 +70,7 @@ export const StyledLeftSideContainer = styled.div`
   }
 `;
 
-export const DeckPreview = styled.div`
+export const StyledDeckPreview = styled.div`
   & {
     display: grid;
     grid-template-rows: 5% repeat(6, 15.833%);
@@ -97,7 +97,7 @@ export const DeckPreview = styled.div`
   }
 `;
 
-export const DeckPreviewLeftBox = styled.div`
+export const StyledPreviewLeftBox = styled.div`
   & {
     display: flex;
     flex-direction: column;
@@ -117,7 +117,7 @@ export const DeckPreviewLeftBox = styled.div`
   }
 `;
 
-export const DeckPreviewRow = styled.div`
+export const StyledPreviewRow = styled.div`
   & {
     display: flex;
     flex-direction: row;
@@ -149,6 +149,7 @@ export const DeckPreviewRow = styled.div`
 
   & img {
     border: 1px solid transparent;
+    border-radius: 8%;
   }
 
   & img:hover {
@@ -157,7 +158,7 @@ export const DeckPreviewRow = styled.div`
   }
 `;
 
-export const LeftSideButtonsContainer = styled.div`
+export const StyledLeftSideButtonsContainer = styled.div`
   & {
     display: flex;
     flex-direction: row;
@@ -187,11 +188,43 @@ export const LeftSideButtonsContainer = styled.div`
 `;
 /***** Fim Left Side Container *****/
 
+/***** Right Side Container *****/
 export const StyledRightSideContainer = styled.div`
   & {
+    display: flex;
+    flex-direction: column;
+
     height: 100%;
     width: 25%;
 
     background-color: var(--eerie-black);
   }
+
+  & div:first-child {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    height: 60%;
+    max-height: 60%;
+    min-height: 30%;
+
+    resize: vertical;
+    overflow: hidden;
+  }
+
+  & .single-image-preview {
+    height: 100%;
+    width: 100%;
+
+    object-fit: contain;
+    user-select: none;
+  }
+
+  & .chat {
+    flex-grow: 1;
+
+    padding: 15px;
+  }
 `;
+/***** Fim Right Side Container *****/

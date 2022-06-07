@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
@@ -8,7 +10,6 @@ import i18n from 'i18next';
 import { 
   FaArrowLeft, 
   BrightButton,
-  SpreadButton,
   ProgressBar,
   MinimalistInput,
   ScaleLoader,
@@ -18,14 +19,14 @@ import {
 
 import {
   StyledPreGameRoom,
-  EnterNicknameContainer,
-  PreGameRoomContainer,
+  StyledEnterNicknameContainer,
+  StyledPreGameRoomContainer,
   StyledLeftSideContainer,
   StyledRightSideContainer,
-  DeckPreview,
-  DeckPreviewRow,
-  DeckPreviewLeftBox,
-  LeftSideButtonsContainer,
+  StyledDeckPreview,
+  StyledPreviewRow,
+  StyledPreviewLeftBox,
+  StyledLeftSideButtonsContainer,
 } from './styles';
 
 const { ipcRenderer } = window.require('electron');
@@ -152,41 +153,41 @@ function LeftSideContainer() {
 
   return(
     <StyledLeftSideContainer>
-      <DeckPreview className="deck-preview">
+      <StyledDeckPreview className="deck-preview">
         <h3>Deck size: {totalCards} cards</h3>
-        <DeckPreviewLeftBox>
+        <StyledPreviewLeftBox>
             <h3>Artifact</h3>
             <h3>({cardsQuantity.Artifact})</h3>
-        </DeckPreviewLeftBox>
-        <DeckPreviewRow className="deck-preview-row" />
-        <DeckPreviewLeftBox>
+        </StyledPreviewLeftBox>
+        <StyledPreviewRow className="deck-preview-row" />
+        <StyledPreviewLeftBox>
           <h3>Creature</h3>
           <h3>({cardsQuantity.Creature})</h3>
-        </DeckPreviewLeftBox>
-        <DeckPreviewRow className="deck-preview-row" />
-        <DeckPreviewLeftBox>
+        </StyledPreviewLeftBox>
+        <StyledPreviewRow className="deck-preview-row" />
+        <StyledPreviewLeftBox>
           <h3>Enchantment</h3>
           <h3>({cardsQuantity.Enchantment})</h3>
-        </DeckPreviewLeftBox>
-        <DeckPreviewRow className="deck-preview-row" />
-        <DeckPreviewLeftBox>
+        </StyledPreviewLeftBox>
+        <StyledPreviewRow className="deck-preview-row" />
+        <StyledPreviewLeftBox>
           <h3>Instant</h3>
           <h3>({cardsQuantity.Instant})</h3>
-        </DeckPreviewLeftBox>
-        <DeckPreviewRow className="deck-preview-row" />
-        <DeckPreviewLeftBox>
+        </StyledPreviewLeftBox>
+        <StyledPreviewRow className="deck-preview-row" />
+        <StyledPreviewLeftBox>
           <h3>Land</h3>
           <h3>({cardsQuantity.Land})</h3>
-        </DeckPreviewLeftBox>
-        <DeckPreviewRow className="deck-preview-row" />
-        <DeckPreviewLeftBox>
+        </StyledPreviewLeftBox>
+        <StyledPreviewRow className="deck-preview-row" />
+        <StyledPreviewLeftBox>
           <h3>Sorcery</h3>
           <h3>({cardsQuantity.Sorcery})</h3>
-        </DeckPreviewLeftBox>
-        <DeckPreviewRow className="deck-preview-row" />
-      </DeckPreview>
+        </StyledPreviewLeftBox>
+        <StyledPreviewRow className="deck-preview-row" />
+      </StyledDeckPreview>
 
-      <LeftSideButtonsContainer>
+      <StyledLeftSideButtonsContainer>
         <BrightButton $allCaps id="load-deck-button">
           {t('preGameRoom:load_deck')}
         </BrightButton>
@@ -197,14 +198,21 @@ function LeftSideContainer() {
           $widthPercentage={90}
           $height={35}
           $progress={progressValue} />
-      </LeftSideButtonsContainer>
+      </StyledLeftSideButtonsContainer>
     </StyledLeftSideContainer>
   );
 }
 
 function RightSideContainer() {
   return(
-    <StyledRightSideContainer />
+    <StyledRightSideContainer>
+      <div>
+        <img className="single-image-preview" />
+      </div>
+      <div className="chat">
+        Chat
+      </div>
+    </StyledRightSideContainer>
   );
 }
 
@@ -234,19 +242,19 @@ function PreGameRoom() {
         <FaArrowLeft />
       </Link>
 
-      <EnterNicknameContainer style={{display: 'none'}}>
+      <StyledEnterNicknameContainer style={{display: 'none'}}>
         <MinimalistInput id="nickname-input" placeholder="Nickname" />
         <BrightButton $allCaps onClick={validateNicknameAndCreateServer}>
           {t('confirm')}
         </BrightButton>
-      </EnterNicknameContainer>
+      </StyledEnterNicknameContainer>
 
       <ScaleLoader size="45"/>
       
-      <PreGameRoomContainer>
+      <StyledPreGameRoomContainer>
         <LeftSideContainer />
         <RightSideContainer />
-      </PreGameRoomContainer>
+      </StyledPreGameRoomContainer>
 
       <Snackbar />
     </StyledPreGameRoom>
