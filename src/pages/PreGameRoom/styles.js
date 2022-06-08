@@ -57,7 +57,7 @@ export const StyledPreGameRoomContainer = styled.div`
 `;
 
 /***** Left Side Container *****/
-export const StyledLeftSideContainer = styled.div`
+export const StyledBiggerSideInterface = styled.div`
   & {
     height: 100%;
     width: 75%;
@@ -183,72 +183,3 @@ export const StyledLeftSideButtonsContainer = styled.div`
   }
 `;
 /***** Fim Left Side Container *****/
-
-/***** Right Side Container *****/
-export const StyledRightSideContainer = styled.div`
-  & {
-    display: flex;
-    flex-direction: column;
-
-    height: 100%;
-    width: 25%;
-
-    background-color: var(--eerie-black);
-  }
-
-  & .single-image-preview-container {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    border: 2px dashed rgba(var(--imperial-red-values), 0.7);
-
-    width: 100%;
-    height: 60%;
-    max-height: 70%;
-    min-height: 30%;
-
-    resize: vertical;
-    overflow: hidden;
-
-    p {
-      color: var(--cultured);
-      align-self: center;
-      user-select: none;
-    }
-  }
-
-  & .chat {
-    display: flex;
-    flex-direction: column;
-
-    flex-grow: 1;
-    padding: 5px;
-
-    .chat-content {
-      flex-grow: 1;
-      height: 85%;
-      width: 100%;
-      padding: 10px;
-      
-      border: 1px solid blue;
-    }
-
-    > input {
-      height: 15%;
-      max-height: 50px;
-    }
-  }
-
-  & .single-image-preview {
-    height: 100%;
-    width: 100%;
-
-    object-fit: contain;
-    
-    -webkit-user-drag: none;
-    user-select: none;
-  }
-`;
-/***** Fim Right Side Container *****/

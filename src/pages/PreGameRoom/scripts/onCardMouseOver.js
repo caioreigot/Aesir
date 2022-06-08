@@ -3,9 +3,9 @@ function onCardMouseOver(cardObject) {
 
   // Se não houver ainda nenhuma imagem sendo exibida
   if (!singleImagePreview.src) {
-    const imagePreviewText = document.querySelector('.single-image-preview-container p');
+    const cardPreviewText = document.querySelector('.card-preview-text');
     
-    imagePreviewText.classList.add('hidden');
+    cardPreviewText.classList.add('hidden');
     singleImagePreview.classList.remove('hidden');
   }
 

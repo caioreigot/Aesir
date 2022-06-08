@@ -15,15 +15,15 @@ import {
   MinimalistInput,
   ScaleLoader,
   Snackbar,
-  showSnackbar
+  showSnackbar,
+  MinorSideInterface
 } from '@components'
 
 import {
   StyledPreGameRoom,
   StyledEnterNicknameContainer,
   StyledPreGameRoomContainer,
-  StyledLeftSideContainer,
-  StyledRightSideContainer,
+  StyledBiggerSideInterface,
   StyledDeckPreview,
   StyledPreviewRow,
   StyledPreviewLeftBox,
@@ -32,7 +32,7 @@ import {
 
 const { ipcRenderer } = window.require('electron');
 
-function LeftSideContainer() {
+function BiggerSideInterface() {
   const { t } = useTranslation();
 
   const [progressValue, setProgressValue] = useState(0);
@@ -84,7 +84,7 @@ function LeftSideContainer() {
   }, []);
 
   return(
-    <StyledLeftSideContainer>
+    <StyledBiggerSideInterface>
       <StyledDeckPreview className="deck-preview">
         <h3>{t('preGameRoom:deck_size', { totalCards })}</h3>
         <StyledPreviewLeftBox>
@@ -131,22 +131,7 @@ function LeftSideContainer() {
           $height={35}
           $progress={progressValue} />
       </StyledLeftSideButtonsContainer>
-    </StyledLeftSideContainer>
-  );
-}
-
-function RightSideContainer() {
-  return(
-    <StyledRightSideContainer>
-      <div className="single-image-preview-container">
-        <p>Card Preview</p>
-        <img className="single-image-preview hidden" />
-      </div>
-      <div className="chat">
-        <div className="chat-content"></div>
-        <input type="text" />
-      </div>
-    </StyledRightSideContainer>
+    </StyledBiggerSideInterface>
   );
 }
 
@@ -194,8 +179,8 @@ function PreGameRoom() {
       <ScaleLoader size="45"/>
       
       <StyledPreGameRoomContainer>
-        <LeftSideContainer />
-        <RightSideContainer />
+        <BiggerSideInterface />
+        <MinorSideInterface />
       </StyledPreGameRoomContainer>
 
       <Snackbar />
