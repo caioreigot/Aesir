@@ -18,6 +18,10 @@ export const GlobalStyles = createGlobalStyle`
     color: #fff;
   }
 
+  .hidden {
+    display: none !important;
+  }
+
   :root {
     /***** Paleta de Cores *****/
     --rich-black-fogra: #0b090aff;

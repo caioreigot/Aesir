@@ -3,9 +3,9 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
-import showDeckPreview from './showDeckPreview';
+import showDeckPreview from './scripts/showDeckPreview';
 import DeckStorage from '@DeckStorage';
-import Utils from './Utils';
+import Utils from './scripts/Utils';
 import i18n from 'i18next';
 
 import { 
@@ -42,14 +42,14 @@ function LeftSideContainer() {
     Creature: 0,
     Enchantment: 0,
     Instant: 0,
-    Land: 0,
-    Sorcery: 0
+    Sorcery: 0,
+    Land: 0
   });
 
   useEffect(() => {
-    const loadDeckButton = document.querySelector('#load-deck-button');
-
-    loadDeckButton.onclick = () => {
+    /* Ao clicar no botão de carregar deck, pede para o processo
+    main abrir a tela para o usuário escolher um arquivo */
+    document.querySelector('#load-deck-button').onclick = () => {
       ipcRenderer.send('load-deck', i18n.language);
     }
 
@@ -108,13 +108,13 @@ function LeftSideContainer() {
         </StyledPreviewLeftBox>
         <StyledPreviewRow className="deck-preview-row" />
         <StyledPreviewLeftBox>
-          <h3>{t('preGameRoom:land')}</h3>
-          <h3>({cardsQuantity.Land})</h3>
+          <h3>{t('preGameRoom:sorcery')}</h3>
+          <h3>({cardsQuantity.Sorcery})</h3>
         </StyledPreviewLeftBox>
         <StyledPreviewRow className="deck-preview-row" />
         <StyledPreviewLeftBox>
-          <h3>{t('preGameRoom:sorcery')}</h3>
-          <h3>({cardsQuantity.Sorcery})</h3>
+          <h3>{t('preGameRoom:land')}</h3>
+          <h3>({cardsQuantity.Land})</h3>
         </StyledPreviewLeftBox>
         <StyledPreviewRow className="deck-preview-row" />
       </StyledDeckPreview>
@@ -126,7 +126,7 @@ function LeftSideContainer() {
         <BrightButton $allCaps id="ready-button">
           {t('preGameRoom:ready')}
         </BrightButton>
-        <ProgressBar 
+        <ProgressBar
           $widthPercentage={90}
           $height={35}
           $progress={progressValue} />
@@ -138,11 +138,13 @@ function LeftSideContainer() {
 function RightSideContainer() {
   return(
     <StyledRightSideContainer>
-      <div>
-        <img className="single-image-preview" />
+      <div className="single-image-preview-container">
+        <p>Card Preview</p>
+        <img className="single-image-preview hidden" />
       </div>
       <div className="chat">
-        Chat
+        <div className="chat-content"></div>
+        <input type="text" />
       </div>
     </StyledRightSideContainer>
   );
@@ -182,8 +184,8 @@ function PreGameRoom() {
 
       <StyledEnterNicknameContainer style={{display: 'none'}}>
         <MinimalistInput id="nickname-input" placeholder="Nickname" />
-        <BrightButton 
-          $allCaps onClick={handleConfirmNickname}
+        <BrightButton $allCaps 
+          onClick={handleConfirmNickname}
         >
           {t('confirm')}
         </BrightButton>

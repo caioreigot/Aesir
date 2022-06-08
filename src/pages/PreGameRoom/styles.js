@@ -64,10 +64,6 @@ export const StyledLeftSideContainer = styled.div`
     
     padding: 65px 20px 20px 20px;
   }
-
-  & .progress-bar {
-    display: none;
-  }
 `;
 
 export const StyledDeckPreview = styled.div`
@@ -200,19 +196,49 @@ export const StyledRightSideContainer = styled.div`
     background-color: var(--eerie-black);
   }
 
-  & div:first-child {
+  & .single-image-preview-container {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    justify-content: center;
 
-    margin: 0 5px;
+    border: 2px dashed rgba(var(--imperial-red-values), 0.7);
 
+    width: 100%;
     height: 60%;
     max-height: 70%;
     min-height: 30%;
 
     resize: vertical;
     overflow: hidden;
+
+    p {
+      color: var(--cultured);
+      align-self: center;
+      user-select: none;
+    }
+  }
+
+  & .chat {
+    display: flex;
+    flex-direction: column;
+
+    flex-grow: 1;
+    padding: 5px;
+
+    .chat-content {
+      flex-grow: 1;
+      height: 85%;
+      width: 100%;
+      padding: 10px;
+      
+      border: 1px solid blue;
+    }
+
+    > input {
+      height: 15%;
+      max-height: 50px;
+    }
   }
 
   & .single-image-preview {
@@ -220,13 +246,9 @@ export const StyledRightSideContainer = styled.div`
     width: 100%;
 
     object-fit: contain;
+    
+    -webkit-user-drag: none;
     user-select: none;
-  }
-
-  & .chat {
-    flex-grow: 1;
-
-    padding: 15px;
   }
 `;
 /***** Fim Right Side Container *****/

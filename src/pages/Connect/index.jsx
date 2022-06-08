@@ -14,12 +14,11 @@ import {
 import { StyledConnect } from './styles';
 
 const onConnectClick = () => {
-  const nicknameEntered = document.querySelector('.nickname-input').value;
   const ipEntered = document.querySelector('.ip-input').value;
   const portEntered = document.querySelector('.port-input').value;
 
   // Se algum campo estiver vazio
-  if (!nicknameEntered.trim() || !ipEntered.trim() || !portEntered.trim()) {
+  if (!ipEntered.trim() || !portEntered.trim()) {
     showSnackbar('fill_all_fields', 'error');
   }
 }
@@ -47,7 +46,6 @@ function Connect() {
 
       <main>
         <div className="container">
-          <MinimalistInput className="nickname-input" placeholder="Nickname" />
           <MinimalistInput className="ip-input" placeholder="IP" />
           <MinimalistInput className="port-input" placeholder={t('port')} />
           <BrightButton $allCaps onClick={onConnectClick}>

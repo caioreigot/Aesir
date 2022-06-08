@@ -18,7 +18,7 @@ class Utils {
   
     // Esconde o container do input
     document.querySelector('.enter-nickname-container')
-      .style.display = 'none';
+      .classList.add('hidden');
   
     // Se o servidor demorar mais de 500ms para abrir, exibe o loader
     const showLoaderTimeout = setTimeout(() => {
@@ -31,20 +31,20 @@ class Utils {
     // Resposta do Main Process pra quando o servidor foi criado
     ipcRenderer.on('server-created', (event, port) => {
       clearTimeout(showLoaderTimeout);
-      scaleLoader.style.display = 'none';
+      scaleLoader.classList.add('hidden');
     });
   }
 
   static hideButtonsAndShowLoader() {
-    document.querySelector(this.queryLoadDeckButton).style.display = 'none';
-    document.querySelector(this.queryReadyButton).style.display = 'none';
-    document.querySelector(this.queryProgressBar).style.display = 'flex';
+    document.querySelector(this.queryLoadDeckButton).classList.add('hidden');
+    document.querySelector(this.queryReadyButton).classList.add('hidden');
+    document.querySelector(this.queryProgressBar).classList.remove('hidden');
   }
   
   static showButtonsAndHideLoader() {
-    document.querySelector(this.queryLoadDeckButton).style.display = 'block';
-    document.querySelector(this.queryReadyButton).style.display = 'block';
-    document.querySelector(this.queryProgressBar).style.display = 'none';
+    document.querySelector(this.queryLoadDeckButton).classList.remove('hidden');
+    document.querySelector(this.queryReadyButton).classList.remove('hidden');
+    document.querySelector(this.queryProgressBar).classList.add('hidden');
   }
 
   static clearDeckPreviewRows() {
