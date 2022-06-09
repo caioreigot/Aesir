@@ -63,3 +63,8 @@ export const resizeChatContent = () => {
   
   bottomContainer.style.height = `${chatContainerNewSize}px`;
 }
+
+export const resizerCleanup = () => {
+  window.removeEventListener('mousemove', resize);
+  window.removeEventListener('mouseup', stopResize);
+}

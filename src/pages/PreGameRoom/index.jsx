@@ -33,7 +33,7 @@ const { ipcRenderer } = window.require('electron');
 function BiggerSideInterface() {
   const { t } = useTranslation();
 
-  const [progressValue, setProgressValue] = useState(0);
+  const [getCardsProgress, setGetCardsProgress] = useState(0);
   const [totalCards, setTotalCards] = useState(0);
   const [cardsQuantity, setCardsQuantity] = useState({
     Artifact: 0,
@@ -60,7 +60,7 @@ function BiggerSideInterface() {
 
     // Progresso do "download" do deck pela API
     ipcRenderer.on('load-cards-progress', (_, progress) => {
-      setProgressValue(progress);
+      setGetCardsProgress(progress);
     });
 
     // Quando os objetos das cartas forem pegos da API
@@ -68,7 +68,7 @@ function BiggerSideInterface() {
       DeckStorage.set(deck);
 
       Utils.showButtonsAndHideLoader();
-      setProgressValue(0);
+      setGetCardsProgress(0);
 
       showDeckPreview(deck, setTotalCards, setCardsQuantity);
     });
@@ -127,7 +127,7 @@ function BiggerSideInterface() {
         <ProgressBar
           $widthPercentage={90}
           $height={35}
-          $progress={progressValue} />
+          $progress={getCardsProgress} />
       </StyledLeftSideButtonsContainer>
     </StyledBiggerSideInterface>
   );
