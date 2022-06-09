@@ -1,69 +1,27 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { 
   StyledSideMinorInterface,
   StyledChat,
-  TopContainer
+  TopContainer,
 } from './styles';
 
 import {
-  MinimalistInput
+  MinimalistInput,
+  Resizer
 } from '@components';
 
-/* TODO 
-  Fazer do resize um react component
-  Reformular o código e perfomatizar o resize
-*/
-
-const resize = (e) => {
-  const chatContainer = document.querySelector('.chat-container');
-  chatContainer.firstChild.style.userSelect = 'none';
-
-  const parentElement = document.querySelector('.resizer').parentElement;
-  parentElement.style.height = (e.clientY - parentElement.offsetTop) + 'px';
-
-  const value = (window.innerHeight - e.clientY);
-  chatContainer.style.height = `${value}px`;
-}
-
-const stopResize = _ => {
-  window.removeEventListener('mousemove', resize);
-  window.removeEventListener('mouseup', stopResize);
-
-  document.querySelector('.chat-content').style.userSelect = 'auto';
-}
-
-const initResize = (e) => {
-  window.addEventListener('mousemove', resize);
-  window.addEventListener('mouseup', stopResize);
-}
-
-const addResizerEventListener = () => {
-  const resizer = document.querySelector('.resizer');
-  
-  resizer.addEventListener('mousedown', 
-    e => initResize(e, resizer.parentElement));
-}
-
-const resizeChatContent = () => {
-  const interfaceContainer = document.querySelector('.single-image-preview')
-    .parentElement
-    .parentElement;
-  
-  const topContainer = document.querySelector('.single-image-preview').parentElement;
-  const bottomContainer = document.querySelector('.chat-container');
-
-  const emptySpace = 
-    interfaceContainer.clientHeight 
-    - topContainer.clientHeight
-    - bottomContainer.clientHeight
-
-  const chatContainerNewSize =  bottomContainer.clientHeight + emptySpace;
-  
-  bottomContainer.style.height = `${chatContainerNewSize}px`;
-}
+import {
+  resizeChatContent,
+  addResizerEventListener,
+  resize,
+  stopResize
+} from './resize';
 
 function MinorSideInterface() {
+  const { t } = useTranslation();
+
   useEffect(() => {
     resizeChatContent();
     addResizerEventListener();
@@ -73,6 +31,7 @@ function MinorSideInterface() {
     return function cleanup() {
       window.removeEventListener('mousemove', resize);
       window.removeEventListener('mouseup', stopResize);
+      window.removeEventListener('resize', resizeChatContent);
     }
   }, []);
 
@@ -81,19 +40,13 @@ function MinorSideInterface() {
       <TopContainer>
         <p className="card-preview-text">Card Preview</p>
         <img alt="Card Preview" className="single-image-preview hidden" />
-        <div className="resizer">
-          <div></div>
-        </div>
+        <Resizer />
       </TopContainer>
       <StyledChat className="chat-container">
         <div className="chat-content">
-          <p><strong>Caio:</strong> oi oi</p>
-          <p><strong>Jãozinho nome grande:</strong> Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, pariatur.</p>
-          <p><strong>Pedrão digita muito:</strong> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla nesciunt molestiae nemo illum veniam perferendis similique quam, culpa enim ipsam modi voluptatum? Laborum, alias. Adipisci exercitationem nemo repudiandae. Enim, nam!</p>
-          <p><strong>Pedrão digita muito:</strong> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla nesciunt molestiae nemo illum veniam perferendis similique quam, culpa enim ipsam modi voluptatum? Laborum, alias. Adipisci exercitationem nemo repudiandae. Enim, nam!</p>
-          <p><strong>Pedrão digita muito:</strong> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla nesciunt molestiae nemo illum veniam perferendis similique quam, culpa enim ipsam modi voluptatum? Laborum, alias. Adipisci exercitationem nemo repudiandae. Enim, nam!</p>
+          <p><strong>Fulano:</strong> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias quae, at molestiae nam fugiat, minima error debitis voluptatem laboriosam dolore sed, minus facilis! Quasi omnis totam et enim placeat, beatae laborum impedit deserunt temporibus quaerat autem nulla sunt. Ex nemo dolorum consequatur vel asperiores similique, dicta obcaecati voluptas accusantium, beatae earum vitae. Fugit vero quaerat perferendis asperiores veniam deleniti commodi et assumenda, incidunt ipsam eius dicta quasi. Eius voluptatum itaque, sequi quibusdam officia quidem nisi, delectus soluta minima impedit quo? Dicta soluta molestiae impedit! Eveniet, at sint molestiae maiores aliquid ipsum laudantium! Dicta iure corporis modi hic ipsam necessitatibus perferendis beatae. Quaerat molestiae temporibus totam itaque aperiam adipisci quod deleniti, tempora id delectus quas quia nulla dolores similique odit excepturi quibusdam ex omnis, nobis et rerum ad, tempore sapiente corporis. Recusandae illum laborum sint corrupti necessitatibus. Ducimus, ab eius consectetur inventore voluptatum doloremque maxime. Ratione laboriosam perspiciatis exercitationem iure deserunt adipisci animi quod temporibus incidunt aperiam nisi, soluta doloribus mollitia iste itaque commodi enim, explicabo inventore alias aliquam. Velit eius consectetur nihil reprehenderit hic nulla neque vero quod, fugiat sint odit reiciendis saepe aliquid, ratione, repellendus illum! A temporibus asperiores alias atque saepe recusandae ratione ut nemo veritatis, esse nobis?</p>
         </div>
-        <MinimalistInput className="chat-input" />
+        <MinimalistInput className="chat-input" placeholder={t('message')} />
       </StyledChat>
     </StyledSideMinorInterface>
   );

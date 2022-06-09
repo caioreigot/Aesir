@@ -1,5 +1,6 @@
 {
   "connect": "Conectar",
   "confirm": "Confirmar",
-  "port": "Porta"
+  "port": "Porta",
+  "message": "Mensagem"
 }

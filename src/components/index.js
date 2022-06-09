@@ -10,6 +10,7 @@ import ScaleLoader from './ScaleLoader';
 import FaArrowLeft from './FaArrowLeft';
 import ProgressBar from './ProgressBar';
 import FaGear from './FaGear';
+import Resizer from './Resizer';
 
 export {
   OptionDropdownMenu,
@@ -25,5 +26,6 @@ export {
   ScaleLoader,
   FaArrowLeft,
   FaGear,
-  ProgressBar
+  ProgressBar,
+  Resizer
 }

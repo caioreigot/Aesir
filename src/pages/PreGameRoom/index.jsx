@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
-
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
@@ -149,9 +147,9 @@ function PreGameRoom() {
 
     // Caso o usuário tenha pressionado enter, chama o método de confirmação
     nicknameInput.addEventListener("keyup", event => {
-      if (event.keyCode === 13) {
-        handleConfirmNickname();
-      }
+      // Se o espaço não foi pressionado, retorna
+      if (event.keyCode !== 13) return;
+      handleConfirmNickname();
     });
 
     // Antes deste componente ser destruido, esta função limpa os listeners

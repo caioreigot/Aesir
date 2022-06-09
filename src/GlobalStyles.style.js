@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
   * {
@@ -87,4 +87,26 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
   /***** Fim Animações *****/
+`;
+
+export const baseVerticalScroll = css`
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(var(--imperial-red-values), .92);
+    background-clip: padding-box;
+    
+    border-right: 4px solid transparent;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--imperial-red);
+  }
 `;
