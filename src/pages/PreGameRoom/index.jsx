@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
+import { sendMessageToChat } from '@components/MinorSideInterface';
+import { setProgressValueTo } from '@components/ProgressBar';
 import showDeckPreview from './scripts/showDeckPreview';
 import DeckStorage from '@DeckStorage';
 import Utils from './scripts/Utils';
@@ -33,7 +35,6 @@ const { ipcRenderer } = window.require('electron');
 function BiggerSideInterface() {
   const { t } = useTranslation();
 
-  const [getCardsProgress, setGetCardsProgress] = useState(0);
   const [totalCards, setTotalCards] = useState(0);
   const [cardsQuantity, setCardsQuantity] = useState({
     Artifact: 0,
@@ -60,7 +61,7 @@ function BiggerSideInterface() {
 
     // Progresso do "download" do deck pela API
     ipcRenderer.on('load-cards-progress', (_, progress) => {
-      setGetCardsProgress(progress);
+      setProgressValueTo(progress);
     });
 
     // Quando os objetos das cartas forem pegos da API
@@ -68,7 +69,7 @@ function BiggerSideInterface() {
       DeckStorage.set(deck);
 
       Utils.showButtonsAndHideLoader();
-      setGetCardsProgress(0);
+      setProgressValueTo(0);
 
       showDeckPreview(deck, setTotalCards, setCardsQuantity);
     });
@@ -126,8 +127,7 @@ function BiggerSideInterface() {
         </BrightButton>
         <ProgressBar
           $widthPercentage={90}
-          $height={35}
-          $progress={getCardsProgress} />
+          $height={35} />
       </StyledLeftSideButtonsContainer>
     </StyledBiggerSideInterface>
   );
@@ -148,17 +148,22 @@ function PreGameRoom() {
         document.querySelector('.preGameRoomContainer')
           .classList
           .remove('hidden')
+
+        sendMessageToChat({ 
+          message: t('preGameRoom:open_room_at_port', {port}) 
+        });
     });
   }
 
   useEffect(() => {
     const nicknameInput = document.querySelector('.nickname-input');
+    const confirmNicknameButton = document.querySelector('.confirm-nickname-button');
 
     // Caso o usuário tenha pressionado enter, chama o método de confirmação
     nicknameInput.addEventListener("keyup", event => {
       // Se o espaço não foi pressionado, retorna
       if (event.keyCode !== 13) return;
-      handleConfirmNickname();
+      confirmNicknameButton.click();
     });
 
     // Antes deste componente ser destruido, esta função limpa os listeners
@@ -176,8 +181,8 @@ function PreGameRoom() {
 
       <StyledEnterNicknameContainer className="enter-nickname-container">
         <MinimalistInput className="nickname-input" placeholder="Nickname" />
-        <BrightButton $allCaps 
-          onClick={handleConfirmNickname}
+        <BrightButton className="confirm-nickname-button"
+          $allCaps onClick={handleConfirmNickname}
         >
           {t('confirm')}
         </BrightButton>

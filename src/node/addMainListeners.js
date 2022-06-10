@@ -22,7 +22,34 @@ function addMainListeners(webContents) {
     currentPeer = new Peer(name)
       .createServer(onServerCreated);
 
+    currentPeer.onConnection = (socket, peerName) => {};
+    currentPeer.onData = (socket, data) => {};
+
     addPeerListeners(currentPeer, webContents);
+  });
+
+  ipcMain.on('connect-to', (_, name, ip, port) => {
+    const connect = () => {
+      console.log(`Connecting to ${ip}:${port}`);
+
+      currentPeer.onConnection = (socket, peerName) => {};
+      currentPeer.onData = (socket, data) => {};
+  
+      currentPeer.connectTo(ip, port, {
+        onConnect: () => {
+          console.log('Connected!');
+
+          // TODO: Mandar ao ipcRenderer que o cliente está conectado
+        }
+      });
+    }
+
+    if (!currentPeer) {
+      currentPeer = new Peer(name).createServer(connect);
+      return;
+    }
+
+    connect();
   });
 
   ipcMain.on('load-deck', (_, language) => {
@@ -51,9 +78,7 @@ const saveDeckAndGetCardObjects = (deckStructure) => {
 }
 
 const sendProgressToRenderer = (progress) => {
-  if (progress % 10 === 0) {
-    renderer.send('load-cards-progress', progress);
-  }
+  renderer.send('load-cards-progress', progress);
 }
 
 const sendCardObjectsToRenderer = (cardObjects) => {

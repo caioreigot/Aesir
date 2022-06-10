@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { StyledProgressBar, StyledProgressValue } from './styles';
 
-function ProgressBar({ $progress, $widthPercentage, $height }) {
+export let setProgressValueTo;
+
+function ProgressBar({ $widthPercentage, $height }) {
+  const [progressValue, setProgressValue] = useState(0);
+
+  setProgressValueTo = setProgressValue;
+
   return(
     <StyledProgressBar
       className="progress-bar hidden"
@@ -11,7 +17,7 @@ function ProgressBar({ $progress, $widthPercentage, $height }) {
     >
       <StyledProgressValue 
         className="progress-value" 
-        $progress={$progress}/>
+        $progress={progressValue}/>
       </StyledProgressBar>
   );
 }

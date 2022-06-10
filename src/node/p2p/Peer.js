@@ -137,7 +137,7 @@ class Peer {
   
       /* Definindo o time out para a tentativa de conexão
       Obs: se o time out não for fornecido, o padrão é 20 segundos */
-      socket.setTimeout((options?.timeoutInSeconds || 20) * 1000, () => {
+      socket.setTimeout((options.timeoutInSeconds || 20) * 1000, () => {
         this.onError(new Error('ETIMEDOUT'), ErrorContext.CONNECT);
         socket.destroy();
       });

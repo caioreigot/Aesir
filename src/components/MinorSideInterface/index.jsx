@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { 
@@ -17,10 +17,30 @@ import {
   resizerCleanup
 } from './resize';
 
+export let sendMessageToChat;
+
 function MinorSideInterface() {
   const { t } = useTranslation();
 
+  const [chatMessages, setChatMessages] = useState([]);
+
+  sendMessageToChat = ({ author, message }) => {
+    let key = Date.now();
+    let newMessage;
+    
+    // Se não há um autor, então é o sistema
+    if (!author) {
+      newMessage = <p key={key}><strong>{message}</strong></p>;
+    } else {
+      key += author;
+      newMessage = <p key={key}><strong>{author}</strong>: {message}</p>;
+    }
+
+    setChatMessages([...chatMessages, newMessage]);
+  }
+
   useEffect(() => {
+
     addResizerEventListener();
     return resizerCleanup;
   }, []);
@@ -34,7 +54,7 @@ function MinorSideInterface() {
       </TopContainer>
       <StyledChat className="chat-container">
         <div className="chat-content">
-          <p><strong>Fulano:</strong> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias quae, at molestiae nam fugiat, minima error debitis voluptatem laboriosam dolore sed, minus facilis! Quasi omnis totam et enim placeat, beatae laborum impedit deserunt temporibus quaerat autem nulla sunt. Ex nemo dolorum consequatur vel asperiores similique, dicta obcaecati voluptas accusantium, beatae earum vitae. Fugit vero quaerat perferendis asperiores veniam deleniti commodi et assumenda, incidunt ipsam eius dicta quasi. Eius voluptatum itaque, sequi quibusdam officia quidem nisi, delectus soluta minima impedit quo? Dicta soluta molestiae impedit! Eveniet, at sint molestiae maiores aliquid ipsum laudantium! Dicta iure corporis modi hic ipsam necessitatibus perferendis beatae. Quaerat molestiae temporibus totam itaque aperiam adipisci quod deleniti, tempora id delectus quas quia nulla dolores similique odit excepturi quibusdam ex omnis, nobis et rerum ad, tempore sapiente corporis. Recusandae illum laborum sint corrupti necessitatibus. Ducimus, ab eius consectetur inventore voluptatum doloremque maxime. Ratione laboriosam perspiciatis exercitationem iure deserunt adipisci animi quod temporibus incidunt aperiam nisi, soluta doloribus mollitia iste itaque commodi enim, explicabo inventore alias aliquam. Velit eius consectetur nihil reprehenderit hic nulla neque vero quod, fugiat sint odit reiciendis saepe aliquid, ratione, repellendus illum! A temporibus asperiores alias atque saepe recusandae ratione ut nemo veritatis, esse nobis?</p>
+          {chatMessages}
         </div>
         <MinimalistInput 
           className="chat-input" 

@@ -32,7 +32,9 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "dev": "concurrently -k \"BROWSER=none npm start\" \"npm:electron\"",
-    "electron": "wait-on tcp:3000 && electron ."
+    "dev2": "concurrently -k \"PORT=3001 BROWSER=none npm start\" \"npm:electron2\"",
+    "electron": "wait-on tcp:3000 && electron .",
+    "electron2": "wait-on tcp:3001 && electron ."
   },
   "eslintConfig": {
     "extends": [
