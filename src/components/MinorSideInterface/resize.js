@@ -46,7 +46,13 @@ export const stopResize = () => {
   window.removeEventListener('mouseup', stopResize);
 }
 
-export const resizeChatContent = () => {
+export const resizerCleanup = () => {
+  window.removeEventListener('mousemove', resize);
+  window.removeEventListener('mouseup', stopResize);
+}
+
+/*
+const resizeChatContent = () => {
   const interfaceContainer = document.querySelector('.single-image-preview')
     .parentElement
     .parentElement;
@@ -63,8 +69,4 @@ export const resizeChatContent = () => {
   
   bottomContainer.style.height = `${chatContainerNewSize}px`;
 }
-
-export const resizerCleanup = () => {
-  window.removeEventListener('mousemove', resize);
-  window.removeEventListener('mouseup', stopResize);
-}
+*/

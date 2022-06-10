@@ -137,13 +137,22 @@ function PreGameRoom() {
   const { t } = useTranslation();
 
   const handleConfirmNickname = () => {
-    Utils.validateNicknameAndCreateServer(ipcRenderer, errorMessage => {
-      showSnackbar(errorMessage, 'error');
+    Utils.validateNicknameAndCreateServer(
+      ipcRenderer,
+      (errorMessage, port) => {
+        if (errorMessage) {
+          showSnackbar(errorMessage, 'error');
+          return;
+        }
+
+        document.querySelector('.preGameRoomContainer')
+          .classList
+          .remove('hidden')
     });
   }
 
   useEffect(() => {
-    const nicknameInput = document.querySelector('#nickname-input');
+    const nicknameInput = document.querySelector('.nickname-input');
 
     // Caso o usuário tenha pressionado enter, chama o método de confirmação
     nicknameInput.addEventListener("keyup", event => {
@@ -165,8 +174,8 @@ function PreGameRoom() {
         <FaArrowLeft />
       </Link>
 
-      <StyledEnterNicknameContainer style={{display: 'none'}}>
-        <MinimalistInput id="nickname-input" placeholder="Nickname" />
+      <StyledEnterNicknameContainer className="enter-nickname-container">
+        <MinimalistInput className="nickname-input" placeholder="Nickname" />
         <BrightButton $allCaps 
           onClick={handleConfirmNickname}
         >
@@ -176,7 +185,7 @@ function PreGameRoom() {
 
       <ScaleLoader size="45"/>
       
-      <StyledPreGameRoomContainer>
+      <StyledPreGameRoomContainer className="preGameRoomContainer hidden">
         <BiggerSideInterface />
         <MinorSideInterface />
       </StyledPreGameRoomContainer>

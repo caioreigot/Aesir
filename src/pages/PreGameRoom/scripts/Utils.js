@@ -5,14 +5,17 @@ class Utils {
   static queryProgressBar = '.progress-bar';
   static queryDeckPreviewRow = '.deck-preview-row';
 
-  static validateNicknameAndCreateServer(ipcRenderer, onErrorCallback) {
-    const nameInput = document.querySelector('#nickname-input');
+  static validateNicknameAndCreateServer(
+    ipcRenderer,
+    serverCreatedCallback
+  ) {
+    const nameInput = document.querySelector('.nickname-input');
     const nameEntered = nameInput.value;
   
     const scaleLoader = document.querySelector('.scale-loader');
     
     if (nameEntered.trim() === '') {
-      onErrorCallback('fill_all_fields');
+      serverCreatedCallback('fill_all_fields');
       return;
     }
   
@@ -29,9 +32,11 @@ class Utils {
     ipcRenderer.send('room-created', nameEntered);
   
     // Resposta do Main Process pra quando o servidor foi criado
-    ipcRenderer.on('server-created', (event, port) => {
+    ipcRenderer.on('server-created', (_, port) => {
       clearTimeout(showLoaderTimeout);
       scaleLoader.classList.add('hidden');
+      
+      serverCreatedCallback(null, port);
     });
   }
 

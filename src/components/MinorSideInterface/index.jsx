@@ -13,7 +13,6 @@ import {
 } from '@components';
 
 import {
-  resizeChatContent,
   addResizerEventListener,
   resizerCleanup
 } from './resize';
@@ -22,15 +21,8 @@ function MinorSideInterface() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    resizeChatContent();
     addResizerEventListener();
-
-    window.addEventListener('resize', resizeChatContent);
-
-    return function cleanup() {
-      window.removeEventListener('resize', resizeChatContent);
-      resizerCleanup();
-    }
+    return resizerCleanup;
   }, []);
 
   return(
