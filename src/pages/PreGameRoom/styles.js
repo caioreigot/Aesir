@@ -57,7 +57,7 @@ export const StyledPreGameRoomContainer = styled.div`
 `;
 
 /***** Left Side Container *****/
-export const StyledBiggerSideInterface = styled.div`
+export const StyledPreGameBiggerSideInterface = styled.div`
   & {
     height: 100%;
     width: 75%;

@@ -17,11 +17,11 @@ import {
   resizerCleanup
 } from './resize';
 
+const { ipcRenderer } = window.require('electron');
 export let sendMessageToChat;
 
 function MinorSideInterface() {
   const { t } = useTranslation();
-
   const [chatMessages, setChatMessages] = useState([]);
 
   sendMessageToChat = ({ author, message }) => {
@@ -39,9 +39,27 @@ function MinorSideInterface() {
     setChatMessages([...chatMessages, newMessage]);
   }
 
-  useEffect(() => {
+  const implementSendMessageSystem = () => {
+    const chatInput = document.querySelector('.chat-input');
+    
+    chatInput.addEventListener("keyup", event => {
+      // Se não foi pressionado o enter ou a mensagem está vazia, retorne
+      if (event.keyCode !== 13 || chatInput.value.trim().length === 0) return;
+      
+      const author = localStorage.getItem('nickname');
+      const message = { author, message: chatInput.value };
 
+      sendMessageToChat(message);
+      ipcRenderer.send('message-sent', message);
+      
+      // Limpa o input
+      chatInput.value = '';
+    });
+  }
+
+  useEffect(() => {
     addResizerEventListener();
+    implementSendMessageSystem();
     return resizerCleanup;
   }, []);
 

@@ -23,7 +23,7 @@ import {
   StyledPreGameRoom,
   StyledEnterNicknameContainer,
   StyledPreGameRoomContainer,
-  StyledBiggerSideInterface,
+  StyledPreGameBiggerSideInterface,
   StyledDeckPreview,
   StyledPreviewRow,
   StyledPreviewLeftBox,
@@ -32,7 +32,7 @@ import {
 
 const { ipcRenderer } = window.require('electron');
 
-function BiggerSideInterface() {
+function PreGameBiggerSideInterface() {
   const { t } = useTranslation();
 
   const [totalCards, setTotalCards] = useState(0);
@@ -83,7 +83,7 @@ function BiggerSideInterface() {
   }, []);
 
   return(
-    <StyledBiggerSideInterface>
+    <StyledPreGameBiggerSideInterface>
       <StyledDeckPreview className="deck-preview">
         <h3>{t('preGameRoom:deck_size', { totalCards })}</h3>
         <StyledPreviewLeftBox>
@@ -129,7 +129,7 @@ function BiggerSideInterface() {
           $widthPercentage={90}
           $height={35} />
       </StyledLeftSideButtonsContainer>
-    </StyledBiggerSideInterface>
+    </StyledPreGameBiggerSideInterface>
   );
 }
 
@@ -145,7 +145,10 @@ function PreGameRoom() {
           return;
         }
 
-        document.querySelector('.preGameRoomContainer')
+        const nickname = document.querySelector('.nickname-input').value;
+        localStorage.setItem('nickname', nickname);
+
+        document.querySelector('.pre-game-room-container')
           .classList
           .remove('hidden')
 
@@ -156,11 +159,30 @@ function PreGameRoom() {
   }
 
   useEffect(() => {
+    const enterNicknameContainer = document.querySelector('.enter-nickname-container');
+    const preGameRoomContainer = document.querySelector('.pre-game-room-container');
+
+    const getNameInUrlParameter = () => {
+      const nameParameter = window.location.href.split('=')[1];
+
+      if (nameParameter) {
+        const nickname = nameParameter.replace(/%20/g, ' ');
+        localStorage.setItem('nickname', nickname);
+        enterNicknameContainer.classList.add('hidden');
+        preGameRoomContainer.classList.remove('hidden');
+        
+        // Não deixe o código continuar abaixo desta função
+        return;
+      }
+    }
+
+    getNameInUrlParameter();
+
     const nicknameInput = document.querySelector('.nickname-input');
     const confirmNicknameButton = document.querySelector('.confirm-nickname-button');
 
     // Caso o usuário tenha pressionado enter, chama o método de confirmação
-    nicknameInput.addEventListener("keyup", event => {
+    nicknameInput.addEventListener('keyup', event => {
       // Se o espaço não foi pressionado, retorna
       if (event.keyCode !== 13) return;
       confirmNicknameButton.click();
@@ -190,8 +212,8 @@ function PreGameRoom() {
 
       <ScaleLoader size="45"/>
       
-      <StyledPreGameRoomContainer className="preGameRoomContainer hidden">
-        <BiggerSideInterface />
+      <StyledPreGameRoomContainer className="pre-game-room-container hidden">
+        <PreGameBiggerSideInterface />
         <MinorSideInterface />
       </StyledPreGameRoomContainer>
 

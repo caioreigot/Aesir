@@ -31,6 +31,7 @@ function Connect() {
 
     ipcRenderer.send(
       'connect-to',
+      window.location.origin,
       nicknameEntered,
       ipEntered,
       portEntered
