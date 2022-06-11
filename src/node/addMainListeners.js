@@ -25,18 +25,17 @@ function addMainListeners(webContents) {
 
     currentPeer.onConnection = (socket, peerName) => {};
     currentPeer.onData = (socket, data) => {
-      // TODO
       console.log(data.content);
     };
 
-    addPeerListeners(currentPeer, webContents);
+    // TODO
+    // addPeerListeners(currentPeer, webContents);
   });
 
   ipcMain.on('connect-to', (_, originLocation, name, ip, port) => {    
     const connectToRoom = () => {
       currentPeer.onConnection = (socket, peerName) => {};
       currentPeer.onData = (socket, data) => {
-        // TODO
         console.log(data.content);
       };
   
@@ -46,6 +45,9 @@ function addMainListeners(webContents) {
             + `/#/pre-game-room?name=${name}`;
           
           renderer.loadURL(preGameRoomUrl);
+
+          // TODO
+          // addPeerListeners(currentPeer, webContents);
         }
       });
     }

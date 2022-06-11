@@ -99,7 +99,7 @@ class Peer {
   // Tenta se conectar em um IP:PORTA
   connectTo = (host, port, options) => {
     const connect = () => {
-      const socket = net.createConnection({ port, host }, () => {
+      const socket = net.createConnection({ host, port }, () => {
         // Caso o cliente tenha fornecido uma callback, invocá-la
         if (options && options.onConnect) {
           options.onConnect();
@@ -227,7 +227,8 @@ class Peer {
       const currentHost = this._knownHosts[i];
 
       // Se a porta já for conhecida
-      if (currentHost.serverPort === data.content) {
+      console.log(currentHost.serverPort, data.content);
+      if (currentHost.serverPort == data.content) {
         /* Se o nome estiver vazio, é sinal de que o servidor 
         em que este peer conectou se apresentou */
         if (currentHost.name.length === 0) {
@@ -261,9 +262,13 @@ class Peer {
     this.onConnection(socket, availableNameForSender);
 
     /* Este peer envia para o cliente todas as hosts que
-    conhece para que ele também possa se conectar nos
-    outros peers da rede */
-    this._sendKnownHostsTo(socket, this._knownHosts);
+    conhece (com excessão do próprio cliente) para que ele
+    também possa se conectar nos outros peers da rede */
+    this._sendKnownHostsTo(socket, this._knownHosts.filter(host => {
+      return (host.ip != socket.remoteAddress.slice(7)
+            || host.ip != socket.remoteAddress)
+            && host.serverPort != data.content;
+    }));
 
     // Adiciona o peer ao array de hosts conhecidas
     this._addKnownHost({
