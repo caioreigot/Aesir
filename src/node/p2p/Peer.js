@@ -1,5 +1,7 @@
+/* eslint-disable eqeqeq */
+
 const net = require('net');
-const DataType = require('./enums/DataType');
+const P2PDataType = require('./enums/P2PDataType');
 const ErrorContext = require('./enums/ErrorContext');
 
 class Peer {
@@ -72,24 +74,24 @@ class Peer {
   /* Envia as hosts conhecidas por este 
   peer para o peer cliente */
   _sendKnownHostsTo = (socket, knownHosts) => {
-    const data = {
-      type: DataType.KNOWN_HOSTS,
+    const P2PDataTemplate = {
+      type: P2PDataType.KNOWN_HOSTS,
       senderName: this.name,
       content: knownHosts
     };
 
-    this._sendData(socket, data);
+    this._sendData(socket, P2PDataTemplate);
   }
 
   // Envia o estado deste peer para o peer cliente
   _sendStateTo = (socket, state) => {
-    const data = {
-      type: DataType.STATE,
+    const P2PDataTemplate = {
+      type: P2PDataType.STATE,
       senderName: this.name,
       content: state
     };
 
-    this._sendData(socket, data);
+    this._sendData(socket, P2PDataTemplate);
   }
   
   // Tenta se conectar em um IP:PORTA
@@ -185,15 +187,15 @@ class Peer {
   }
 
   // Recebe as hosts conhecidas de outro peer
-  _receiveKnownHosts = (senderSocket, data) => {
-    if (data.type !== DataType.KNOWN_HOSTS) {
+  _receiveKnownHosts = (senderSocket, P2PDataTemplate) => {
+    if (P2PDataTemplate.type !== P2PDataType.KNOWN_HOSTS) {
       return;
     }
     
     /* Para cada host recebida pelo servidor, caso este 
     peer não conheça alguma, adiciona no próprio array 
     de hosts conhecidas e se conecta com ela */
-    data.content.forEach(host => {
+    P2PDataTemplate.content.forEach(host => {
       if (!this._isKnownHost(host)) {
         const connectOptions = {
           onConnect: () => { this._addKnownHost(host); }
@@ -205,17 +207,17 @@ class Peer {
   }
 
   // Recebe o estado da sala
-  _receiveState = data => {
-    if (data.type !== DataType.STATE) {
+  _receiveState = P2PDataTemplate => {
+    if (P2PDataTemplate.type !== P2PDataType.STATE) {
       return;
     }
 
-    this.state = data.content;
+    this.state = P2PDataTemplate.content;
   }
 
   // Recebe o nome de um peer e a porta em que ele está ouvindo
-  _receiveIntroduction = (socket, data) => {
-    if (data.type !== DataType.PEER_INTRODUCTION) {
+  _receiveIntroduction = (socket, P2PDataTemplate) => {
+    if (P2PDataTemplate.type !== P2PDataType.PEER_INTRODUCTION) {
       return;
     }
 
@@ -223,12 +225,12 @@ class Peer {
       const currentHost = this._knownHosts[i];
 
       // Se a porta já for conhecida
-      console.log(currentHost.serverPort, data.content);
-      if (currentHost.serverPort == data.content) {
+      console.log(currentHost.serverPort, P2PDataTemplate.content);
+      if (currentHost.serverPort == P2PDataTemplate.content) {
         /* Se o nome estiver vazio, é sinal de que o servidor 
         em que este peer conectou se apresentou */
         if (currentHost.name.length === 0) {
-          currentHost.name = data.senderName;
+          currentHost.name = P2PDataTemplate.senderName;
         }
         
         /* Retorne pois o servidor já é conhecido e
@@ -239,12 +241,12 @@ class Peer {
 
     // Verifica e atribui um nome disponível para o peer conectado
     const availableNameForSender = this
-      ._findAvailableName(data.senderName);
+      ._findAvailableName(P2PDataTemplate.senderName);
 
     // Se o nome do peer cliente for diferente do nome disponível
-    if (availableNameForSender !== data.senderName) {
+    if (availableNameForSender !== P2PDataTemplate.senderName) {
       const nameChangedData = {
-        type: DataType.NAME_CHANGED,
+        type: P2PDataType.NAME_CHANGED,
         senderName: this.name,
         content: availableNameForSender
       }
@@ -263,7 +265,7 @@ class Peer {
     this._sendKnownHostsTo(socket, this._knownHosts.filter(host => {
       return (host.ip != socket.remoteAddress.slice(7)
             || host.ip != socket.remoteAddress)
-            && host.serverPort != data.content;
+            && host.serverPort != P2PDataTemplate.content;
     }));
 
     // Adiciona o peer ao array de hosts conhecidas
@@ -271,7 +273,7 @@ class Peer {
       name: availableNameForSender,
       ip: socket.remoteAddress || '',
       portImConnected: socket.remotePort,
-      serverPort: data.content
+      serverPort: P2PDataTemplate.content
     });
 
     // Enviando o estado atual para o cliente
@@ -279,12 +281,12 @@ class Peer {
   }
 
   // Função chamada quando o peer servidor altera o nome deste peer
-  _handleNameChanged = (socket, data) => {
-    if (data.type !== DataType.NAME_CHANGED) {
+  _handleNameChanged = (P2PDataTemplate) => {
+    if (P2PDataTemplate.type !== P2PDataType.NAME_CHANGED) {
       return;
     }
 
-    this.name = data.content;
+    this.name = P2PDataTemplate.content;
   } 
 
   /* Gera um nome disponível na rede
@@ -321,19 +323,19 @@ class Peer {
 
   // Manda o nome e a porta do servidor deste peer para outro peer
   _introduceMyselfTo = (socket, portImListening) => {
-    const data = {
-      type: DataType.PEER_INTRODUCTION,
+    const P2PDataTemplate = {
+      type: P2PDataType.PEER_INTRODUCTION,
       senderName: this.name,
       content: portImListening
     }
 
-    this._sendData(socket, data);
+    this._sendData(socket, P2PDataTemplate);
   }
 
   // Envia dados para um único peer
-  _sendData = (socket, data) => {
-    // Concatenando com um '\n' para marcar o fim do JSON no buffer
-    const jsonData = JSON.stringify(data).concat('\n');
+  _sendData = (socket, P2PDataTemplate) => {
+    // Adicionando um '\n' no fim da string para marcar o fim do JSON no buffer
+    const jsonData = JSON.stringify(P2PDataTemplate).concat('\n');
 
     try {
       if (!socket.writableEnded) {
@@ -345,16 +347,16 @@ class Peer {
   }
 
   // Envia dados para todos os Peers conhecidos (este não está incluso)
-  broadcast = (data) => {
+  broadcast = (P2PDataTemplate) => {
     this._connections.forEach(socket => {
-      this._sendData(socket, data);
+      this._sendData(socket, P2PDataTemplate);
     });
   }
 
   /* Escuta os dados enviados pelo cliente
     
   Obs: as mensagem são transmitidas atráves da
-  interface "Data" em formato JSON
+  interface "P2PDataTemplate" em formato JSON
   */
   _listenClientData = socket => {
     socket.on('data', bufferData => {
@@ -367,14 +369,14 @@ class Peer {
         .filter(json => json.length !== 0);
 
       jsonDatas.forEach(jsonData => {
-        const data = JSON.parse(jsonData);
+        const P2PDataTemplate = JSON.parse(jsonData);
         
-        this._receiveState(data);
-        this._receiveKnownHosts(socket, data);
-        this._receiveIntroduction(socket, data);
-        this._handleNameChanged(socket, data);
+        this._receiveState(P2PDataTemplate);
+        this._receiveKnownHosts(socket, P2PDataTemplate);
+        this._receiveIntroduction(socket, P2PDataTemplate);
+        this._handleNameChanged(P2PDataTemplate);
 
-        this.onData(socket, data);
+        this.onData(socket, P2PDataTemplate);
       });
     });
   }
@@ -406,7 +408,7 @@ class Peer {
   onDisconnect(host, socket) {}
 
   // Essa função deve ser sobrescrita pelo cliente
-  onData(socket, data) {
+  onData(socket, P2PDataTemplate) {
     throw Error('peer.onData não foi implementado');
   }
 

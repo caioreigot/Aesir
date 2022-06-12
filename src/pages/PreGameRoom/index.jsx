@@ -172,13 +172,13 @@ function PreGameRoom() {
   }
 
   useEffect(() => {
+    // Se não houver o nickname no URL, pede para o usuário fornecer um
     if (!urlHasNameParameter()) {
       const nicknameInput = document.querySelector('.nickname-input');
       const confirmNicknameButton = document.querySelector('.confirm-nickname-button');
   
       // Caso o usuário tenha pressionado enter, chama o método de confirmação
       nicknameInput.addEventListener('keyup', event => {
-        // Se o espaço não foi pressionado, retorna
         if (event.keyCode !== 13) return;
         confirmNicknameButton.click();
       });
@@ -195,12 +195,17 @@ function PreGameRoom() {
     }
   }, []);
 
+  const closeServer = () =>
+    ipcRenderer.send('close-server');
+
   return(
     <StyledPreGameRoom>
-      <Link to="/">
+      <Link to="/" onClick={closeServer}>
         <FaArrowLeft />
       </Link>
 
+      {/* Se não houver o nickname na URL, mostra o
+      input para o usuário fornece-lo */}
       {!urlHasNameParameter() && 
         <StyledEnterNicknameContainer className="enter-nickname-container">
           <MinimalistInput className="nickname-input" placeholder="Nickname" />

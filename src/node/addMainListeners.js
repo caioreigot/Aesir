@@ -1,49 +1,51 @@
+const { ipcMain } = require('electron');
 const Peer = require('./p2p/Peer');
-const DataType = require('./p2p/enums/DataType');
+const P2PDataType = require('./p2p/enums/P2PDataType');
 const addPeerListeners = require('./addPeerListeners');
 const loadDeckInformation = require('./loadDeckInformation');
 const extractDeckFromFile = require('./cardsApi/extractDeckFromFile');
 const getCardObjects = require('./cardsApi/getCardObjects');
-const { ipcMain } = require('electron');
 
 let renderer;
 let currentPeer;
-
 let currentDeckStructure;
 
 function addMainListeners(webContents) {
   renderer = webContents;
 
   ipcMain.on('room-created', (_, name) => {
-    // Se um servidor já estiver rodando, fecha ele
-    if (currentPeer && currentPeer.server) {
-      currentPeer.server.close();
-    }
+    /* Caso o servidor já esteja aberto, 
+    fecha ele antes de abrir um novo */
+    closePeerServer();
+
+    const tellRendererThatServerOpened = () =>
+      renderer.send('server-created', currentPeer.port);
 
     currentPeer = new Peer(name)
-      .createServer(onServerCreated);
+      .createServer(tellRendererThatServerOpened);
 
     addPeerListeners(currentPeer, webContents);
   });
 
-  ipcMain.on('connect-to', (_, originLocation, name, ip, port) => {    
+  ipcMain.on('connect-to', (_, originLocation, connectInformations) => {
+    const { nickname, ip, port } = connectInformations;
+
     const connectToRoom = () => {
       currentPeer.connectTo(ip, port, {
         onConnect: () => {
           const preGameRoomUrl = originLocation
-            + `/#/pre-game-room?name=${name}`;
+            + `/#/pre-game-room?name=${currentPeer.name}`;
           
           renderer.loadURL(preGameRoomUrl);
-
           addPeerListeners(currentPeer, webContents);
         }
       });
     }
 
-    // Se o servidor deste peer ainda não foi aberto, abre
+    // Se o servidor deste peer ainda não foi aberto
     if (!currentPeer) {
-      // E após abrir o servidor, se conecta
-      currentPeer = new Peer(name)
+      // Abre, e após abrir o servidor, se conecta
+      currentPeer = new Peer(nickname)
         .createServer(connectToRoom);
       
       return;
@@ -61,21 +63,28 @@ function addMainListeners(webContents) {
   });
 
   ipcMain.on('message-sent', (_, message) => {
-    const data = {
-      type: DataType.MESSAGE,
+    const P2PDataTemplate = {
+      type: P2PDataType.MESSAGE,
       senderName: currentPeer.name,
       content: message
     }
 
-    currentPeer.broadcast(data);
+    currentPeer.broadcast(P2PDataTemplate);
   });
+
+  ipcMain.on('close-server', () => {
+    closePeerServer();
+  });
+}
+
+const closePeerServer = () => {
+  if (currentPeer && currentPeer.server) {
+    currentPeer.server.close();
+  }
 }
 
 const sendErrorToRenderer = (err) =>
   renderer.send('error', err);
-
-const onServerCreated = () => 
-  renderer.send('server-created', currentPeer.port);
 
 const saveDeckAndGetCardObjects = (deckStructure) => {
   currentDeckStructure = deckStructure;
@@ -88,9 +97,8 @@ const saveDeckAndGetCardObjects = (deckStructure) => {
 }
 
 const sendProgressToRenderer = (progress) => {
-  if (progress % 5 === 0) {
-    renderer.send('load-cards-progress', progress);
-  }
+  if (progress % 5 !== 0) return;
+  renderer.send('load-cards-progress', progress);
 }
 
 const sendCardObjectsToRenderer = (cardObjects) => {

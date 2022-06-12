@@ -1,4 +1,4 @@
-const DataType = require('./p2p/enums/DataType');
+const P2PDataType = require('./p2p/enums/P2PDataType');
 const ErrorContext = require('./p2p/enums/ErrorContext');
 const ErrorMessage = require('./p2p/enums/ErrorMessage');
 
@@ -21,26 +21,18 @@ function addPeerListeners(peer, webContents) {
   }
 
   // Função chamada quando este peer recebe uma informação
-  function onData(socket, data) {
-    switch (data.type) {
-      case DataType.NAME_CHANGED:
-        webContents.send('name-changed', data.content);
+  function onData(socket, P2PDataTemplate) {
+    switch (P2PDataTemplate.type) {
+      case P2PDataType.STATE:
+        peer.state = P2PDataTemplate.content;
+        webContents.send('set-state', P2PDataTemplate.content);
         break;
 
-      case DataType.KNOWN_HOSTS:
-        // Conexão estabelecida
-        break;
-
-      case DataType.STATE:
-        peer.state = data.content;
-        webContents.send('set-state', data.content);
-        break;
-
-      case DataType.MESSAGE:
+      case P2PDataType.MESSAGE:
         webContents.send(
           'new-message', 
-          data.senderName, 
-          data.content
+          P2PDataTemplate.senderName, 
+          P2PDataTemplate.content
         );
         break;
 

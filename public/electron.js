@@ -51,9 +51,9 @@ function createWindow() {
       console.log('Ocorreu um erro: ', err);
   });
 
-  /* Adiciona os listeners para o ipcMain
-  Também configura os listeners para as conexões p2p 
-  para possibilitar o jogo online */
+  /* Adiciona os listeners ao main process
+  (que também contem listeners para as conexões
+  P2P, possibilitando o jogo online) */
   addMainListeners(mainWindow.webContents);
 }
 

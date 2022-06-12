@@ -19,25 +19,26 @@ function Connect() {
   const { t } = useTranslation();
 
   const onConnectClick = () => {
-    const nicknameEntered = document.querySelector('.nickname-input').value;
-    const ipEntered = document.querySelector('.ip-input').value;
-    const portEntered = document.querySelector('.port-input').value;
+    const nickname = document.querySelector('.nickname-input').value;
+    const ip = document.querySelector('.ip-input').value;
+    const port = document.querySelector('.port-input').value;
   
     // Se algum campo estiver vazio
-    if (!nicknameEntered.trim() || !ipEntered.trim() || !portEntered.trim()) {
+    if (!nickname.trim() || !ip.trim() || !port.trim()) {
       showSnackbar('fill_all_fields', 'error');
       return;
     }
 
+    const connectInformations = { nickname, ip, port }
+
+    /* Manda para o Main Process as informações necessárias
+    para o connect. Caso consiga se conectar, o Main Process
+    carrega a nova URL da sala de pré jogo */
     ipcRenderer.send(
       'connect-to',
       window.location.origin,
-      nicknameEntered,
-      ipEntered,
-      portEntered
+      connectInformations
     );
-
-    // TODO: Receber do ipcRenderer o aviso de que a conexão foi feita
   }
 
   useEffect(() => {
@@ -45,8 +46,8 @@ function Connect() {
     const connectButton = document.querySelector('.connect-button');
 
     /* Caso o usuário tenha pressionado enter no input
-    de porta, chama a função de connect */
-    portInput.addEventListener("keyup", event => {
+    de porta, o código clica no botão de connect */
+    portInput.addEventListener('keyup', event => {
       if (event.keyCode !== 13) return;
       connectButton.click();
     });

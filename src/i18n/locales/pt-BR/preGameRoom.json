@@ -8,5 +8,5 @@
   "sorcery": "Feitiço",
   "load_deck": "Carregar Deck",
   "ready": "Preparado",
-  "open_room_at_port": "Sala aberta na porta {{port}}"
+  "open_room_at_port": "Sala aberta na porta {{port}}."
 }
