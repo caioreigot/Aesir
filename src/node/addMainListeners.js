@@ -23,22 +23,11 @@ function addMainListeners(webContents) {
     currentPeer = new Peer(name)
       .createServer(onServerCreated);
 
-    currentPeer.onConnection = (socket, peerName) => {};
-    currentPeer.onData = (socket, data) => {
-      console.log(data.content);
-    };
-
-    // TODO
-    // addPeerListeners(currentPeer, webContents);
+    addPeerListeners(currentPeer, webContents);
   });
 
   ipcMain.on('connect-to', (_, originLocation, name, ip, port) => {    
     const connectToRoom = () => {
-      currentPeer.onConnection = (socket, peerName) => {};
-      currentPeer.onData = (socket, data) => {
-        console.log(data.content);
-      };
-  
       currentPeer.connectTo(ip, port, {
         onConnect: () => {
           const preGameRoomUrl = originLocation
@@ -46,8 +35,7 @@ function addMainListeners(webContents) {
           
           renderer.loadURL(preGameRoomUrl);
 
-          // TODO
-          // addPeerListeners(currentPeer, webContents);
+          addPeerListeners(currentPeer, webContents);
         }
       });
     }

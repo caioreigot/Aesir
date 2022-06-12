@@ -12,12 +12,12 @@ function addPeerListeners(peer, webContents) {
   // Função chamada quando este Peer recebe uma conexão
   function onConnection(socket, peerName) {
     const log = `"${peerName}" connected to the room.`;
-    // webContents.send('log-chat', log);
+    webContents.send('log-chat', log);
   }
 
   function onDisconnect(host, socket) {
     const log = `"${host.name}" disconnected.`;
-    // webContents.send('log-chat', log);
+    webContents.send('log-chat', log);
   }
 
   // Função chamada quando este peer recebe uma informação

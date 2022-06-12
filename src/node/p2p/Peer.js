@@ -46,10 +46,6 @@ class Peer {
     return this;
   }
 
-  _handleDisconnection = socket => {
-    this._forgetConnection(socket);
-  }
-
   // Remove o socket dos arrays de conexões e hosts conhecidas
   _forgetConnection = socket => {
     /* Atribui um novo array para o this._connections,
@@ -387,11 +383,11 @@ class Peer {
     socket.setEncoding('utf8');
     
     socket.on('close', hadError => {
-      this._handleDisconnection(socket);
+      this._forgetConnection(socket);
     });
 
     socket.on('end', () => {
-      this._handleDisconnection(socket);
+      this._forgetConnection(socket);
     });
 
     socket.on('error', err => this.onError(err, ErrorContext.SOCKET));

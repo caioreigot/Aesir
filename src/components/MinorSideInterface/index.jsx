@@ -57,9 +57,21 @@ function MinorSideInterface() {
     });
   }
 
+  const implementReceiveMessageSystem = () => {
+    ipcRenderer.on('new-message', (_, senderName, message) => {
+      sendMessageToChat(message);
+    });
+
+    ipcRenderer.on('log-chat', (_, log) => {
+      sendMessageToChat({ message: log });
+    });
+  }
+
   useEffect(() => {
     addResizerEventListener();
     implementSendMessageSystem();
+    implementReceiveMessageSystem();
+
     return resizerCleanup;
   }, []);
 

@@ -158,40 +158,40 @@ function PreGameRoom() {
     });
   }
 
-  useEffect(() => {
-    const enterNicknameContainer = document.querySelector('.enter-nickname-container');
-    const preGameRoomContainer = document.querySelector('.pre-game-room-container');
+  const urlHasNameParameter = () => {
+    const nameParameter = window.location.href.split('=')[1];
 
-    const getNameInUrlParameter = () => {
-      const nameParameter = window.location.href.split('=')[1];
-
-      if (nameParameter) {
-        const nickname = nameParameter.replace(/%20/g, ' ');
-        localStorage.setItem('nickname', nickname);
-        enterNicknameContainer.classList.add('hidden');
-        preGameRoomContainer.classList.remove('hidden');
-        
-        // Não deixe o código continuar abaixo desta função
-        return;
-      }
+    if (nameParameter) {
+      const nickname = nameParameter.replace(/%20/g, ' ');
+      localStorage.setItem('nickname', nickname);
+      
+      return true;
     }
 
-    getNameInUrlParameter();
+    return false;
+  }
 
-    const nicknameInput = document.querySelector('.nickname-input');
-    const confirmNicknameButton = document.querySelector('.confirm-nickname-button');
-
-    // Caso o usuário tenha pressionado enter, chama o método de confirmação
-    nicknameInput.addEventListener('keyup', event => {
-      // Se o espaço não foi pressionado, retorna
-      if (event.keyCode !== 13) return;
-      confirmNicknameButton.click();
-    });
-
-    // Antes deste componente ser destruido, esta função limpa os listeners
-    return function cleanup() {
-      document.removeEventListener('keyup', nicknameInput);
-      ipcRenderer.removeAllListeners('server-created');
+  useEffect(() => {
+    if (!urlHasNameParameter()) {
+      const nicknameInput = document.querySelector('.nickname-input');
+      const confirmNicknameButton = document.querySelector('.confirm-nickname-button');
+  
+      // Caso o usuário tenha pressionado enter, chama o método de confirmação
+      nicknameInput.addEventListener('keyup', event => {
+        // Se o espaço não foi pressionado, retorna
+        if (event.keyCode !== 13) return;
+        confirmNicknameButton.click();
+      });
+  
+      // Antes deste componente ser destruido, esta função limpa os listeners
+      return function cleanup() {
+        document.removeEventListener('keyup', nicknameInput);
+        ipcRenderer.removeAllListeners('server-created');
+      }
+    } else {
+      // Mostra a sala pré jogo
+      const preGameRoomContainer = document.querySelector('.pre-game-room-container');
+      preGameRoomContainer.classList.remove('hidden');
     }
   }, []);
 
@@ -201,14 +201,16 @@ function PreGameRoom() {
         <FaArrowLeft />
       </Link>
 
-      <StyledEnterNicknameContainer className="enter-nickname-container">
-        <MinimalistInput className="nickname-input" placeholder="Nickname" />
-        <BrightButton className="confirm-nickname-button"
-          $allCaps onClick={handleConfirmNickname}
-        >
-          {t('confirm')}
-        </BrightButton>
-      </StyledEnterNicknameContainer>
+      {!urlHasNameParameter() && 
+        <StyledEnterNicknameContainer className="enter-nickname-container">
+          <MinimalistInput className="nickname-input" placeholder="Nickname" />
+          <BrightButton className="confirm-nickname-button"
+            $allCaps onClick={handleConfirmNickname}
+          >
+            {t('confirm')}
+          </BrightButton>
+        </StyledEnterNicknameContainer>
+      }
 
       <ScaleLoader size="45"/>
       
