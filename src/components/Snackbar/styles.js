@@ -15,6 +15,7 @@ export const StyledSnackbar = styled.div`
     visibility: hidden;
 
     min-width: 250px;
+    max-width: clamp(250px, 70%, 700px);
     transform: translateX(-50%);
     padding: 20px 16px;
     position: fixed;
@@ -24,6 +25,7 @@ export const StyledSnackbar = styled.div`
     color: var(--cultured);
 
     font-size: 1.2rem;
+    overflow-wrap: break-word;
     text-align: center;
     border-radius: 4px;
     

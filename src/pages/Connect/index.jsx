@@ -49,6 +49,7 @@ function Connect() {
       clearTimeout(showLoaderTimeout);
     }
 
+    // Se não houver uma resposta em menos de 200ms, mostra o loader
     showLoaderTimeout = setTimeout(showLoader, 200);
   
     // Se algum campo estiver vazio
@@ -89,6 +90,7 @@ function Connect() {
     return function cleanup() {
       ipcRenderer.removeAllListeners('error');
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return(

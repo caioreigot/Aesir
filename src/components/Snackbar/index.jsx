@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { StyledSnackbar } from './styles';
 import i18n from 'i18next';
 
@@ -11,6 +12,9 @@ let canShowSnackbar = true;
 const closeSnackbar = () => {
   const snackbar = document.querySelector('.snackbar');
 
+  // Se a snackbar já foi destruida, não faz nada
+  if (!snackbar) return;
+
   snackbar.classList.remove(
     'visible',
     'hidding',
@@ -18,7 +22,12 @@ const closeSnackbar = () => {
     'success'
   );
 
-  snackbar.removeChild(snackbar.lastChild);
+  const message = snackbar.querySelector('.message');
+
+  if (message) {
+    // Remove o node da mensagem dentro da snackbar
+    snackbar.removeChild(message);
+  }
 
   canShowSnackbar = true;
 }
@@ -36,6 +45,10 @@ const onCloseButtonClicked = () => {
 }
 
 function Snackbar() { 
+  useEffect(() => {
+    return closeSnackbar();
+  }, [])
+
   return(
     <StyledSnackbar className="snackbar">
       <div 
@@ -49,8 +62,9 @@ function Snackbar() {
 }
 
 const calculateTextReadingTimeInMs = (text) => {
+  text = text.toString();
   const words = text.split(' ');
-  const wordsPerMinute = 200;
+  const wordsPerMinute = 180;
   const timeInMinutes = words.length / wordsPerMinute;
   const timeInSeconds = timeInMinutes * 60;
   const timeInMiliseconds = timeInSeconds * 1000;
@@ -73,7 +87,7 @@ function showSnackbar(messageType, type = 'error') {
       textToDisplay = ptBrSnackbarTranslation[messageType];
       break;
     default:
-      textToDisplay = 'Message not found.';
+      textToDisplay = null;
       break;
   }
 
@@ -81,7 +95,9 @@ function showSnackbar(messageType, type = 'error') {
     textToDisplay = messageType;
   }
 
-  const p = document.createElement('p').innerText = textToDisplay;
+  const p = document.createElement('p');
+  p.className = 'message';
+  p.innerText = textToDisplay;
   snackbar.append(p);
   snackbar.classList.add('visible', type);
 

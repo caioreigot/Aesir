@@ -1,3 +1,9 @@
 {
-  "fill_all_fields": "Preencha todos os campos!"
+  "fill_all_fields": "Preencha todos os campos!",
+  "PORT_SHOULD_BE": "A porta precisa ser >= 0 e < 65535.",
+  "ECONNREFUSED": "Conexão recusada. Pode ter sido o firewall do criador da sala ou a porta fornecida não está aberta no lado do servidor. Lembre-se de usar algum programa que simule uma rede local para facilitar a conexão.",
+  "ETIMEDOUT": "Sua solicitação de conexão não recebeu uma resposta. Você forneceu o IP correto?",
+  "ENOTFOUND": "Não foi possível encontrar o endereço IP.",
+  "EADDRINUSE": "Esta porta já está sendo usada.",
+  "EAIAGAIN": "DNS não resolvido. Tente usar o endereço IP."
 }

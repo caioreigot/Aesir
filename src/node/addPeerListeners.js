@@ -1,6 +1,5 @@
 const P2PDataType = require('./p2p/enums/P2PDataType');
 const ErrorContext = require('./p2p/enums/ErrorContext');
-const ErrorMessage = require('./p2p/enums/ErrorMessage');
 
 function addPeerListeners(peer, webContents) {
   peer.onConnection = onConnection;
@@ -35,36 +34,41 @@ function addPeerListeners(peer, webContents) {
     }
   }
 
-  // Função chamada quando ocorre algum erro no Peer
+  // Função chamada quando ocorre algum erro no peer
   function onError(error, context) {
-    // TODO: Tratamento e tradução de erros
+    let errorTypeOrMessage = error;
 
-    let errorMessage = error;
+    const errorMessageLowerCase = error.message
+      ? error.message.toLowerCase()
+      : error.toLowerCase();
 
-    if (error.message) {
-      switch (context) {
-        case ErrorContext.CONNECT:
-          if (error.message.includes('ETIMEDOUT')) {
-            errorMessage = ErrorMessage.ETIMEDOUT;
-          } else if (error.message.includes('ECONNREFUSED')) {
-            errorMessage = ErrorMessage.ECONNREFUSED;
-          } else if (error.message.includes('ENOTFOUND')) {
-            errorMessage = ErrorMessage.ENOTFOUND;
-          }
-          break;
-        
-        case ErrorContext.SERVER:
-          if (error.message.includes('EADDRINUSE')) {
-            errorMessage = ErrorMessage.EADDRINUSE;
-          }
-          break;
-  
-        default:
-          break;
-      }
+    switch (context) {
+      case ErrorContext.CONNECT:
+        if (errorMessageLowerCase.includes('etimedout')) {
+          errorTypeOrMessage = 'ETIMEDOUT';
+        } else if (errorMessageLowerCase.includes('econnrefused')) {
+          errorTypeOrMessage = 'ECONNREFUSED';
+        } else if (errorMessageLowerCase.includes('enotfound')) {
+          errorTypeOrMessage = 'ENOTFOUND';
+        } else if (errorMessageLowerCase.includes('eai_again')) {
+          errorTypeOrMessage = 'EAIAGAIN';
+        } else if (errorMessageLowerCase.includes('port should be')) {
+          errorTypeOrMessage = 'PORT_SHOULD_BE';
+        }
+        break;
+      
+      case ErrorContext.SERVER:
+        if (errorMessageLowerCase.includes('eaddrinuse')) {
+          errorTypeOrMessage = 'EADDRINUSE';
+        }
+        break;
+
+      default:
+        errorTypeOrMessage = error.message;
+        break;
     }
 
-    sendErrorToRenderer(webContents, errorMessage);
+    sendErrorToRenderer(webContents, errorTypeOrMessage);
   }
 }
 

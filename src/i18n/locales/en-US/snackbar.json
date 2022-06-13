@@ -1,3 +1,9 @@
 {
-  "fill_all_fields": "Fill in all fields!"
+  "fill_all_fields": "Fill in all fields!",
+  "PORT_SHOULD_BE": "Port should be >= 0 and < 65535.",
+  "ECONNREFUSED": "Connection refused. It could have been the room creator's firewall or the port provided is not open on the server side. Remember to use a program that simulates a local network to facilitate the connection.",
+  "ETIMEDOUT": "Your request has not received a response. Did you provide the correct IP?",
+  "ENOTFOUND": "Could not find IP address.",
+  "EADDRINUSE": "This port is already being used.",
+  "EAIAGAIN": "DNS lookup timed out error. Try using the IP address."
 }
