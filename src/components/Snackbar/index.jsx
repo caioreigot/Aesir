@@ -12,8 +12,12 @@ let canShowSnackbar = true;
 const closeSnackbar = () => {
   const snackbar = document.querySelector('.snackbar');
 
-  // Se a snackbar já foi destruida, não faz nada
-  if (!snackbar) return;
+  // Se a snackbar já foi destruida
+  if (!snackbar) {
+    // Volta a booleana para seu valor padrão
+    canShowSnackbar = true;
+    return;
+  }
 
   snackbar.classList.remove(
     'visible',
@@ -46,7 +50,7 @@ const onCloseButtonClicked = () => {
 
 function Snackbar() { 
   useEffect(() => {
-    return closeSnackbar();
+    return closeSnackbar;
   }, [])
 
   return(
@@ -101,8 +105,8 @@ function showSnackbar(messageType, type = 'error') {
   snackbar.append(p);
   snackbar.classList.add('visible', type);
 
-  // A duração tem o mínimo de 500ms + o tempo médio de leitura de um texto
-  const textDisplayTimeInMs = 500 + calculateTextReadingTimeInMs(textToDisplay);
+  // A duração tem o tempo de 1s + o tempo médio de leitura de um texto
+  const textDisplayTimeInMs = 1000 + calculateTextReadingTimeInMs(textToDisplay);
 
   // Espera o tempo de exibição do snackbar
   displayTimeTimeout = setTimeout(() => { 

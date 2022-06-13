@@ -47,8 +47,8 @@ function getCardObjects(deckInformation, callback) {
             callback(progress);
           })
           .catch(err => {
-            console.warn(err);
-            reject(err);
+            const reason = err.response.data.details;
+            reject(reason);
           });
         
         // Na ultima iteração, resolver a promise

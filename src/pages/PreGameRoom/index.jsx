@@ -182,16 +182,26 @@ function PreGameRoom() {
         if (event.keyCode !== 13) return;
         confirmNicknameButton.click();
       });
-  
-      // Antes deste componente ser destruido, esta função limpa os listeners
-      return function cleanup() {
-        document.removeEventListener('keyup', nicknameInput);
-        ipcRenderer.removeAllListeners('server-created');
-      }
     } else {
       // Mostra a sala pré jogo
       const preGameRoomContainer = document.querySelector('.pre-game-room-container');
       preGameRoomContainer.classList.remove('hidden');
+    }
+
+    ipcRenderer.on('error', (_, error) => {
+      if (error.toLowerCase().includes('no cards found matching')) {
+        // TODO: Traduzir o erro
+        sendMessageToChat({ message: error });
+        Utils.showButtonsAndHideLoader();
+        return;
+      }
+
+      showSnackbar(error, 'error');
+    });
+
+    // Antes deste componente ser destruido, esta função limpa os listeners
+    return function cleanup() {
+      ipcRenderer.removeAllListeners('server-created');
     }
   }, []);
 
