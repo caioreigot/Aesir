@@ -57,16 +57,14 @@ class Peer {
     });
 
     this._knownHosts.forEach(host => {
-      const isKnownPort = (host.portImConnected === socket.remotePort 
-        || host.serverPort === socket.remotePort);
+      const isKnownPort = (host.portImConnected == socket.remotePort 
+        || host.serverPort == socket.remotePort);
 
-      if (host.ip === socket.remoteAddress
-        && isKnownPort
-      ) {
+      if (host.ip === socket.remoteAddress && isKnownPort) {
         const indexToRemove = this._knownHosts.indexOf(host);
         this._knownHosts.splice(indexToRemove, 1);
 
-        this.onDisconnect(host, socket);
+        this.onDisconnect(socket, host);
       }
     });
   }
@@ -399,13 +397,24 @@ class Peer {
     this._listenClientData(socket);
   }
 
+  // Fecha o servidor e as conexões estabelecidas por este peer
+  closeServerAndConnections = () => {
+    if (this._server) {
+      this._server.close();
+    }
+
+    this._connections.forEach(socket => {
+      socket.end()
+    });
+  }
+
   // Essa função deve ser sobrescrita pelo cliente
   onConnection(socket, peerName) {
     throw Error('peer.onConnection não foi implementado');
   }
 
   // Essa função pode ser sobrescrita pelo cliente
-  onDisconnect(host, socket) {}
+  onDisconnect(socket, host) {}
 
   // Essa função deve ser sobrescrita pelo cliente
   onData(socket, P2PDataTemplate) {

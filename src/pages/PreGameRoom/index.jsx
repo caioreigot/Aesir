@@ -195,12 +195,12 @@ function PreGameRoom() {
     }
   }, []);
 
-  const closeServer = () =>
-    ipcRenderer.send('close-server');
+  const disconnectPlayer = () =>
+    ipcRenderer.send('disconnect-player');
 
   return(
     <StyledPreGameRoom>
-      <Link to="/" onClick={closeServer}>
+      <Link to="/" onClick={disconnectPlayer}>
         <FaArrowLeft />
       </Link>
 

@@ -16,7 +16,9 @@ function addMainListeners(webContents) {
   ipcMain.on('room-created', (_, name) => {
     /* Caso o servidor já esteja aberto, 
     fecha ele antes de abrir um novo */
-    closePeerServer();
+    if (currentPeer) {
+      currentPeer.closeServerAndConnections();
+    }
 
     const tellRendererThatServerOpened = () =>
       renderer.send('server-created', currentPeer.port);
@@ -42,16 +44,15 @@ function addMainListeners(webContents) {
       });
     }
 
-    // Se o servidor deste peer ainda não foi aberto
-    if (!currentPeer) {
-      // Abre, e após abrir o servidor, se conecta
-      currentPeer = new Peer(nickname)
-        .createServer(connectToRoom);
-      
-      return;
+    // Caso o servidor esteja aberto, fecha ele
+    if (currentPeer) {
+      currentPeer.closeServerAndConnections();
     }
 
-    connectToRoom();
+    /* E então abre o servidor para este peer,
+    após abrir, se conecta à sala */
+    currentPeer = new Peer(nickname)
+      .createServer(connectToRoom);
   });
 
   ipcMain.on('load-deck', (_, language) => {
@@ -72,15 +73,10 @@ function addMainListeners(webContents) {
     currentPeer.broadcast(P2PDataTemplate);
   });
 
-  ipcMain.on('close-server', () => {
-    closePeerServer();
+  ipcMain.on('disconnect-player', () => {
+    if (!currentPeer) return;
+    currentPeer.closeServerAndConnections();
   });
-}
-
-const closePeerServer = () => {
-  if (currentPeer && currentPeer.server) {
-    currentPeer.server.close();
-  }
 }
 
 const sendErrorToRenderer = (err) =>

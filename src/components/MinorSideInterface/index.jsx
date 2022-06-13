@@ -39,41 +39,53 @@ function MinorSideInterface() {
     setChatMessages([...chatMessages, newMessage]);
   }
 
-  const implementSendMessageSystem = () => {
-    const chatInput = document.querySelector('.chat-input');
-    
-    chatInput.addEventListener("keyup", event => {
-      // Se não foi pressionado o enter ou a mensagem está vazia, retorne
-      if (event.keyCode !== 13 || chatInput.value.trim().length === 0) return;
-      
-      const author = localStorage.getItem('nickname');
-      const message = { author, message: chatInput.value };
-
-      sendMessageToChat(message);
-      ipcRenderer.send('message-sent', message);
-      
-      // Limpa o input
-      chatInput.value = '';
-    });
-  }
-
-  const implementReceiveMessageSystem = () => {
-    ipcRenderer.on('new-message', (_, senderName, message) => {
-      sendMessageToChat(message);
-    });
-
-    ipcRenderer.on('log-chat', (_, log) => {
-      sendMessageToChat({ message: log });
-    });
-  }
-
   useEffect(() => {
+    const implementSendMessageSystem = () => {
+      const chatInput = document.querySelector('.chat-input');
+      
+      chatInput.addEventListener("keyup", event => {
+        // Se não foi pressionado o enter ou a mensagem está vazia, retorne
+        if (event.keyCode !== 13 || chatInput.value.trim().length === 0) return;
+        
+        const author = localStorage.getItem('nickname');
+        const message = { author, message: chatInput.value };
+  
+        sendMessageToChat(message);
+        ipcRenderer.send('message-sent', message);
+        
+        // Limpa o input
+        chatInput.value = '';
+      });
+    }
+  
+    // Ouve mensagens de outros jogadores e do próprio sistema (logs)
+    const implementReceiveMessageSystem = () => {
+      ipcRenderer.on('new-message', (_, messageObject) => {
+        sendMessageToChat(messageObject);
+      });
+  
+      ipcRenderer.on('player-connected', (_, nickname) => {
+        const logMessage = t('chatLog:connected', { nickname });
+        sendMessageToChat({ message: logMessage });
+      });
+  
+      ipcRenderer.on('player-disconnected', (_, nickname) => {
+        const logMessage = t('chatLog:disconnected', { nickname });
+        sendMessageToChat({ message: logMessage });
+      });
+    }
+
     addResizerEventListener();
     implementSendMessageSystem();
     implementReceiveMessageSystem();
 
-    return resizerCleanup;
-  }, []);
+    return function cleanup() {
+      resizerCleanup();
+      ipcRenderer.removeAllListeners('new-message');
+      ipcRenderer.removeAllListeners('player-connected');
+      ipcRenderer.removeAllListeners('player-disconnected');
+    };
+  }, [t]);
 
   return(
     <StyledSideMinorInterface>

@@ -5,6 +5,7 @@ function getTranslations(language) {
   return {
     common: require(`./locales/${language}/common.json`),
     tooltip: require(`./locales/${language}/tooltip.json`),
+    chatLog: require(`./locales/${language}/chatLog.json`),
     home: require(`./locales/${language}/home.json`),
     config: require(`./locales/${language}/config.json`),
     playRoom: require(`./locales/${language}/playRoom.json`),

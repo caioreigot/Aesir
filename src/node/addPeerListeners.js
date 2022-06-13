@@ -9,15 +9,14 @@ function addPeerListeners(peer, webContents) {
   peer.onError = onError;
   peer.onData = onData
 
-  // Função chamada quando este Peer recebe uma conexão
+  // Função chamada quando este peer recebe uma conexão
   function onConnection(socket, peerName) {
-    const log = `"${peerName}" connected to the room.`;
-    webContents.send('log-chat', log);
+    webContents.send('player-connected', peerName);
   }
 
-  function onDisconnect(host, socket) {
-    const log = `"${host.name}" disconnected.`;
-    webContents.send('log-chat', log);
+  // Função chamada quando um peer se desconecta
+  function onDisconnect(socket, host) {
+    webContents.send('player-disconnected', host.name);
   }
 
   // Função chamada quando este peer recebe uma informação
@@ -29,11 +28,7 @@ function addPeerListeners(peer, webContents) {
         break;
 
       case P2PDataType.MESSAGE:
-        webContents.send(
-          'new-message', 
-          P2PDataTemplate.senderName, 
-          P2PDataTemplate.content
-        );
+        webContents.send('new-message', P2PDataTemplate.content);
         break;
 
       default:

@@ -8,5 +8,5 @@
   "sorcery": "Sorcery",
   "load_deck": "Load Deck",
   "ready": "Ready",
-  "open_room_at_port": "Open room at port {{port}}."
+  "open_room_at_port": "Room opened at port {{port}}."
 }

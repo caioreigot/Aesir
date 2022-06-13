@@ -1,0 +1,4 @@
+{
+  "connected": "{{nickname}} entered the room.",
+  "disconnected": "{{nickname}} disconnected."
+}
