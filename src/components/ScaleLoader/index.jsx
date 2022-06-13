@@ -9,12 +9,12 @@ const getLoaderBarSizes = (maxHeight) => {
 }
 
 function ScaleLoader(props) {
-  const barHeights = getLoaderBarSizes(props.size);
+  const barHeights = getLoaderBarSizes(props.$size);
 
   return(
     <StyledScaleLoader 
       barHeights={barHeights} 
-      className="scale-loader"
+      className="scale-loader hidden"
     >
       <span className="bar"></span>
       <span className="bar"></span>

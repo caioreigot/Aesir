@@ -208,7 +208,7 @@ function PreGameRoom() {
       input para o usuário fornece-lo */}
       {!urlHasNameParameter() && 
         <StyledEnterNicknameContainer className="enter-nickname-container">
-          <MinimalistInput className="nickname-input" placeholder="Nickname" />
+          <MinimalistInput className="nickname-input" placeholder={t('your-nickname')} />
           <BrightButton className="confirm-nickname-button"
             $allCaps onClick={handleConfirmNickname}
           >
@@ -217,7 +217,7 @@ function PreGameRoom() {
         </StyledEnterNicknameContainer>
       }
 
-      <ScaleLoader size="45"/>
+      <ScaleLoader $size="45"/>
       
       <StyledPreGameRoomContainer className="pre-game-room-container hidden">
         <PreGameBiggerSideInterface />

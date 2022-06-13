@@ -24,18 +24,16 @@ export const StyledConnect = styled.div`
     filter: brightness(var(--hover-brightness-base));
   }
 
-  main {
-    width: clamp(420px, 40%, 500px);
-
-    animation: enter-from-left 400ms ease forwards;
-  }
-
   .container {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    align-items: center;
     
-    height: 100%;
+    width: clamp(420px, 40%, 500px);
+    height: fit-content;
+
+    animation: enter-from-left 400ms ease forwards;
 
     button {
       width: 100%;
@@ -48,6 +46,10 @@ export const StyledConnect = styled.div`
 
     input:not(:first-child) {
       margin-top: 8px;
+    }
+
+    div:last-child {
+      margin-top: 18px;
     }
   }
 `;

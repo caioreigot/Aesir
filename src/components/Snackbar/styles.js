@@ -14,22 +14,32 @@ export const StyledSnackbar = styled.div`
   & {
     visibility: hidden;
 
-    font-size: 1.2rem;
     min-width: 250px;
     transform: translateX(-50%);
-    padding: 16px;
+    padding: 20px 16px;
+    position: fixed;
+    left: 50%;
 
     background-color: #333;
     color: var(--cultured);
 
+    font-size: 1.2rem;
     text-align: center;
     border-radius: 4px;
     
+    user-select: none;
     z-index: 1;
     
-    position: fixed;
-    left: 50%;
     bottom: var(--snackbar-bottom-offset);
+
+    .close-button {
+      cursor: pointer;
+      color: rgba(var(--cultured-values), 0.8);
+      padding: 1px 3px;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
   }
 
   &.error {
@@ -40,9 +50,13 @@ export const StyledSnackbar = styled.div`
     background-color: var(--snackbar-green);
   }
 
-  &.show {
+  &.visible {
     visibility: visible;
-    animation: ${snackbarInKeyframes} 0.5s, 
-      ${snackbarOutKeyframes} 0.5s 2.5s forwards;
+    animation: ${snackbarInKeyframes} 500ms
+  }
+
+  &.hidding {
+    visibility: visible;
+    animation: ${snackbarOutKeyframes} 500ms forwards;
   }
 `;

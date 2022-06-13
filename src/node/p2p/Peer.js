@@ -94,56 +94,60 @@ class Peer {
   
   // Tenta se conectar em um IP:PORTA
   connectTo = (host, port, options) => {
-    const connect = () => {
-      const socket = net.createConnection({ host, port }, () => {
-        // Caso o cliente tenha fornecido uma callback, invocá-la
-        if (options && options.onConnect) {
-          options.onConnect();
-        }
+    try {
+      const connect = () => {
+        const socket = net.createConnection({ host, port }, () => {
+          // Caso o cliente tenha fornecido uma callback, invocá-la
+          if (options && options.onConnect) {
+            options.onConnect();
+          }
+    
+          /* Se o host em que este peer estiver conectando
+          não for conhecido, adiciona ao array de conhecidos
   
-        /* Se o host em que este peer estiver conectando
-        não for conhecido, adiciona ao array de conhecidos
+          Obs: o nome é desconhecido, só após o servidor se 
+          apresentar que ele será atribuido */
+          const hostImConnected = {
+            name: '', ip: host, 
+            portImConnected: socket.remotePort, 
+            serverPort: port
+          }
+  
+          if (!this._isKnownHost(hostImConnected)) {
+            this._addKnownHost(hostImConnected);
+          }
+          
+          // Adiciona esta conexão estabelecida ao array de conexões
+          this._addConnection(socket);
+    
+          // Adiciona listeners para este socket
+          this._addSocketListeners(socket);
+    
+          // Envia o nome e a porta do servidor deste peer 
+          this._introduceMyselfTo(socket, this.port);
+    
+          /* Tirando o time out estabelecido anteriormente para caso
+          a conexão não tivesse sido estabelecida no tempo definido */
+          socket.setTimeout(0);
+        })
+          .on('error', err => this.onError(err, ErrorContext.CONNECT));
+    
+        /* Definindo o time out para a tentativa de conexão
+        Obs: se o time out não for fornecido, o padrão é 20 segundos */
+        socket.setTimeout((options.timeoutInSeconds || 20) * 1000, () => {
+          this.onError(new Error('ETIMEDOUT'), ErrorContext.CONNECT);
+          socket.destroy();
+        });
+      }
 
-        Obs: o nome é desconhecido, só após o servidor se 
-        apresentar que ele será atribuido */
-        const hostImConnected = {
-          name: '', ip: host, 
-          portImConnected: socket.remotePort, 
-          serverPort: port
-        }
+      /* Apenas se conecta se o servidor deste peer estiver aberto
+      (caso não esteja, abre um e se conecta) */
+      this.server ? connect() : this.createServer(connect);
 
-        if (!this._isKnownHost(hostImConnected)) {
-          this._addKnownHost(hostImConnected);
-        }
-        
-        // Adiciona esta conexão estabelecida ao array de conexões
-        this._addConnection(socket);
-  
-        // Adiciona listeners para este socket
-        this._addSocketListeners(socket);
-  
-        // Envia o nome e a porta do servidor deste peer 
-        this._introduceMyselfTo(socket, this.port);
-  
-        /* Tirando o time out estabelecido anteriormente para caso
-        a conexão não tivesse sido estabelecida no tempo definido */
-        socket.setTimeout(0);
-      })
-        .on('error', err => this.onError(err, ErrorContext.CONNECT));
-  
-      /* Definindo o time out para a tentativa de conexão
-      Obs: se o time out não for fornecido, o padrão é 20 segundos */
-      socket.setTimeout((options.timeoutInSeconds || 20) * 1000, () => {
-        this.onError(new Error('ETIMEDOUT'), ErrorContext.CONNECT);
-        socket.destroy();
-      });
+      return this;
+    } catch (err) {
+      this.onError(err.message, ErrorContext.CONNECT);
     }
-
-    /* Apenas se conecta se o servidor deste peer estiver aberto
-    (caso não esteja, abre um e se conecta) */
-    this.server ? connect() : this.createServer(connect);
-
-    return this;
   }
 
   // Adiciona a host para o array de hosts conhecidas
@@ -223,7 +227,6 @@ class Peer {
       const currentHost = this._knownHosts[i];
 
       // Se a porta já for conhecida
-      console.log(currentHost.serverPort, P2PDataTemplate.content);
       if (currentHost.serverPort == P2PDataTemplate.content) {
         /* Se o nome estiver vazio, é sinal de que o servidor 
         em que este peer conectou se apresentou */
@@ -423,7 +426,7 @@ class Peer {
 
   // Essa função pode ser sobrescrita pelo cliente
   onError(err, context) {
-    console.warn('Peer.onError -> erro não tratado:', err);
+    console.warn('Peer.onError não foi implementado, erro não tratado:', err);
   }
 }
 

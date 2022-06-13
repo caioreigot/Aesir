@@ -14,19 +14,20 @@ function addMainListeners(webContents) {
   renderer = webContents;
 
   ipcMain.on('room-created', (_, name) => {
-    /* Caso o servidor já esteja aberto, 
-    fecha ele antes de abrir um novo */
-    if (currentPeer) {
-      currentPeer.closeServerAndConnections();
-    }
-
     const tellRendererThatServerOpened = () =>
       renderer.send('server-created', currentPeer.port);
 
-    currentPeer = new Peer(name)
-      .createServer(tellRendererThatServerOpened);
+    // Se o servidor deste peer não estiver aberto, abre
+    if (!currentPeer) {
+      // E após abrir, avisa ao render process
+      currentPeer = new Peer(name)
+        .createServer(tellRendererThatServerOpened);
 
-    addPeerListeners(currentPeer, webContents);
+      addPeerListeners(currentPeer, webContents);
+      return;
+    }
+
+    tellRendererThatServerOpened();
   });
 
   ipcMain.on('connect-to', (_, originLocation, connectInformations) => {
@@ -39,20 +40,21 @@ function addMainListeners(webContents) {
             + `/#/pre-game-room?name=${currentPeer.name}`;
           
           renderer.loadURL(preGameRoomUrl);
-          addPeerListeners(currentPeer, webContents);
         }
       });
     }
 
-    // Caso o servidor esteja aberto, fecha ele
-    if (currentPeer) {
-      currentPeer.closeServerAndConnections();
+    // Se o servidor deste peer não estiver aberto, abre
+    if (!currentPeer) {
+      // E após abrir, se conecta à sala
+      currentPeer = new Peer(nickname)
+        .createServer(connectToRoom);
+
+      addPeerListeners(currentPeer, webContents);
+      return;
     }
 
-    /* E então abre o servidor para este peer,
-    após abrir, se conecta à sala */
-    currentPeer = new Peer(nickname)
-      .createServer(connectToRoom);
+    connectToRoom();
   });
 
   ipcMain.on('load-deck', (_, language) => {
@@ -79,8 +81,8 @@ function addMainListeners(webContents) {
   });
 }
 
-const sendErrorToRenderer = (err) =>
-  renderer.send('error', err);
+const sendErrorToRenderer = (error) =>
+  renderer.send('error', error);
 
 const saveDeckAndGetCardObjects = (deckStructure) => {
   currentDeckStructure = deckStructure;

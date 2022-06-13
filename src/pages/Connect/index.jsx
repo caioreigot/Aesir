@@ -6,6 +6,7 @@ import {
   FaArrowLeft,
   InteractiveTooltipIcon,
   BrightButton,
+  ScaleLoader,
   MinimalistInput,
   Snackbar,
   showSnackbar
@@ -17,14 +18,42 @@ const { ipcRenderer } = window.require('electron');
 
 function Connect() {
   const { t } = useTranslation();
+  let showLoaderTimeout;
+
+  const showLoader = () => {
+    document.querySelector('.connect-button')
+      .classList.add('hidden');
+    
+    document.querySelector('.scale-loader')
+      .classList.remove('hidden');
+  }
+
+  const hideLoader = () => {
+    if (showLoaderTimeout) {
+      clearTimeout(showLoaderTimeout);
+    }
+
+    document.querySelector('.scale-loader')
+      .classList.add('hidden');
+
+    document.querySelector('.connect-button')
+      .classList.remove('hidden');
+  }
 
   const onConnectClick = () => {
     const nickname = document.querySelector('.nickname-input').value;
     const ip = document.querySelector('.ip-input').value;
     const port = document.querySelector('.port-input').value;
+
+    if (showLoaderTimeout) {
+      clearTimeout(showLoaderTimeout);
+    }
+
+    showLoaderTimeout = setTimeout(showLoader, 200);
   
     // Se algum campo estiver vazio
     if (!nickname.trim() || !ip.trim() || !port.trim()) {
+      hideLoader();
       showSnackbar('fill_all_fields', 'error');
       return;
     }
@@ -51,6 +80,15 @@ function Connect() {
       if (event.keyCode !== 13) return;
       connectButton.click();
     });
+
+    ipcRenderer.on('error', (_, error) => {
+      hideLoader();
+      showSnackbar(error, 'error');
+    });
+
+    return function cleanup() {
+      ipcRenderer.removeAllListeners('error');
+    }
   }, []);
 
   return(
@@ -59,17 +97,16 @@ function Connect() {
         <FaArrowLeft />
       </Link>
 
-      <main>
-        <div className="container">
-          <MinimalistInput className="nickname-input" placeholder="Nickname" />
-          <MinimalistInput className="ip-input" placeholder="IP" />
-          <MinimalistInput className="port-input" placeholder={t('port')} />
-          <BrightButton className="connect-button" 
-            $allCaps onClick={onConnectClick}>
-            {t('connect')}
-          </BrightButton>
-        </div>
-      </main>
+      <div className="container">
+        <MinimalistInput className="nickname-input" placeholder={t('your-nickname')} />
+        <MinimalistInput className="ip-input" placeholder="IP" />
+        <MinimalistInput className="port-input" placeholder={t('port')} />
+        <BrightButton className="connect-button" 
+          $allCaps onClick={onConnectClick}>
+          {t('connect')}
+        </BrightButton>
+        <ScaleLoader $size="45"/>
+      </div>
 
       <InteractiveTooltipIcon 
         size="2x"

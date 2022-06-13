@@ -3,7 +3,6 @@ const ErrorContext = require('./p2p/enums/ErrorContext');
 const ErrorMessage = require('./p2p/enums/ErrorMessage');
 
 function addPeerListeners(peer, webContents) {
-
   peer.onConnection = onConnection;
   peer.onDisconnect = onDisconnect;
   peer.onError = onError;
@@ -37,44 +36,39 @@ function addPeerListeners(peer, webContents) {
   }
 
   // Função chamada quando ocorre algum erro no Peer
-  function onError(err, context) {
-    let errorMessage = ErrorMessage.UNEXPECTED;
+  function onError(error, context) {
+    // TODO: Tratamento e tradução de erros
 
-    switch (context) {
-      case ErrorContext.CONNECT:  
-        if (err.message.includes('ETIMEDOUT')) {
-          errorMessage = ErrorMessage.ETIMEDOUT;
-        } else if (err.message.includes('ECONNREFUSED')) {
-          errorMessage = ErrorMessage.ECONNREFUSED;
-        } else if (err.message.includes('ENOTFOUND')) {
-          errorMessage = ErrorMessage.ENOTFOUND;
-        }
-    
-        // dialog.showErrorBox(
-        //   'Connection Error',
-        //   errorMessage.concat(`\n\n${err.message}`)
-        // );
-    
-        webContents.send('connect-error');
-        break;
-      
-      case ErrorContext.SERVER:
-        if (err.message.includes('EADDRINUSE')) {
-          errorMessage = ErrorMessage.EADDRINUSE;
-        }
-    
-        // dialog.showErrorBox(
-        //   'Connection Error',
-        //   errorMessage.concat(`\n\n${err.message}`)
-        // );
-    
-        webContents.send('listen-port-error');
-        break;
+    let errorMessage = error;
 
-      default:
-        break;
+    if (error.message) {
+      switch (context) {
+        case ErrorContext.CONNECT:
+          if (error.message.includes('ETIMEDOUT')) {
+            errorMessage = ErrorMessage.ETIMEDOUT;
+          } else if (error.message.includes('ECONNREFUSED')) {
+            errorMessage = ErrorMessage.ECONNREFUSED;
+          } else if (error.message.includes('ENOTFOUND')) {
+            errorMessage = ErrorMessage.ENOTFOUND;
+          }
+          break;
+        
+        case ErrorContext.SERVER:
+          if (error.message.includes('EADDRINUSE')) {
+            errorMessage = ErrorMessage.EADDRINUSE;
+          }
+          break;
+  
+        default:
+          break;
+      }
     }
+
+    sendErrorToRenderer(webContents, errorMessage);
   }
 }
+
+const sendErrorToRenderer = (webContents, error) =>
+  webContents.send('error', error);
 
 module.exports = addPeerListeners;

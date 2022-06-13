@@ -4,7 +4,7 @@ export const StyledInteractiveTooltipIcon = styled.div`
   .fa-circle-question {
     cursor: pointer;
     color: var(--imperial-red);
-    z-index: 2;
+    z-index: 3;
 
     ${props => props.$fixedPosition && css`
       position: fixed;
@@ -35,7 +35,7 @@ export const StyledInteractiveTooltipIcon = styled.div`
     width: 100%;
     background-color: rgba(0, 0, 0, 0.8);
     
-    z-index: 1;
+    z-index: 2;
   }
 
   & .tooltip-modal.show {

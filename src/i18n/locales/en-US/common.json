@@ -2,5 +2,6 @@
   "connect": "Connect",
   "confirm": "Confirm",
   "port": "Port",
-  "message": "Message"
+  "message": "Message",
+  "your-nickname": "Your nickname"
 }

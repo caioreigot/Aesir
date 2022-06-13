@@ -12,7 +12,8 @@ const scaleUpKeyframe = keyframes`
 
 export const StyledScaleLoader = styled.div`
   & {
-    display: none;
+    display: flex;
+    flex-direction: row;
     align-items: center;
   }
 
