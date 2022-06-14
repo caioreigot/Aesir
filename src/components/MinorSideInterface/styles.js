@@ -58,7 +58,7 @@ export const StyledChat = styled.div`
     justify-content: space-between;
 
     flex-grow: 1;
-    min-height: 30%;
+    height: 30%;
     overflow: hidden;
 
     .chat-content {

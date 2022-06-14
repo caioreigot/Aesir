@@ -1,3 +1,5 @@
+import { setProgressValueTo } from '@components/ProgressBar';
+
 class Utils {
 
   static queryLoadDeckButton = '#load-deck-button';
@@ -50,6 +52,7 @@ class Utils {
     document.querySelector(this.queryLoadDeckButton).classList.remove('hidden');
     document.querySelector(this.queryReadyButton).classList.remove('hidden');
     document.querySelector(this.queryProgressBar).classList.add('hidden');
+    setProgressValueTo(0);
   }
 
   static clearDeckPreviewRows() {

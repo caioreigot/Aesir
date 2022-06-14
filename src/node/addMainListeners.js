@@ -90,7 +90,8 @@ const saveDeckAndGetCardObjects = (deckStructure) => {
 
   return getCardObjects(
     deckStructure,
-    sendProgressToRenderer
+    sendProgressToRenderer,
+    sendErrorToRenderer
   );
 }
 

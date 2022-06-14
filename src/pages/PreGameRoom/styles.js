@@ -174,6 +174,10 @@ export const StyledLeftSideButtonsContainer = styled.div`
     button:first-child {
       margin-right: 10px;
     }
+
+    button.enabled {
+      background-color: #fb5454;
+    }
   }
 
   @media (max-height: 760px) {

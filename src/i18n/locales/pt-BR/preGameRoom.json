@@ -8,5 +8,6 @@
   "sorcery": "Feitiço",
   "load_deck": "Carregar Deck",
   "ready": "Preparado",
-  "open_room_at_port": "Sala aberta na porta {{port}}."
+  "open_room_at_port": "Sala aberta na porta {{port}}.",
+  "card_not_found": "Carta \"{{cardNameNotFound}}\" não encontrada."
 }

@@ -52,6 +52,12 @@ function PreGameBiggerSideInterface() {
       ipcRenderer.send('load-deck', i18n.language);
     }
 
+    const readyButton = document.querySelector('#ready-button');
+    readyButton.onclick = () => {
+      readyButton.classList.toggle('enabled');
+      // TODO: Mandar para o processo main o comando de "ready"
+    }
+
     // Quando o usuário selecionar o arquivo do deck
     ipcRenderer.on('deck-selected', _ => {
       Utils.clearDeckPreviewRows();
@@ -67,10 +73,7 @@ function PreGameBiggerSideInterface() {
     // Quando os objetos das cartas forem pegos da API
     ipcRenderer.on('cards-loaded', (_, deck) => {
       DeckStorage.set(deck);
-
       Utils.showButtonsAndHideLoader();
-      setProgressValueTo(0);
-
       showDeckPreview(deck, setTotalCards, setCardsQuantity);
     });
 
@@ -189,10 +192,12 @@ function PreGameRoom() {
     }
 
     ipcRenderer.on('error', (_, error) => {
+      Utils.showButtonsAndHideLoader();
+
       if (error.toLowerCase().includes('no cards found matching')) {
-        // TODO: Traduzir o erro
-        sendMessageToChat({ message: error });
-        Utils.showButtonsAndHideLoader();
+        const cardNameNotFound = error.slice(25).slice(0, -1);
+        const message = { message: t('preGameRoom:card_not_found', { cardNameNotFound }) };
+        sendMessageToChat(message);
         return;
       }
 
@@ -203,7 +208,7 @@ function PreGameRoom() {
     return function cleanup() {
       ipcRenderer.removeAllListeners('server-created');
     }
-  }, []);
+  }, [t]);
 
   const disconnectPlayer = () =>
     ipcRenderer.send('disconnect-player');
