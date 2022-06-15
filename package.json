@@ -33,8 +33,10 @@
     "eject": "react-scripts eject",
     "dev": "concurrently -k \"BROWSER=none npm start\" \"npm:electron\"",
     "dev2": "concurrently -k \"PORT=3001 BROWSER=none npm start\" \"npm:electron2\"",
+    "dev3": "concurrently -k \"PORT=3002 BROWSER=none npm start\" \"npm:electron3\"",
     "electron": "wait-on tcp:3000 && electron .",
-    "electron2": "wait-on tcp:3001 && electron ."
+    "electron2": "wait-on tcp:3001 && electron .",
+    "electron3": "wait-on tcp:3002 && electron ."
   },
   "eslintConfig": {
     "extends": [

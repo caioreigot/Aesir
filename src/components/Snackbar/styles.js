@@ -17,9 +17,10 @@ export const StyledSnackbar = styled.div`
     min-width: 250px;
     max-width: clamp(250px, 70%, 700px);
     transform: translateX(-50%);
-    padding: 20px 16px;
     position: fixed;
     left: 50%;
+    
+    padding: 28px 16px 24px 16px;
 
     background-color: #333;
     color: var(--cultured);

@@ -21,13 +21,13 @@ function showDeckPreview(
   const increaseAmountAndRender = (rowIndex, card) => {
     const row = deckPreviewRows[rowIndex];
 
-    // Se o tipo da carta corresponder ao tipo da linha
     const cardBelongsToThisRow = card.type_line
       .toLowerCase()
       .indexOf(rowsType[rowIndex].toLowerCase()) >= 0;
   
+    // Se o tipo da carta corresponder ao tipo da linha
     if (cardBelongsToThisRow) {
-      // Pega a quantidade presente desta carta no deck
+      // Pega a quantidade presente desta carta na estrutura do deck
       const cardQuantity = deck.structure
         .filter(c => c.name === card.name)[0].quantity;
   
@@ -48,9 +48,8 @@ function showDeckPreview(
   }
 
   for (let i = 0; i < deckPreviewRows.length; i++) {
-    deckPreviewRows.forEach(row => {
-      addRowMouseScrollListener(row);
-    })
+    const row = deckPreviewRows[i];
+    addRowMouseScrollListener(row);
 
     /* Pra cada objeto de carta da API, incrementa a quantidade
     do mesmo tipo de carta e então renderiza ela na tela */
@@ -70,10 +69,20 @@ function showDeckPreview(
 }
 
 const addRowMouseScrollListener = (row) => {
-  row.addEventListener("wheel", e => {
-    e.preventDefault();
-    row.scrollLeft += e.deltaY * 0.5;
-  });
+  /* Não é preciso limpar o listener (pra evitar duplicação)
+  pois o navegador não duplica a chamada caso seja passada
+  a mesma refêrencia da função */
+  row.addEventListener('wheel', rowScrollListener);
 }
+
+const rowScrollListener = e => {
+  e.preventDefault();
+
+  const row = e.target.classList.contains('deck-preview-row')
+    ? e.target
+    : e.target.parentElement;
+  
+  row.scrollLeft += e.deltaY * 0.8;
+};
 
 export default showDeckPreview;

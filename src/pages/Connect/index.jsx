@@ -59,16 +59,11 @@ function Connect() {
       return;
     }
 
-    const connectInformations = { nickname, ip, port }
-
     /* Manda para o Main Process as informações necessárias
     para o connect. Caso consiga se conectar, o Main Process
     carrega a nova URL da sala de pré jogo */
-    ipcRenderer.send(
-      'connect-to',
-      window.location.origin,
-      connectInformations
-    );
+    const connectInformations = { nickname, ip, port }
+    ipcRenderer.send('connect-to', connectInformations);
   }
 
   useEffect(() => {
