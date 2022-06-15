@@ -1,5 +1,7 @@
+const { setPlayerReadyStatus } = require('./preGameRoomState.js');
 const P2PDataType = require('./p2p/enums/P2PDataType');
 const ErrorContext = require('./p2p/enums/ErrorContext');
+const Utils = require('./Utils');
 
 function addPeerListeners(peer, webContents) {
   peer.onConnection = onConnection;
@@ -19,14 +21,22 @@ function addPeerListeners(peer, webContents) {
 
   // Função chamada quando este peer recebe uma informação
   function onData(socket, P2PDataTemplate) {
-    switch (P2PDataTemplate.type) {
+    const { type, senderName, content } = P2PDataTemplate;
+
+    switch (type) {
       case P2PDataType.STATE:
-        peer.state = P2PDataTemplate.content;
-        webContents.send('set-state', P2PDataTemplate.content);
+        peer.state = content;
+        webContents.send('set-state', content);
         break;
 
       case P2PDataType.MESSAGE:
-        webContents.send('new-message', P2PDataTemplate.content);
+        webContents.send('new-message', content);
+        break;
+
+      case P2PDataType.READY:
+        setPlayerReadyStatus(senderName, content, () => {
+          Utils.loadURL(webContents, 'play-room');
+        });
         break;
 
       default:
@@ -72,7 +82,8 @@ function addPeerListeners(peer, webContents) {
   }
 }
 
-const sendErrorToRenderer = (webContents, error) =>
+const sendErrorToRenderer = (webContents, error) => {
   webContents.send('error', error);
+}
 
 module.exports = addPeerListeners;

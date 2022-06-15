@@ -6,7 +6,7 @@ const ErrorContext = require('./enums/ErrorContext');
 
 class Peer {
 
-  constructor(name, port, state) {
+  constructor(name, state, port) {
     this.state = state; // Estado da sala
     this.name = name; // Nome único do peer
     this.port = port; // Porta em que este peer irá ouvir conexões
@@ -409,6 +409,12 @@ class Peer {
     this._connections.forEach(socket => {
       socket.end()
     });
+  }
+
+  // Retorna o número total de pessoas na network
+  getNetworkSize = () => {
+    // Hosts conhecidos + 1 para contar o próprio peer
+    return this._knownHosts.length + 1;
   }
 
   // Essa função deve ser sobrescrita pelo cliente

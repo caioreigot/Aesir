@@ -5,7 +5,8 @@ const P2PDataType = {
   PEER_INTRODUCTION: 'PEER_INTRODUCTION',
   NAME_CHANGED: 'NAME_CHANGED',
   MESSAGE: 'MESSAGE',
-  STATE: 'STATE'
+  STATE: 'STATE',
+  READY: 'READY'
 }
 
 module.exports = P2PDataType;
