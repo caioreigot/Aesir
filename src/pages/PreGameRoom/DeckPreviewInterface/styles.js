@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledDeckPreviewInterface = styled.div`
   & {
     height: 100%;
-    width: 75%;
+    flex-grow: 1;
     
     padding: 65px 20px 20px 20px;
   }
@@ -86,8 +86,9 @@ export const StyledPreviewRow = styled.div`
   }
 
   & img {
+    user-select: none;
     border: 1px solid transparent;
-    border-radius: 8%;
+    border-radius: 6px;
   }
 
   & img:hover {

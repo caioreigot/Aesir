@@ -82,7 +82,7 @@ function DeckPreviewInterface() {
   return(
     <StyledDeckPreviewInterface>
       <StyledDeckPreview className="deck-preview">
-        <h3>{t('preGameRoom:deck_size', { totalCards })}</h3>
+        <h3>{t('preGameRoom:deck_size', {totalCards})}</h3>
         <StyledPreviewLeftBox>
             <h3>{t('preGameRoom:artifact')}</h3>
             <h3>({cardsQuantity.Artifact})</h3>

@@ -1,14 +1,16 @@
-import { Link } from 'react-router-dom';
-import FaArrowLeft from '@components/FaArrowLeft';
+import GameBoard from './GameBoard';
+
+import {
+  MinorSideInterface
+} from '@components';
 
 import { StyledPlayRoom } from './styles';
 
 function PlayRoom() {
-  return (
+  return(
     <StyledPlayRoom>
-      <Link to="/">
-        <FaArrowLeft />
-      </Link>
+      <GameBoard />
+      <MinorSideInterface />
     </StyledPlayRoom>
   );
 }

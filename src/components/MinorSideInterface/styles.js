@@ -10,6 +10,7 @@ export const StyledSideMinorInterface = styled.div`
 
     height: 100%;
     width: 25%;
+    max-width: 320px;
 
     background-color: var(--eerie-black);
   }
