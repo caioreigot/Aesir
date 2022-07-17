@@ -5,7 +5,8 @@ import FaArrowLeft from '@components/FaArrowLeft';
 
 import { 
   StyledGameBoard,
-  StyledTopRow
+  StyledTopRow,
+  StyledBoardArea
 } from './styles';
 
 function GameBoard() {
@@ -21,6 +22,11 @@ function GameBoard() {
         <p>Cemitério</p>
         <p>Exílio</p>
       </StyledTopRow>
+      <StyledBoardArea>
+        <div className='commanders-area'></div>
+        <div className='bigger-area'></div>
+        <div className='hand-area'></div>
+      </StyledBoardArea>
     </StyledGameBoard>
   );
 }
